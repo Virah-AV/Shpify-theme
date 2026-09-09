@@ -1,0 +1,367 @@
+{% doc %}
+  @prompt
+    a button that should be fixed on right center corner on each page in the shopify website, Move the button below to 50 pixel, Move the button below to 50 pixel
+    
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-fixed-button-{{ ai_gen_id }} {
+    position: fixed;
+    top: calc(50% + 100px);
+    right: {{ block.settings.distance_from_edge }}px;
+    transform: translateY(-50%);
+    z-index: 9999;
+    width: {{ block.settings.button_size }}px;
+    height: {{ block.settings.button_size }}px;
+    border-radius: {{ block.settings.border_radius }}px;
+    background-color: {{ block.settings.button_color }};
+    border: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+    box-shadow: 0 {{ block.settings.shadow_vertical_offset }}px {{ block.settings.shadow_blur }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity | divided_by: 100.0 }});
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-fixed-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+    color: {{ block.settings.icon_hover_color }};
+    transform: translateY(-50%) scale({{ block.settings.hover_scale | divided_by: 100.0 }});
+    box-shadow: 0 {{ block.settings.shadow_vertical_offset | times: 1.5 }}px {{ block.settings.shadow_blur | times: 1.5 }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity | times: 1.2 | divided_by: 100.0 }});
+  }
+
+  .ai-fixed-button-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    fill: currentColor;
+  }
+
+  .ai-fixed-button-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-fixed-button-{{ ai_gen_id }} {
+      width: {{ block.settings.button_size | times: 0.8 }}px;
+      height: {{ block.settings.button_size | times: 0.8 }}px;
+      right: {{ block.settings.distance_from_edge | times: 0.7 }}px;
+    }
+
+    .ai-fixed-button-icon-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.8 }}px;
+      height: {{ block.settings.icon_size | times: 0.8 }}px;
+    }
+
+    .ai-fixed-button-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+
+  {% if block.settings.hide_on_mobile %}
+    @media screen and (max-width: 768px) {
+      .ai-fixed-button-{{ ai_gen_id }} {
+        display: none;
+      }
+    }
+  {% endif %}
+{% endstyle %}
+
+<a
+  href="{{ block.settings.button_link }}"
+  class="ai-fixed-button-{{ ai_gen_id }}"
+  aria-label="{{ block.settings.button_text | default: 'Fixed button' }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.display_type == 'icon' %}
+    {% case block.settings.icon_type %}
+      {% when 'chat' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'phone' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7293C21.7209 20.9845 21.5573 21.2136 21.3521 21.4019C21.1468 21.5901 20.9046 21.7335 20.6407 21.8227C20.3769 21.9119 20.0974 21.9451 19.82 21.92C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3147 6.72533 15.2662 5.18999 12.85C3.49997 10.2412 2.44824 7.27099 2.11999 4.18C2.095 3.90347 2.12787 3.62476 2.21649 3.36162C2.30512 3.09849 2.44756 2.85669 2.63476 2.65162C2.82196 2.44655 3.0498 2.28271 3.30379 2.17052C3.55777 2.05833 3.83233 2.00026 4.10999 2H7.10999C7.59531 1.99522 8.06579 2.16708 8.43376 2.48353C8.80173 2.79999 9.04207 3.23945 9.10999 3.72C9.23662 4.68007 9.47144 5.62273 9.80999 6.53C9.94454 6.88792 9.97366 7.27691 9.8939 7.65088C9.81415 8.02485 9.62886 8.36811 9.35999 8.64L8.08999 9.91C9.51355 12.4135 11.5865 14.4864 14.09 15.91L15.36 14.64C15.6319 14.3711 15.9751 14.1858 16.3491 14.1061C16.7231 14.0263 17.1121 14.0555 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'email' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'help' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'cart' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'whatsapp' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382C17.367 14.382 17.261 14.382 17.156 14.382C16.909 14.382 16.663 14.382 16.417 14.382C16.048 14.382 15.679 14.382 15.31 14.382C14.941 14.382 14.572 14.382 14.203 14.382C13.834 14.382 13.465 14.382 13.096 14.382C12.727 14.382 12.358 14.382 11.989 14.382C11.62 14.382 11.251 14.382 10.882 14.382C10.513 14.382 10.144 14.382 9.775 14.382C9.406 14.382 9.037 14.382 8.668 14.382C8.299 14.382 7.93 14.382 7.561 14.382C7.192 14.382 6.823 14.382 6.454 14.382C6.085 14.382 5.716 14.382 5.347 14.382C4.978 14.382 4.609 14.382 4.24 14.382C3.871 14.382 3.502 14.382 3.133 14.382C2.764 14.382 2.395 14.382 2.026 14.382C1.657 14.382 1.288 14.382 0.919 14.382C0.55 14.382 0.181 14.382 -0.188 14.382" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.60556 8.7 3.9C9.87812 3.30493 11.1801 2.99656 12.5 3H13C15.0843 3.11499 17.053 3.99476 18.5291 5.47086C20.0052 6.94695 20.885 8.91565 21 11V11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% when 'arrow_up' %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="12" y1="19" x2="12" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="5,12 12,5 19,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      {% else %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    {% endcase %}
+  {% else %}
+    <p class="ai-fixed-button-text-{{ ai_gen_id }}">{{ block.settings.button_text }}</p>
+  {% endif %}
+</a>
+
+{% schema %}
+{
+  "name": "Fixed button",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button content"
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "Display type",
+      "options": [
+        {
+          "value": "icon",
+          "label": "Icon"
+        },
+        {
+          "value": "text",
+          "label": "Text"
+        }
+      ],
+      "default": "icon"
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "Icon type",
+      "options": [
+        {
+          "value": "chat",
+          "label": "Chat"
+        },
+        {
+          "value": "phone",
+          "label": "Phone"
+        },
+        {
+          "value": "email",
+          "label": "Email"
+        },
+        {
+          "value": "help",
+          "label": "Help"
+        },
+        {
+          "value": "cart",
+          "label": "Cart"
+        },
+        {
+          "value": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "value": "arrow_up",
+          "label": "Arrow up"
+        }
+      ],
+      "default": "chat"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Help"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Position"
+    },
+    {
+      "type": "range",
+      "id": "distance_from_edge",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Distance from right edge",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 40,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Button size",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Background color",
+      "default": "#b7aca2"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Hover background color",
+      "default": "#797068"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#262626"
+    },
+    {
+      "type": "color",
+      "id": "icon_hover_color",
+      "label": "Icon hover color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Shadow opacity",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical_offset",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow vertical offset",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Hover effects"
+    },
+    {
+      "type": "range",
+      "id": "hover_scale",
+      "min": 100,
+      "max": 120,
+      "step": 5,
+      "unit": "%",
+      "label": "Hover scale",
+      "default": 110
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fixed button"
+    }
+  ]
+}
+{% endschema %}

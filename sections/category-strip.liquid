@@ -1,0 +1,420 @@
+{%- liquid
+  assign card_theme = section.settings.card_theme
+  assign section_background = section.settings.background_color
+-%}
+
+<category-strip
+  class="category-strip category-strip--theme-{{ card_theme }}"
+  data-entry-animation="{{ section.settings.entry_animation }}"
+  style="--section-bg: {{ section_background }}; --pill-bg: {{ section.settings.pill_background }}; --pill-radius: {{ section.settings.pill_radius }}px;"
+>
+  <div class="category-strip__inner page-width">
+    {%- unless section.settings.heading == blank -%}
+      <h2 class="visually-hidden">{{ section.settings.heading | escape }}</h2>
+    {%- endunless -%}
+
+    <div class="category-strip__viewport">
+      <ul class="category-row" role="list">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign label = block.settings.title | default: 'Category' -%}
+            <li class="category-item" style="--item-index: {{ forloop.index0 }};" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a class="category-item__link" href="{{ block.settings.link }}" aria-label="{{ label | escape }}">
+              {%- else -%}
+                <div class="category-item__link">
+              {%- endif -%}
+                  <span class="category-image-wrapper">
+                    <span
+                      class="category-pill"
+                      style="--item-pill-bg: {{ block.settings.custom_bg | default: section.settings.pill_background }};"
+                      aria-hidden="true"
+                    ></span>
+                    {%- if block.settings.image != blank -%}
+                      {{ block.settings.image | image_url: width: 600 | image_tag:
+                        class: 'category-product-image',
+                        loading: 'lazy',
+                        widths: '240, 360, 480, 600',
+                        sizes: '(min-width: 990px) calc((100vw - 12rem) / 5), 45vw',
+                        alt: label
+                      }}
+                    {%- else -%}
+                      {{ 'product-apparel-1' | placeholder_svg_tag: 'category-product-image category-product-placeholder' }}
+                    {%- endif -%}
+                  </span>
+                  <span class="category-item__title">{{ label | escape }}</span>
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign fallback_titles = 'Bathroom Accessories|Sofa Covers|Chair & Stools|Wooden Shoe Racks|Side Table' | split: '|' -%}
+          {%- for label in fallback_titles -%}
+            <li class="category-item" style="--item-index: {{ forloop.index0 }};">
+              <div class="category-item__link">
+                <span class="category-image-wrapper">
+                  <span class="category-pill" style="--item-pill-bg: {{ section.settings.pill_background }};" aria-hidden="true"></span>
+                  {{ 'product-apparel-1' | placeholder_svg_tag: 'category-product-image category-product-placeholder' }}
+                </span>
+                <span class="category-item__title">{{ label }}</span>
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+</category-strip>
+
+{% style %}
+  .category-strip {
+    display: block;
+    min-height: 180px;
+    overflow: hidden;
+    background: var(--section-bg, #ffffff);
+  }
+
+  .category-strip__inner {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .category-strip__viewport {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-strip__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    width: 100%;
+    max-width: 1400px;
+    min-width: max-content;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .category-item {
+    flex: 1 1 0;
+    min-width: 140px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .category-strip.is-visible .category-item {
+    animation: category-strip-entry 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--item-index) * 70ms);
+  }
+
+  .category-item__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .category-image-wrapper {
+    height: 180px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .category-pill {
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 75%;
+    height: 85%;
+    background: var(--item-pill-bg, var(--pill-bg, #f4ebe1));
+    border-radius: var(--pill-radius, 24px);
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .category-product-image {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform-origin: center bottom;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.06));
+  }
+
+  .category-product-placeholder {
+    padding: 2rem;
+    fill: rgba(0, 0, 0, 0.08);
+  }
+
+  .category-item__title {
+    display: block;
+    margin-top: 14px;
+    color: var(--category-text, #1a1a1a);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .category-item:hover .category-product-image,
+  .category-item:focus-within .category-product-image {
+    transform: translateY(-8px) scale(1.04);
+    filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.12));
+  }
+
+  .category-item:hover .category-pill,
+  .category-item:focus-within .category-pill {
+    transform: scale(1.04);
+    filter: brightness(0.98);
+  }
+
+  .category-strip--theme-frosted_glassmorphism .category-pill {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .category-strip--theme-editorial_monochrome {
+    --category-text: #000000;
+  }
+
+  .category-strip--theme-editorial_monochrome .category-pill {
+    background: #f0f0f0;
+  }
+
+  .category-strip--theme-editorial_monochrome .category-item__title {
+    font-weight: 600;
+  }
+
+  @keyframes category-strip-entry {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .category-strip__inner {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      padding-right: 0;
+      padding-left: 1.5rem;
+    }
+
+    .category-row {
+      justify-content: flex-start;
+      padding-right: 1.5rem;
+    }
+
+    .category-item {
+      flex: 0 0 140px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-strip .category-item {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .category-product-image,
+    .category-pill {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+{% javascript %}
+  (() => {
+    const initializeCategoryStrip = (strip) => {
+      if (strip.dataset.initialized === 'true') return;
+      strip.dataset.initialized = 'true';
+
+      if (!('IntersectionObserver' in window)) {
+        strip.classList.add('is-visible');
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          currentObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+
+      observer.observe(strip);
+    };
+
+    document.querySelectorAll('category-strip').forEach(initializeCategoryStrip);
+
+    document.addEventListener('shopify:section:load', (event) => {
+      const strip = event.target.querySelector('category-strip');
+      if (strip) initializeCategoryStrip(strip);
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Category strip",
+  "tag": "section",
+  "class": "section section-category-strip",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Accessible heading",
+      "default": "Shop by category"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "pill_background",
+      "label": "Default pill background",
+      "default": "#f4ebe1"
+    },
+    {
+      "type": "range",
+      "id": "pill_radius",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Pill border radius",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "card_theme",
+      "label": "Card Style Theme",
+      "options": [
+        { "value": "warm_minimalist", "label": "Warm Minimalist" },
+        { "value": "frosted_glassmorphism", "label": "Frosted Glassmorphism" },
+        { "value": "editorial_monochrome", "label": "Editorial Monochrome" },
+        { "value": "soft_pastel_accent", "label": "Soft Pastel Accent" }
+      ],
+      "default": "warm_minimalist"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "entry_animation",
+      "label": "Entry animation",
+      "options": [
+        { "value": "staggered", "label": "Staggered Fade Up" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "staggered"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category link"
+        },
+        {
+          "type": "color",
+          "id": "custom_bg",
+          "label": "Custom pill background",
+          "default": "#f4ebe1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category strip",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Bathroom Accessories" } },
+        { "type": "category", "settings": { "title": "Sofa Covers" } },
+        { "type": "category", "settings": { "title": "Chair & Stools" } },
+        { "type": "category", "settings": { "title": "Wooden Shoe Racks" } },
+        { "type": "category", "settings": { "title": "Side Table" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

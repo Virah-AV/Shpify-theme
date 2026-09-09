@@ -1,0 +1,355 @@
+{% doc %}
+  @prompt
+    a button that should be fixed on right center corner in the rich text section
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-fixed-button-{{ ai_gen_id }} {
+    position: fixed;
+    top: 50%;
+    right: {{ block.settings.distance_from_edge }}px;
+    transform: translateY(-50%);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .ai-fixed-button-link-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ block.settings.button_padding }}px;
+    background-color: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.border_radius }}px;
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    min-width: {{ block.settings.min_width }}px;
+    text-align: center;
+    border: {{ settings.buttons_border_thickness }}px solid rgba({{ block.settings.button_color | color_extract: 'red' }}, {{ block.settings.button_color | color_extract: 'green' }}, {{ block.settings.button_color | color_extract: 'blue' }}, {{ settings.buttons_border_opacity | divided_by: 100.0 }});
+  }
+
+  .ai-fixed-button-link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+    color: {{ block.settings.button_hover_text_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-fixed-button-link-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.button_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-fixed-button-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  {% if block.settings.show_text == false %}
+    .ai-fixed-button-link-{{ ai_gen_id }} {
+      width: {{ block.settings.button_padding | times: 2 | plus: block.settings.icon_size }}px;
+      height: {{ block.settings.button_padding | times: 2 | plus: block.settings.icon_size }}px;
+      border-radius: 50%;
+      min-width: auto;
+    }
+
+    .ai-fixed-button-icon-{{ ai_gen_id }} {
+      margin-right: 0;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-fixed-button-{{ ai_gen_id }} {
+      right: {{ block.settings.distance_from_edge | times: 0.7 }}px;
+    }
+
+    .ai-fixed-button-link-{{ ai_gen_id }} {
+      padding: {{ block.settings.button_padding | times: 0.8 }}px;
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+      min-width: {{ block.settings.min_width | times: 0.8 }}px;
+    }
+
+    .ai-fixed-button-icon-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.9 }}px;
+      height: {{ block.settings.icon_size | times: 0.9 }}px;
+    }
+
+    {% if block.settings.show_text == false %}
+      .ai-fixed-button-link-{{ ai_gen_id }} {
+        width: {{ block.settings.button_padding | times: 1.6 | plus: block.settings.icon_size | times: 0.9 }}px;
+        height: {{ block.settings.button_padding | times: 1.6 | plus: block.settings.icon_size | times: 0.9 }}px;
+      }
+    {% endif %}
+  }
+
+  {% if block.settings.hide_on_mobile %}
+    @media screen and (max-width: 749px) {
+      .ai-fixed-button-{{ ai_gen_id }} {
+        display: none;
+      }
+    }
+  {% endif %}
+{% endstyle %}
+
+<div
+  class="ai-fixed-button-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.button_link != blank %}
+    <a
+      href="{{ block.settings.button_link }}"
+      class="ai-fixed-button-link-{{ ai_gen_id }}"
+      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+      aria-label="{% if block.settings.button_text != blank %}{{ block.settings.button_text }}{% else %}{{ block.settings.aria_label }}{% endif %}"
+    >
+      {% if block.settings.show_icon %}
+        {% case block.settings.icon_type %}
+          {% when 'chat' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          {% when 'phone' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          {% when 'email' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          {% when 'help' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          {% when 'arrow_up' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          {% when 'shopping_cart' %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+            </svg>
+          {% else %}
+            <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        {% endcase %}
+      {% endif %}
+
+      {% if block.settings.show_text and block.settings.button_text != blank %}
+        <span>{{ block.settings.button_text }}</span>
+      {% endif %}
+    </a>
+  {% else %}
+    <div class="ai-fixed-button-link-{{ ai_gen_id }}" style="cursor: default;">
+      {% if block.settings.show_icon %}
+        <svg class="ai-fixed-button-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      {% endif %}
+      {% if block.settings.show_text %}
+        <span>{{ block.settings.button_text | default: 'Add a link' }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Fixed button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Accessibility label",
+      "info": "Used when button text is hidden for screen readers"
+    },
+    {
+      "type": "header",
+      "content": "Icon settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "Icon type",
+      "options": [
+        {
+          "value": "chat",
+          "label": "Chat"
+        },
+        {
+          "value": "phone",
+          "label": "Phone"
+        },
+        {
+          "value": "email",
+          "label": "Email"
+        },
+        {
+          "value": "help",
+          "label": "Help"
+        },
+        {
+          "value": "arrow_up",
+          "label": "Arrow up"
+        },
+        {
+          "value": "shopping_cart",
+          "label": "Shopping cart"
+        },
+        {
+          "value": "info",
+          "label": "Info"
+        }
+      ],
+      "default": "chat"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Display options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text",
+      "label": "Show text",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Position"
+    },
+    {
+      "type": "range",
+      "id": "distance_from_edge",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Distance from right edge",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#797068"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#262626"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Button padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "min_width",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Minimum width",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fixed button"
+    }
+  ]
+}
+{% endschema %}
