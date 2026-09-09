@@ -1,444 +1,483 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "custom_liquid_WCQWxK":  {
-                                                  "type":  "custom-liquid",
-                                                  "disabled":  true,
-                                                  "name":  "t:sections.custom-liquid.presets.name",
-                                                  "settings":  {
-                                                                   "custom_liquid":  "\u003c!-- video-background.liquid --\u003e\n\u003cdiv class=\"bg-video-container\"\u003e\n  \u003cvideo autoplay muted loop playsinline\u003e\n    \u003c!-- Replace \u0027video.mp4\u0027 with your actual uploaded video asset filename --\u003e\n    \u003csource src=\"{{ \u0027https://cdn.shopify.com/videos/c/o/v/57128b7597fb47faac8ac65a36741f4d.mp4\u0027 }}\" type=\"video/mp4\"\u003e\n    Your browser does not support the video tag.\n  \u003c/video\u003e\n  \u003cdiv class=\"bg-heading\"\u003e\n    {{ section.settings.heading_text }}\n  \u003c/div\u003e\n\u003c/div\u003e\n\n\u003cstyle\u003e\n  .bg-video-container {\n    position: relative;\n    width: 100vw;\n    height: 100vh;\n    overflow: hidden;\n  }\n  .bg-video-container video {\n    position: absolute;\n    top: 0; left: 0;\n    min-width: 100vw;\n    min-height: 100vh;\n    width: 100vw;\n    height: 100vh;\n    object-fit: cover;\n    z-index: 0;\n    opacity: 50;\n  }\n  .bg-heading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 1;\n    color: #202020;\n    font-size: 2.8em;\n    font-weight: bold;\n    text-align: center;\n    padding: 0 24px;\n  }\n\u003c/style\u003e",
-                                                                   "color_scheme":  "",
-                                                                   "padding_top":  0,
-                                                                   "padding_bottom":  0
-                                                               }
-                                              },
-                     "image_banner":  {
-                                          "type":  "category-strip",
-                                          "disabled":  true,
-                                          "settings":  {
-                                                           "heading":  "Shop by category",
-                                                           "color_scheme":  "scheme-1"
-                                                       }
-                                      },
-                     "rich_text":  {
-                                       "type":  "rich-text",
-                                       "blocks":  {
-                                                      "text":  {
-                                                                   "type":  "text",
-                                                                   "settings":  {
-                                                                                    "text":  "\u003ch3\u003eOutstanding service | Exclusive pricing | Industry expertise\u003c/h3\u003e"
-                                                                                }
-                                                               }
-                                                  },
-                                       "block_order":  [
-                                                           "text"
-                                                       ],
-                                       "settings":  {
-                                                        "desktop_content_position":  "center",
-                                                        "content_alignment":  "center",
-                                                        "color_scheme":  "scheme-3",
-                                                        "full_width":  true,
-                                                        "padding_top":  8,
-                                                        "padding_bottom":  8
-                                                    }
-                                   },
-                     "featured_collection_cPXEj6":  {
-                                                        "type":  "featured-collection",
-                                                        "name":  "t:sections.featured-collection.presets.name",
-                                                        "settings":  {
-                                                                         "collection":  "foldable-tables",
-                                                                         "products_to_show":  6,
-                                                                         "title":  "Folding Tables",
-                                                                         "heading_size":  "h1",
-                                                                         "description":  "",
-                                                                         "show_description":  false,
-                                                                         "description_style":  "body",
-                                                                         "columns_desktop":  3,
-                                                                         "enable_desktop_slider":  false,
-                                                                         "full_width":  false,
-                                                                         "show_view_all":  true,
-                                                                         "view_all_style":  "solid",
-                                                                         "color_scheme":  "",
-                                                                         "image_ratio":  "square",
-                                                                         "image_shape":  "default",
-                                                                         "show_secondary_image":  true,
-                                                                         "show_vendor":  true,
-                                                                         "show_rating":  true,
-                                                                         "quick_add":  "standard",
-                                                                         "columns_mobile":  "2",
-                                                                         "swipe_on_mobile":  true,
-                                                                         "padding_top":  36,
-                                                                         "padding_bottom":  36
-                                                                     }
-                                                    },
-                     "collection_list":  {
-                                             "type":  "collection-list",
-                                             "blocks":  {
-                                                            "featured_collection1":  {
-                                                                                         "type":  "featured_collection",
-                                                                                         "settings":  {
-                                                                                                          "collection":  "foldable-tables"
-                                                                                                      }
-                                                                                     },
-                                                            "featured_collection2":  {
-                                                                                         "type":  "featured_collection",
-                                                                                         "settings":  {
-                                                                                                          "collection":  "side-tables"
-                                                                                                      }
-                                                                                     },
-                                                            "featured_collection3":  {
-                                                                                         "type":  "featured_collection",
-                                                                                         "settings":  {
-                                                                                                          "collection":  "coffee-tables"
-                                                                                                      }
-                                                                                     },
-                                                            "featured_collection4":  {
-                                                                                         "type":  "featured_collection",
-                                                                                         "settings":  {
-                                                                                                          "collection":  "utility-cart"
-                                                                                                      }
-                                                                                     }
-                                                        },
-                                             "block_order":  [
-                                                                 "featured_collection1",
-                                                                 "featured_collection2",
-                                                                 "featured_collection3",
-                                                                 "featured_collection4"
-                                                             ],
-                                             "settings":  {
-                                                              "title":  "Shop our categories",
-                                                              "heading_size":  "h2",
-                                                              "image_ratio":  "square",
-                                                              "columns_desktop":  4,
-                                                              "color_scheme":  "scheme-4",
-                                                              "show_view_all":  false,
-                                                              "columns_mobile":  "2",
-                                                              "swipe_on_mobile":  false,
-                                                              "padding_top":  12,
-                                                              "padding_bottom":  20
-                                                          }
-                                         },
-                     "featured_collection1":  {
-                                                  "type":  "featured-collection",
-                                                  "settings":  {
-                                                                   "collection":  "featured-products",
-                                                                   "products_to_show":  10,
-                                                                   "title":  "Featured Products",
-                                                                   "heading_size":  "h1",
-                                                                   "description":  "",
-                                                                   "show_description":  false,
-                                                                   "description_style":  "body",
-                                                                   "columns_desktop":  3,
-                                                                   "enable_desktop_slider":  false,
-                                                                   "full_width":  false,
-                                                                   "show_view_all":  true,
-                                                                   "view_all_style":  "solid",
-                                                                   "color_scheme":  "",
-                                                                   "image_ratio":  "square",
-                                                                   "image_shape":  "default",
-                                                                   "show_secondary_image":  false,
-                                                                   "show_vendor":  true,
-                                                                   "show_rating":  true,
-                                                                   "quick_add":  "standard",
-                                                                   "columns_mobile":  "2",
-                                                                   "swipe_on_mobile":  true,
-                                                                   "padding_top":  36,
-                                                                   "padding_bottom":  52
-                                                               }
-                                              },
-                     "featured_collection_HyJ38K":  {
-                                                        "type":  "featured-collection",
-                                                        "name":  "t:sections.featured-collection.presets.name",
-                                                        "settings":  {
-                                                                         "collection":  "side-tables",
-                                                                         "products_to_show":  4,
-                                                                         "title":  "Side Table collections",
-                                                                         "heading_size":  "h1",
-                                                                         "description":  "",
-                                                                         "show_description":  false,
-                                                                         "description_style":  "body",
-                                                                         "columns_desktop":  4,
-                                                                         "enable_desktop_slider":  false,
-                                                                         "full_width":  false,
-                                                                         "show_view_all":  false,
-                                                                         "view_all_style":  "solid",
-                                                                         "color_scheme":  "",
-                                                                         "image_ratio":  "portrait",
-                                                                         "image_shape":  "default",
-                                                                         "show_secondary_image":  true,
-                                                                         "show_vendor":  true,
-                                                                         "show_rating":  true,
-                                                                         "quick_add":  "standard",
-                                                                         "columns_mobile":  "2",
-                                                                         "swipe_on_mobile":  true,
-                                                                         "padding_top":  36,
-                                                                         "padding_bottom":  36
-                                                                     }
-                                                    },
-                     "multicolumn2":  {
-                                          "type":  "multicolumn",
-                                          "blocks":  {
-                                                         "column11":  {
-                                                                          "type":  "column",
-                                                                          "settings":  {
-                                                                                           "title":  "Sell With Us",
-                                                                                           "text":  "\u003cp\u003eWe invite you to partner with us and feature your products on our growing online marketplace. Our platform provides a dynamic and highly visible stage to showcase your items to a broad and engaged\u003cbr/\u003e\u003cbr/\u003e\u003c/p\u003e",
-                                                                                           "link_label":  "Explore",
-                                                                                           "link":  "shopify://pages/collaboration"
-                                                                                       }
-                                                                      },
-                                                         "column12":  {
-                                                                          "type":  "column",
-                                                                          "settings":  {
-                                                                                           "title":  "Bulk Orders",
-                                                                                           "text":  "\u003cp\u003eInterested in placing a bulk order? We proudly support businesses and organizations by offering special pricing on bulk orders. We look forward to working with you\u003cbr/\u003e\u003cbr/\u003e\u003c/p\u003e",
-                                                                                           "link_label":  "Explore",
-                                                                                           "link":  "shopify://pages/collaboration"
-                                                                                       }
-                                                                      },
-                                                         "column13":  {
-                                                                          "type":  "column",
-                                                                          "settings":  {
-                                                                                           "title":  "Product Procurement",
-                                                                                           "text":  "\u003cp\u003eSimply provide us with the product details, Our expert procurement team specializes in sourcing high-quality goods tailored to your unique business requirements\u003cbr/\u003e\u003cbr/\u003e\u003c/p\u003e",
-                                                                                           "link_label":  "Explore",
-                                                                                           "link":  "shopify://pages/collaboration"
-                                                                                       }
-                                                                      }
-                                                     },
-                                          "block_order":  [
-                                                              "column11",
-                                                              "column12",
-                                                              "column13"
-                                                          ],
-                                          "settings":  {
-                                                           "title":  "Services We Provide",
-                                                           "heading_size":  "h2",
-                                                           "image_width":  "full",
-                                                           "image_ratio":  "adapt",
-                                                           "button_label":  "",
-                                                           "button_link":  "",
-                                                           "columns_desktop":  3,
-                                                           "column_alignment":  "left",
-                                                           "background_style":  "primary",
-                                                           "color_scheme":  "scheme-3",
-                                                           "columns_mobile":  "1",
-                                                           "swipe_on_mobile":  false,
-                                                           "padding_top":  44,
-                                                           "padding_bottom":  48
-                                                       }
-                                      },
-                     "featured_collection_njNGEw":  {
-                                                        "type":  "featured-collection",
-                                                        "name":  "t:sections.featured-collection.presets.name",
-                                                        "settings":  {
-                                                                         "collection":  "utility-cart",
-                                                                         "products_to_show":  3,
-                                                                         "title":  "Utility Carts/Moving Side Table",
-                                                                         "heading_size":  "h1",
-                                                                         "description":  "",
-                                                                         "show_description":  false,
-                                                                         "description_style":  "body",
-                                                                         "columns_desktop":  3,
-                                                                         "enable_desktop_slider":  false,
-                                                                         "full_width":  false,
-                                                                         "show_view_all":  false,
-                                                                         "view_all_style":  "solid",
-                                                                         "color_scheme":  "",
-                                                                         "image_ratio":  "square",
-                                                                         "image_shape":  "blob",
-                                                                         "show_secondary_image":  true,
-                                                                         "show_vendor":  true,
-                                                                         "show_rating":  true,
-                                                                         "quick_add":  "standard",
-                                                                         "columns_mobile":  "2",
-                                                                         "swipe_on_mobile":  false,
-                                                                         "padding_top":  36,
-                                                                         "padding_bottom":  36
-                                                                     }
-                                                    },
-                     "slideshow_VDEGqb":  {
-                                              "type":  "slideshow",
-                                              "blocks":  {
-                                                             "slide_Gqgbk6":  {
-                                                                                  "type":  "slide",
-                                                                                  "settings":  {
-                                                                                                   "image":  "shopify://shop_images/Sofa.png",
-                                                                                                   "image_overlay_opacity":  0,
-                                                                                                   "heading":  "",
-                                                                                                   "heading_size":  "h1",
-                                                                                                   "subheading":  "",
-                                                                                                   "button_label":  "",
-                                                                                                   "link":  "",
-                                                                                                   "button_style_secondary":  false,
-                                                                                                   "show_text_box":  false,
-                                                                                                   "box_align":  "middle-center",
-                                                                                                   "text_alignment":  "center",
-                                                                                                   "text_alignment_mobile":  "center",
-                                                                                                   "color_scheme":  ""
-                                                                                               }
-                                                                              },
-                                                             "slide_ryYpz4":  {
-                                                                                  "type":  "slide",
-                                                                                  "settings":  {
-                                                                                                   "image":  "shopify://shop_images/bed1.png",
-                                                                                                   "image_overlay_opacity":  0,
-                                                                                                   "heading":  "",
-                                                                                                   "heading_size":  "h1",
-                                                                                                   "subheading":  "",
-                                                                                                   "button_label":  "",
-                                                                                                   "link":  "",
-                                                                                                   "button_style_secondary":  false,
-                                                                                                   "show_text_box":  false,
-                                                                                                   "box_align":  "middle-center",
-                                                                                                   "text_alignment":  "center",
-                                                                                                   "text_alignment_mobile":  "center",
-                                                                                                   "color_scheme":  ""
-                                                                                               }
-                                                                              },
-                                                             "slide_ya97kM":  {
-                                                                                  "type":  "slide",
-                                                                                  "settings":  {
-                                                                                                   "image":  "shopify://shop_images/rack_3537201b-1cb1-429b-b0cd-789e7e8ad02b.png",
-                                                                                                   "image_overlay_opacity":  0,
-                                                                                                   "heading":  "",
-                                                                                                   "heading_size":  "h1",
-                                                                                                   "subheading":  "",
-                                                                                                   "button_label":  "",
-                                                                                                   "link":  "",
-                                                                                                   "button_style_secondary":  false,
-                                                                                                   "show_text_box":  false,
-                                                                                                   "box_align":  "middle-center",
-                                                                                                   "text_alignment":  "center",
-                                                                                                   "text_alignment_mobile":  "center",
-                                                                                                   "color_scheme":  ""
-                                                                                               }
-                                                                              }
-                                                         },
-                                              "block_order":  [
-                                                                  "slide_Gqgbk6",
-                                                                  "slide_ryYpz4",
-                                                                  "slide_ya97kM"
-                                                              ],
-                                              "disabled":  true,
-                                              "name":  "t:sections.slideshow.presets.name",
-                                              "settings":  {
-                                                               "layout":  "full_bleed",
-                                                               "slide_height":  "large",
-                                                               "slider_visual":  "dots",
-                                                               "auto_rotate":  true,
-                                                               "change_slides_speed":  3,
-                                                               "image_behavior":  "none",
-                                                               "show_text_below":  false,
-                                                               "accessibility_info":  "Slideshow about our brand"
-                                                           }
-                                          },
-                     "custom_liquid_F8MGyd":  {
-                                                  "type":  "custom-liquid",
-                                                  "name":  "Fixed Button",
-                                                  "settings":  {
-                                                                   "custom_liquid":  "\u003c!-- Permanent Floating Button --\u003e\n\u003c!-- Permanent Floating Buttons --\u003e\n\u003ca href=\"/pages/collab\" class=\"fixed-button\" id=\"sell-with-us-button\" title=\"Sell With Us\"\u003e\n  Sell With Us\n\u003c/a\u003e\n\n\u003ca href=\"/pages/collab\" class=\"fixed-button\" id=\"browse-all-button\" title=\"Bulk\"\u003e\n  Bulk Orders\n\u003c/a\u003e\n\n\u003cstyle\u003e\n  /* Shared styles for all fixed buttons */\n.fixed-button {\n  position: fixed;\n  right: 25px;\n  z-index: 1000;\n  padding: 10px 10px;\n  background-color: #797068;\n  color: #ffffff;\n  text-decoration: none;\n  border-radius: 8px;\n  font-family: sans-serif;\n  font-size: 12px;\n  font-weight: brighter;\n  box-shadow: 0 4px 10px rgba(0,0,0,0.25);\n  /* --- New additions for fade effect --- */\n  opacity: 0;\n  pointer-events: none;\n  transition: opacity 0.4s ease, transform 0.3s ease;\n}\n\n/* Individual position for the first button */\n#sell-with-us-button {\n  bottom: 220px;\n}\n\n/* Individual position for the second button */\n#browse-all-button {\n  bottom: 150px;\n}\n\n/* --- New class to show the buttons --- */\n.fixed-button.show {\n  opacity: 1;\n  pointer-events: auto;\n}\n\n/* Shared hover effect */\n.fixed-button:hover {\n  background-color: #333333;\n  transform: translateY(-3px);\n}\n\n\u003c/style\u003e\n\n\u003cscript\u003e\n  document.addEventListener(\u0027DOMContentLoaded\u0027, function() {\n    // Select both buttons\n    const scrollButtons = document.querySelectorAll(\u0027.fixed-button\u0027);\n\n    // Set the scroll distance (in pixels) to trigger the buttons\n    // Adjust this value to match the height of your banner\n    const scrollTrigger = 400;\n\n    // Function to check scroll position and toggle button visibility\n    function toggleButtons() {\n      if (window.scrollY \u003e scrollTrigger) {\n        scrollButtons.forEach(button =\u003e button.classList.add(\u0027show\u0027));\n      } else {\n        scrollButtons.forEach(button =\u003e button.classList.remove(\u0027show\u0027));\n      }\n    }\n\n    // Listen for scroll events\n    window.addEventListener(\u0027scroll\u0027, toggleButtons);\n  });\n\u003c/script\u003e",
-                                                                   "color_scheme":  "",
-                                                                   "padding_top":  12,
-                                                                   "padding_bottom":  12
-                                                               }
-                                              },
-                     "badge_mQtQYd":  {
-                                          "type":  "badge",
-                                          "blocks":  {
-                                                         "trustbadge_gm_WdjhtH":  {
-                                                                                      "type":  "trustbadge-gm",
-                                                                                      "settings":  {
-                                                                                                       "svg_icon":  "\u003cpath d=\"M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2\"\u003e\u003c/path\u003e",
-                                                                                                       "title":  "Free Shipping",
-                                                                                                       "paragraph":  "Enjoy Free shipping on orders above 500. We deliver your favorite products right to your doorstep at no extra cost."
-                                                                                                   }
-                                                                                  },
-                                                         "trustbadge_gm_ipx7LP":  {
-                                                                                      "type":  "trustbadge-gm",
-                                                                                      "settings":  {
-                                                                                                       "svg_icon":  "\u003cpath fill-rule=\"evenodd\" d=\"M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411\"\u003e\u003c/path\u003e",
-                                                                                                       "title":  "Track Order",
-                                                                                                       "paragraph":  "Stay updated from checkout to delivery. Easily track your order\u0027s journey and know exactly when it will arrive."
-                                                                                                   }
-                                                                                  },
-                                                         "trustbadge_gm_hrrrMx":  {
-                                                                                      "type":  "trustbadge-gm",
-                                                                                      "settings":  {
-                                                                                                       "svg_icon":  "\u003cpath d=\"M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z\"\u003e\u003c/path\u003e\n  \u003cpath d=\"M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z\"\u003e\u003c/path\u003e",
-                                                                                                       "title":  "Secure Payments",
-                                                                                                       "paragraph":  "Shop with complete peace of mind. Our checkout is protected with 100% secure, encrypted payment processing."
-                                                                                                   }
-                                                                                  },
-                                                         "trustbadge_gm_h487en":  {
-                                                                                      "type":  "trustbadge-gm",
-                                                                                      "settings":  {
-                                                                                                       "svg_icon":  "\u003cpath d=\"M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5\"\u003e\u003c/path\u003e",
-                                                                                                       "title":  "24/7 Online Support",
-                                                                                                       "paragraph":  "We\u0027re here to help whenever you need it. Our dedicated online support team is available to answer your questions."
-                                                                                                   }
-                                                                                  }
-                                                     },
-                                          "block_order":  [
-                                                              "trustbadge_gm_WdjhtH",
-                                                              "trustbadge_gm_ipx7LP",
-                                                              "trustbadge_gm_hrrrMx",
-                                                              "trustbadge_gm_h487en"
-                                                          ],
-                                          "name":  "GM Trustbadge Grid",
-                                          "settings":  {
-                                                           "section_padding_block":  3,
-                                                           "section_padding_inline":  4,
-                                                           "section_bg_color":  "#f4f4f4",
-                                                           "content_bg_color":  "#797068",
-                                                           "svg_color":  "#ffffff",
-                                                           "title_color":  "#ffffff",
-                                                           "text_color":  "#ffffff",
-                                                           "svg_size":  4.5
-                                                       }
-                                      },
-                     "featured_collection_9wRL7W":  {
-                                                        "type":  "featured-collection",
-                                                        "name":  "t:sections.featured-collection.presets.name",
-                                                        "settings":  {
-                                                                         "collection":  "coffee-tables",
-                                                                         "products_to_show":  5,
-                                                                         "title":  "Coffee Tables",
-                                                                         "heading_size":  "h1",
-                                                                         "description":  "",
-                                                                         "show_description":  false,
-                                                                         "description_style":  "body",
-                                                                         "columns_desktop":  5,
-                                                                         "enable_desktop_slider":  false,
-                                                                         "full_width":  true,
-                                                                         "show_view_all":  false,
-                                                                         "view_all_style":  "solid",
-                                                                         "color_scheme":  "",
-                                                                         "image_ratio":  "square",
-                                                                         "image_shape":  "round",
-                                                                         "show_secondary_image":  true,
-                                                                         "show_vendor":  true,
-                                                                         "show_rating":  true,
-                                                                         "quick_add":  "standard",
-                                                                         "columns_mobile":  "2",
-                                                                         "swipe_on_mobile":  true,
-                                                                         "padding_top":  16,
-                                                                         "padding_bottom":  16
-                                                                     }
-                                                    }
-                 },
-    "order":  [
-                  "custom_liquid_WCQWxK",
-                  "image_banner",
-                  "rich_text",
-                  "featured_collection_cPXEj6",
-                  "collection_list",
-                  "featured_collection1",
-                  "featured_collection_HyJ38K",
-                  "multicolumn2",
-                  "featured_collection_njNGEw",
-                  "slideshow_VDEGqb",
-                  "custom_liquid_F8MGyd",
-                  "badge_mQtQYd",
-                  "featured_collection_9wRL7W"
-              ]
+  "sections": {
+    "custom_liquid_WCQWxK": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<!-- video-background.liquid -->\n<div class=\"bg-video-container\">\n  <video autoplay muted loop playsinline>\n    <!-- Replace 'video.mp4' with your actual uploaded video asset filename -->\n    <source src=\"{{ 'https://cdn.shopify.com/videos/c/o/v/57128b7597fb47faac8ac65a36741f4d.mp4' }}\" type=\"video/mp4\">\n    Your browser does not support the video tag.\n  </video>\n  <div class=\"bg-heading\">\n    {{ section.settings.heading_text }}\n  </div>\n</div>\n\n<style>\n  .bg-video-container {\n    position: relative;\n    width: 100vw;\n    height: 100vh;\n    overflow: hidden;\n  }\n  .bg-video-container video {\n    position: absolute;\n    top: 0; left: 0;\n    min-width: 100vw;\n    min-height: 100vh;\n    width: 100vw;\n    height: 100vh;\n    object-fit: cover;\n    z-index: 0;\n    opacity: 50;\n  }\n  .bg-heading {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    z-index: 1;\n    color: #202020;\n    font-size: 2.8em;\n    font-weight: bold;\n    text-align: center;\n    padding: 0 24px;\n  }\n</style>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_banner": {
+      "type": "category-strip",
+      "blocks": {
+        "category_UXGkYX": {
+          "type": "category",
+          "settings": {
+            "title": "Category",
+            "link": "",
+            "custom_bg": "#f4ebe1"
+          }
+        },
+        "category_Hby6bG": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/8_b03d6363-f538-4f29-9604-c6c890588439.jpg",
+            "title": "Coffee Tables",
+            "link": "shopify://collections/coffee-tables",
+            "custom_bg": "#f4ebe1"
+          }
+        }
+      },
+      "block_order": [
+        "category_UXGkYX",
+        "category_Hby6bG"
+      ],
+      "settings": {
+        "heading": "Shop by category",
+        "background_color": "#ffffff",
+        "pill_background": "#f4ebe1",
+        "pill_radius": 20,
+        "card_theme": "editorial_monochrome",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "entry_animation": "staggered"
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>Outstanding service | Exclusive pricing | Industry expertise</h3>"
+          }
+        }
+      },
+      "block_order": [
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "featured_collection_cPXEj6": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "foldable-tables",
+        "products_to_show": 6,
+        "title": "Folding Tables",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "foldable-tables"
+          }
+        },
+        "featured_collection2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "side-tables"
+          }
+        },
+        "featured_collection3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "coffee-tables"
+          }
+        },
+        "featured_collection4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "utility-cart"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection1",
+        "featured_collection2",
+        "featured_collection3",
+        "featured_collection4"
+      ],
+      "settings": {
+        "title": "Shop our categories",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "color_scheme": "scheme-4",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 12,
+        "padding_bottom": 20
+      }
+    },
+    "featured_collection1": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "featured-products",
+        "products_to_show": 10,
+        "title": "Featured Products",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 52
+      }
+    },
+    "featured_collection_HyJ38K": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "side-tables",
+        "products_to_show": 4,
+        "title": "Side Table collections",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn2": {
+      "type": "multicolumn",
+      "blocks": {
+        "column11": {
+          "type": "column",
+          "settings": {
+            "title": "Sell With Us",
+            "text": "<p>We invite you to partner with us and feature your products on our growing online marketplace. Our platform provides a dynamic and highly visible stage to showcase your items to a broad and engaged<br/><br/></p>",
+            "link_label": "Explore",
+            "link": "shopify://pages/collaboration"
+          }
+        },
+        "column12": {
+          "type": "column",
+          "settings": {
+            "title": "Bulk Orders",
+            "text": "<p>Interested in placing a bulk order? We proudly support businesses and organizations by offering special pricing on bulk orders. We look forward to working with you<br/><br/></p>",
+            "link_label": "Explore",
+            "link": "shopify://pages/collaboration"
+          }
+        },
+        "column13": {
+          "type": "column",
+          "settings": {
+            "title": "Product Procurement",
+            "text": "<p>Simply provide us with the product details, Our expert procurement team specializes in sourcing high-quality goods tailored to your unique business requirements<br/><br/></p>",
+            "link_label": "Explore",
+            "link": "shopify://pages/collaboration"
+          }
+        }
+      },
+      "block_order": [
+        "column11",
+        "column12",
+        "column13"
+      ],
+      "settings": {
+        "title": "Services We Provide",
+        "heading_size": "h2",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "scheme-3",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 48
+      }
+    },
+    "featured_collection_njNGEw": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "utility-cart",
+        "products_to_show": 3,
+        "title": "Utility Carts/Moving Side Table",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "blob",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "slideshow_VDEGqb": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_Gqgbk6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Sofa.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_ryYpz4": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/bed1.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_ya97kM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/rack_3537201b-1cb1-429b-b0cd-789e7e8ad02b.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_Gqgbk6",
+        "slide_ryYpz4",
+        "slide_ya97kM"
+      ],
+      "disabled": true,
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "large",
+        "slider_visual": "dots",
+        "auto_rotate": true,
+        "change_slides_speed": 3,
+        "image_behavior": "none",
+        "show_text_below": false,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "custom_liquid_F8MGyd": {
+      "type": "custom-liquid",
+      "name": "Fixed Button",
+      "settings": {
+        "custom_liquid": "<!-- Permanent Floating Button -->\n<!-- Permanent Floating Buttons -->\n<a href=\"/pages/collab\" class=\"fixed-button\" id=\"sell-with-us-button\" title=\"Sell With Us\">\n  Sell With Us\n</a>\n\n<a href=\"/pages/collab\" class=\"fixed-button\" id=\"browse-all-button\" title=\"Bulk\">\n  Bulk Orders\n</a>\n\n<style>\n  /* Shared styles for all fixed buttons */\n.fixed-button {\n  position: fixed;\n  right: 25px;\n  z-index: 1000;\n  padding: 10px 10px;\n  background-color: #797068;\n  color: #ffffff;\n  text-decoration: none;\n  border-radius: 8px;\n  font-family: sans-serif;\n  font-size: 12px;\n  font-weight: brighter;\n  box-shadow: 0 4px 10px rgba(0,0,0,0.25);\n  /* --- New additions for fade effect --- */\n  opacity: 0;\n  pointer-events: none;\n  transition: opacity 0.4s ease, transform 0.3s ease;\n}\n\n/* Individual position for the first button */\n#sell-with-us-button {\n  bottom: 220px;\n}\n\n/* Individual position for the second button */\n#browse-all-button {\n  bottom: 150px;\n}\n\n/* --- New class to show the buttons --- */\n.fixed-button.show {\n  opacity: 1;\n  pointer-events: auto;\n}\n\n/* Shared hover effect */\n.fixed-button:hover {\n  background-color: #333333;\n  transform: translateY(-3px);\n}\n\n</style>\n\n<script>\n  document.addEventListener('DOMContentLoaded', function() {\n    // Select both buttons\n    const scrollButtons = document.querySelectorAll('.fixed-button');\n\n    // Set the scroll distance (in pixels) to trigger the buttons\n    // Adjust this value to match the height of your banner\n    const scrollTrigger = 400;\n\n    // Function to check scroll position and toggle button visibility\n    function toggleButtons() {\n      if (window.scrollY > scrollTrigger) {\n        scrollButtons.forEach(button => button.classList.add('show'));\n      } else {\n        scrollButtons.forEach(button => button.classList.remove('show'));\n      }\n    }\n\n    // Listen for scroll events\n    window.addEventListener('scroll', toggleButtons);\n  });\n</script>",
+        "color_scheme": "",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "badge_mQtQYd": {
+      "type": "badge",
+      "blocks": {
+        "trustbadge_gm_WdjhtH": {
+          "type": "trustbadge-gm",
+          "settings": {
+            "svg_icon": "<path d=\"M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2\"></path>",
+            "title": "Free Shipping",
+            "paragraph": "Enjoy Free shipping on orders above 500. We deliver your favorite products right to your doorstep at no extra cost."
+          }
+        },
+        "trustbadge_gm_ipx7LP": {
+          "type": "trustbadge-gm",
+          "settings": {
+            "svg_icon": "<path fill-rule=\"evenodd\" d=\"M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411\"></path>",
+            "title": "Track Order",
+            "paragraph": "Stay updated from checkout to delivery. Easily track your order's journey and know exactly when it will arrive."
+          }
+        },
+        "trustbadge_gm_hrrrMx": {
+          "type": "trustbadge-gm",
+          "settings": {
+            "svg_icon": "<path d=\"M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z\"></path>\n  <path d=\"M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z\"></path>",
+            "title": "Secure Payments",
+            "paragraph": "Shop with complete peace of mind. Our checkout is protected with 100% secure, encrypted payment processing."
+          }
+        },
+        "trustbadge_gm_h487en": {
+          "type": "trustbadge-gm",
+          "settings": {
+            "svg_icon": "<path d=\"M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5\"></path>",
+            "title": "24/7 Online Support",
+            "paragraph": "We're here to help whenever you need it. Our dedicated online support team is available to answer your questions."
+          }
+        }
+      },
+      "block_order": [
+        "trustbadge_gm_WdjhtH",
+        "trustbadge_gm_ipx7LP",
+        "trustbadge_gm_hrrrMx",
+        "trustbadge_gm_h487en"
+      ],
+      "name": "GM Trustbadge Grid",
+      "settings": {
+        "section_padding_block": 3,
+        "section_padding_inline": 4,
+        "section_bg_color": "#f4f4f4",
+        "content_bg_color": "#797068",
+        "svg_color": "#ffffff",
+        "title_color": "#ffffff",
+        "text_color": "#ffffff",
+        "svg_size": 4.5
+      }
+    },
+    "featured_collection_9wRL7W": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "coffee-tables",
+        "products_to_show": 5,
+        "title": "Coffee Tables",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 5,
+        "enable_desktop_slider": false,
+        "full_width": true,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "round",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_WCQWxK",
+    "image_banner",
+    "rich_text",
+    "featured_collection_cPXEj6",
+    "collection_list",
+    "featured_collection1",
+    "featured_collection_HyJ38K",
+    "multicolumn2",
+    "featured_collection_njNGEw",
+    "slideshow_VDEGqb",
+    "custom_liquid_F8MGyd",
+    "badge_mQtQYd",
+    "featured_collection_9wRL7W"
+  ]
 }
