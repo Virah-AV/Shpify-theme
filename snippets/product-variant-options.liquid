@@ -63,7 +63,6 @@
       <span class="visually-hidden">{{ value | escape }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-<<<<<<< HEAD
     {%- assign escaped_value = value | escape -%}
     {%
       render 'swatch-input',
@@ -78,9 +77,6 @@
       help_text: help_text,
       additional_props: input_dataset
     %}
-=======
-    {% render 'swatch-input', id: input_id, name: input_name, value: value, swatch: value.swatch, product_form_id: product_form_id, checked: value.selected, visually_disabled: option_disabled, shape: block.settings.swatch_shape, help_text: help_text, additional_props: input_dataset %}
->>>>>>> 8f7a8166b1db210776b097e9123ffc3f084b4222
   {%- elsif picker_type == 'button' -%}
     <input
       type="radio"
