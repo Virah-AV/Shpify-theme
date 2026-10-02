@@ -311,10 +311,6 @@
 
     {% sections 'header-group' %}
 
-    {%- if request.page_type == 'index' -%}
-      {% section 'category-strip' %}
-    {%- endif -%}
-
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>

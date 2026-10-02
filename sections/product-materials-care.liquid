@@ -1,0 +1,288 @@
+{% comment %}
+  Materials & care — interactive tabbed panel with sage accent.
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="pdp-care" id="PdpCare-{{ sid }}" data-pdp-care>
+    <div class="pdp-care__inner page-width">
+      <div class="pdp-care__intro">
+        <span class="pdp-care__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <path d="M12 3c4 2 7 5 7 9.5A7 7 0 1 1 5 12.5C5 8 8 5 12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 8v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <h2 class="pdp-care__heading">{{ section.settings.heading }}</h2>
+        <p class="pdp-care__subheading">{{ section.settings.subheading }}</p>
+      </div>
+
+      <div class="pdp-care__panel">
+        {%- if section.blocks.size > 1 -%}
+          <div class="pdp-care__tabs" role="tablist" data-pdp-care-tabs>
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="pdp-care__tab{% if forloop.first %} is-active{% endif %}"
+                role="tab"
+                data-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.heading }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          <div
+            class="pdp-care__content rte{% if forloop.first %} is-active{% endif %}"
+            data-pdp-care-content
+            data-index="{{ forloop.index0 }}"
+            {% if section.blocks.size == 1 %}{{ block.shopify_attributes }}{% endif %}
+          >
+            {{ block.settings.content }}
+            {{ block.settings.page.content }}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- style -%}
+    #PdpCare-{{ sid }} {
+      background: #F3F1EA;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__inner {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(107, 142, 111, 0.14);
+      color: #6B8E6F;
+      margin-bottom: 18px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1F1D1A;
+      margin: 0 0 14px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__subheading {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #76726B;
+      margin: 0;
+      max-width: 320px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__panel {
+      background: #FFFFFF;
+      border-radius: 18px;
+      padding: 8px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px;
+      border-bottom: 1px solid rgba(31, 29, 26, 0.08);
+      margin-bottom: 8px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__tab {
+      appearance: none;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #76726B;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__tab.is-active {
+      background: #6B8E6F;
+      color: #ffffff;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content {
+      display: none;
+      padding: 24px 28px 28px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #4A4640;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content.is-active {
+      display: block;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F1D1A;
+      margin: 0 0 8px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content ul {
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 8px;
+    }
+
+    #PdpCare-{{ sid }} .pdp-care__content li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #6B8E6F;
+      font-weight: 700;
+    }
+
+    @media screen and (max-width: 860px) {
+      #PdpCare-{{ sid }} .pdp-care__inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media screen and (max-width: 599px) {
+      #PdpCare-{{ sid }} .pdp-care__heading {
+        font-size: 22px;
+      }
+
+      #PdpCare-{{ sid }} .pdp-care__content {
+        padding: 20px;
+      }
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var root = document.getElementById('PdpCare-{{ sid }}');
+      if (!root || root.dataset.pdpInitialized) return;
+      root.dataset.pdpInitialized = 'true';
+
+      var tabs = root.querySelectorAll('[data-pdp-care-tabs] .pdp-care__tab');
+      var panels = root.querySelectorAll('[data-pdp-care-content]');
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var index = tab.dataset.index;
+          tabs.forEach(function (t) {
+            t.classList.toggle('is-active', t === tab);
+          });
+          panels.forEach(function (panel) {
+            panel.classList.toggle('is-active', panel.dataset.index === index);
+          });
+        });
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Materials & care",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Materials & Care"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "How to keep your piece looking its best for years to come."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Materials"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Describe materials and care instructions.</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Linked page (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Materials & care",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials & Care",
+            "content": "<p>Crafted from solid wood and finished by hand. Dust regularly with a soft, dry cloth and wipe spills immediately. Avoid direct sunlight and heat sources to preserve the natural tone of the finish. Use coasters and felt pads to protect surfaces from scratches and moisture rings.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

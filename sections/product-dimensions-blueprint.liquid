@@ -1,0 +1,486 @@
+{% comment %}
+  Architectural spatial planning section — eliminates sizing hesitation with
+  a dimensioned schematic visual and a clean specifications table.
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+  assign featured_image = product.featured_image | default: product.images.first
+-%}
+
+<section class="pdp-blueprint" id="PdpBlueprint-{{ sid }}">
+  <div class="pdp-blueprint__inner page-width">
+    <h2 class="pdp-blueprint__heading">{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}
+      <p class="pdp-blueprint__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="pdp-blueprint__grid">
+      <div class="pdp-blueprint__visual">
+        <div class="pdp-schematic">
+          {%- if featured_image -%}
+            <img
+              src="{{ featured_image | image_url: width: 1000 }}"
+              alt="{{ featured_image.alt | default: product.title | escape }}"
+              loading="lazy"
+              width="{{ featured_image.width }}"
+              height="{{ featured_image.height }}"
+              class="pdp-schematic__image"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'pdp-schematic__image' }}
+          {%- endif -%}
+
+          <div class="pdp-schematic__height" aria-hidden="true">
+            <span class="pdp-schematic__line"></span>
+            <span class="pdp-schematic__label pdp-schematic__label--height">
+              {{ section.settings.height_label }}
+            </span>
+          </div>
+
+          <div class="pdp-schematic__width" aria-hidden="true">
+            <span class="pdp-schematic__line"></span>
+            <span class="pdp-schematic__label pdp-schematic__label--width">
+              {{ section.settings.width_label }} × {{ section.settings.depth_label }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdp-blueprint__specs">
+        <table class="pdp-specs-table">
+          <tbody>
+            <tr>
+              <th scope="row">Overall Dimensions</th>
+              <td>{{ section.settings.overall_dimensions }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Clearance Below Tabletop</th>
+              <td>{{ section.settings.clearance_below }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Product Net Weight</th>
+              <td>{{ section.settings.net_weight }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Maximum Load Bearing</th>
+              <td>{{ section.settings.max_load }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Boxed Package Dimensions</th>
+              <td>{{ section.settings.package_dimensions }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pdp-promise">
+        <div class="pdp-promise__item">
+          <span class="pdp-promise__badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L5 16l3 3 4.3-4.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3z" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div class="pdp-promise__text">
+            <p class="pdp-promise__title">Assembly</p>
+            <p class="pdp-promise__note">{{ section.settings.assembly_note }}</p>
+          </div>
+        </div>
+        <div class="pdp-promise__divider" aria-hidden="true"></div>
+        <div class="pdp-promise__item">
+          <span class="pdp-promise__badge pdp-promise__badge--accent" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M9.3 12.2l1.8 1.8 3.6-3.6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div class="pdp-promise__text">
+            <p class="pdp-promise__title">Warranty</p>
+            <p class="pdp-promise__note">{{ section.settings.warranty_note }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- style -%}
+  #PdpBlueprint-{{ sid }} {
+    background: #F4F0E8;
+    border-top: 1px solid rgba(31, 29, 26, 0.06);
+    border-bottom: 1px solid rgba(31, 29, 26, 0.06);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    color: #1F1D1A;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-blueprint__heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-blueprint__subheading {
+    color: #76726B;
+    font-size: 15px;
+    margin: 0 0 36px;
+    max-width: 640px;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-blueprint__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic {
+    position: relative;
+    border: 1px dashed #D1CCC2;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 48px 48px 64px 64px;
+    overflow: hidden;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__image {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height {
+    position: absolute;
+    top: 48px;
+    bottom: 64px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    border-left: 1px dashed #A8A298;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::before,
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-left: 1px dashed #A8A298;
+    border-bottom: 1px dashed #A8A298;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::before {
+    top: -1px;
+    transform: translateX(-50%) rotate(135deg);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::after {
+    bottom: -1px;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__label--height {
+    background: #FFFFFF;
+    color: #1F1D1A;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 7px;
+    border-radius: 4px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    position: relative;
+    z-index: 1;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width {
+    position: absolute;
+    left: 64px;
+    right: 48px;
+    bottom: 24px;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 0;
+    border-top: 1px dashed #A8A298;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::before,
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-left: 1px dashed #A8A298;
+    border-bottom: 1px dashed #A8A298;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::before {
+    left: -1px;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::after {
+    right: -1px;
+    transform: translateY(-50%) rotate(225deg);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-schematic__label--width {
+    background: #FFFFFF;
+    color: #1F1D1A;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 7px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table tr {
+    border-bottom: 1px solid rgba(31, 29, 26, 0.08);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table tr:last-child {
+    border-bottom: none;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table th,
+  #PdpBlueprint-{{ sid }} .pdp-specs-table td {
+    text-align: left;
+    padding: 18px 24px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table th {
+    color: #76726B;
+    font-weight: 500;
+    width: 55%;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-specs-table td {
+    color: #1F1D1A;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: 8px;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__item {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(31, 29, 26, 0.08);
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__badge {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1F1D1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__badge--accent {
+    background: #C47355;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__title {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F1D1A;
+  }
+
+  #PdpBlueprint-{{ sid }} .pdp-promise__note {
+    margin: 0;
+    font-size: 14px;
+    color: #76726B;
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 989px) {
+    #PdpBlueprint-{{ sid }} .pdp-blueprint__grid {
+      grid-template-columns: 1fr;
+    }
+
+    #PdpBlueprint-{{ sid }} .pdp-promise {
+      grid-column: auto;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PdpBlueprint-{{ sid }} .pdp-schematic {
+      padding: 32px 28px 48px 44px;
+    }
+
+    #PdpBlueprint-{{ sid }} .pdp-specs-table th,
+    #PdpBlueprint-{{ sid }} .pdp-specs-table td {
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    #PdpBlueprint-{{ sid }} .pdp-promise {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #PdpBlueprint-{{ sid }} .pdp-promise__divider {
+      display: none;
+    }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Dimensions blueprint",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Dimensions & Fit"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Plan your space with confidence — every measurement you need, before it arrives."
+    },
+    {
+      "type": "text",
+      "id": "height_label",
+      "label": "Height (schematic marker)",
+      "default": "72 cm"
+    },
+    {
+      "type": "text",
+      "id": "width_label",
+      "label": "Width (schematic marker)",
+      "default": "180 cm"
+    },
+    {
+      "type": "text",
+      "id": "depth_label",
+      "label": "Depth (schematic marker)",
+      "default": "75 cm"
+    },
+    {
+      "type": "text",
+      "id": "overall_dimensions",
+      "label": "Overall dimensions",
+      "default": "180 × 75 × 72 cm (W × D × H)"
+    },
+    {
+      "type": "text",
+      "id": "clearance_below",
+      "label": "Clearance below tabletop",
+      "default": "62 cm"
+    },
+    {
+      "type": "text",
+      "id": "net_weight",
+      "label": "Product net weight",
+      "default": "28 kg"
+    },
+    {
+      "type": "text",
+      "id": "max_load",
+      "label": "Maximum load bearing",
+      "default": "120 kg"
+    },
+    {
+      "type": "text",
+      "id": "package_dimensions",
+      "label": "Boxed package dimensions",
+      "default": "190 × 20 × 15 cm"
+    },
+    {
+      "type": "textarea",
+      "id": "assembly_note",
+      "label": "Assembly note",
+      "default": "Minimal assembly required — approx. 15 minutes with included tools."
+    },
+    {
+      "type": "textarea",
+      "id": "warranty_note",
+      "label": "Warranty note",
+      "default": "2-Year Manufacturer Warranty against structural defects."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Bottom padding"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dimensions blueprint"
+    }
+  ]
+}
+{% endschema %}

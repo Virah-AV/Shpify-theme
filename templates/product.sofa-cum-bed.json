@@ -1,1 +1,88 @@
-{"sections":{"main":{"type":"main-product","blocks":{"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"judge_me_reviews_preview_badge_iC4RKy":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{}},"variant_picker_D8Rzi9":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"buy_buttons_XwTzd3":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"collapsible_tab_LbmCYi":{"type":"collapsible_tab","settings":{"heading":"Product Specifications","icon":"clipboard","content":"<p><strong>Versatile Recliner Sofa Bed <\/strong>: Designed to serve as both a comfortable lounge chair and a spacious floor bed, with simple transformation for relaxation, reading, or overnight guests.<\/p><p><strong>Multi-Positioning Recliner <\/strong>: The backrest adjusts to six different angles, giving personalized ergonomic support and plush cushioning make this floor lounger ideal for both sitting upright or reclining comfortably, so you can sit straight or lean back and relax with ease.<\/p><p><strong>Superior Comfort:<\/strong> Thick cushioning made of high-resilience foam and over 99% pure doll cotton provides plush, continuous support. Built with a Sturdy thick steel internal frame and reliable adjustment brackets for lasting durability and stable support.<\/p><p><strong>Corduroy Upholstery:<\/strong> Premium corduroy fabric cover delivers a soft, cozy feel and a modern minimalist look, blending easily with any living space. precision-crafted reclining mechanism that provides stability and durability, the material feels nice on the skin and is easy to clean for daily use.<\/p>","page":""}},"collapsible-row-1":{"type":"collapsible_tab","settings":{"heading":"Product features","icon":"star","content":"<p><strong>Spacious Size: <\/strong>Expanded length up to 178 cm and width of 95 cm easily accommodates adults and teens, offering generous space for lounging and sleeping<\/p><p><strong>User-Friendly Design:<\/strong> Features a removable pillow for extra neck and back comfort, a removable cover with a zipper for easy cleaning, and a lightweight frame for simple repositioning.<\/p><p><strong>Family-Friendly:<\/strong> Safe, low-profile design and rounded corners ensure suitability for homes with children or elderly family members<\/p>","page":"product-features"}},"collapsible-row-0":{"type":"collapsible_tab","settings":{"heading":"Materials and care","icon":"leaf","content":"<ul><li><strong>Main Material:<\/strong> High elasticity doll cotton filling, high-resilience sponge cushioning, soft corduroy fabric upholstery, and thick steel adjustment frame for a robust yet plush feel.<\/li><li><strong>Removable Fabric Cover:<\/strong> Equipped with an easy-to-use zipper—simply unzip and remove the outer cover for machine washing or spot-cleaning as needed.<\/li><\/ul><h4><strong>Care Instructions:<\/strong><\/h4><ul><li>Dust regularly with a soft brush or vacuum upholstery attachment to keep fabric lint-free and looking fresh.<\/li><li>Wipe spills promptly with a dry or slightly damp cloth.For a deeper clean, machine wash the removable cover on a gentle cycle with a mild detergent and air dry flat.<\/li><li>Avoid direct sunlight or excessive moisture exposure to maintain color and durability.<\/li><\/ul><p><strong>Do Not:<\/strong> Bleach, iron, or tumble dry the cover. Avoid placing sharp objects or heavy items on the sofa bed to prevent fabric tearing or deformation<\/p>","page":"materials-and-care"}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["title","price","judge_me_reviews_preview_badge_iC4RKy","variant_picker_D8Rzi9","buy_buttons_XwTzd3","description","collapsible_tab_LbmCYi","collapsible-row-1","collapsible-row-0","share"],"settings":{"enable_sticky_info":true,"color_scheme":"","media_size":"small","constrain_to_viewport":true,"media_fit":"cover","gallery_layout":"thumbnail_slider","mobile_thumbnails":"show","media_position":"left","image_zoom":"hover","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":36}},"quick-order-list":{"type":"quick-order-list","settings":{"variants_per_page":50,"show_image":true,"show_sku":true,"color_scheme":"scheme-2","padding_top":36,"padding_bottom":16}},"17601896360e6b280a":{"type":"apps","blocks":{"judge_me_reviews_review_widget_JjiVCa":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{"review_data":"sample_data","show_shop_reviews":false,"empty_state":"empty_widget","max_width":1200}}},"block_order":["judge_me_reviews_review_widget_JjiVCa"],"settings":{"include_margins":true}},"related-products":{"type":"related-products","settings":{"heading":"Other industry favorites","heading_size":"h2","products_to_show":5,"columns_desktop":5,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":44}}},"order":["main","quick-order-list","17601896360e6b280a","related-products"]}
+{
+    "sections":  {
+                     "main":  {
+                                  "type":  "product-main-showcase",
+                                  "blocks":  {
+                                                 "judge_me_reviews_preview_badge_iC4RKy":  {
+                                                                                               "type":  "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+                                                                                               "settings":  {
+
+                                                                                                            }
+                                                                                           }
+                                             }
+                              },
+                     "description":  {
+                                         "type":  "product-description"
+                                     },
+                     "features":  {
+                                      "type":  "product-features",
+                                      "blocks":  {
+                                                     "collapsible_tab_LbmCYi":  {
+                                                                                    "type":  "feature",
+                                                                                    "settings":  {
+                                                                                                     "heading":  "Product Specifications",
+                                                                                                     "content":  "\u003cp\u003e\u003cstrong\u003eVersatile Recliner Sofa Bed \u003c/strong\u003e: Designed to serve as both a comfortable lounge chair and a spacious floor bed, with simple transformation for relaxation, reading, or overnight guests.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMulti-Positioning Recliner \u003c/strong\u003e: The backrest adjusts to six different angles, giving personalized ergonomic support and plush cushioning make this floor lounger ideal for both sitting upright or reclining comfortably, so you can sit straight or lean back and relax with ease.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eSuperior Comfort:\u003c/strong\u003e Thick cushioning made of high-resilience foam and over 99% pure doll cotton provides plush, continuous support. Built with a Sturdy thick steel internal frame and reliable adjustment brackets for lasting durability and stable support.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCorduroy Upholstery:\u003c/strong\u003e Premium corduroy fabric cover delivers a soft, cozy feel and a modern minimalist look, blending easily with any living space. precision-crafted reclining mechanism that provides stability and durability, the material feels nice on the skin and is easy to clean for daily use.\u003c/p\u003e"
+                                                                                                 }
+                                                                                },
+                                                     "collapsible-row-1":  {
+                                                                               "type":  "feature",
+                                                                               "settings":  {
+                                                                                                "heading":  "Product features",
+                                                                                                "content":  "\u003cp\u003e\u003cstrong\u003eSpacious Size: \u003c/strong\u003eExpanded length up to 178 cm and width of 95 cm easily accommodates adults and teens, offering generous space for lounging and sleeping\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eUser-Friendly Design:\u003c/strong\u003e Features a removable pillow for extra neck and back comfort, a removable cover with a zipper for easy cleaning, and a lightweight frame for simple repositioning.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eFamily-Friendly:\u003c/strong\u003e Safe, low-profile design and rounded corners ensure suitability for homes with children or elderly family members\u003c/p\u003e",
+                                                                                                "page":  "product-features"
+                                                                                            }
+                                                                           }
+                                                 },
+                                      "block_order":  [
+                                                          "collapsible_tab_LbmCYi",
+                                                          "collapsible-row-1"
+                                                      ]
+                                  },
+                     "materials_care":  {
+                                            "type":  "product-materials-care",
+                                            "blocks":  {
+                                                           "collapsible-row-0":  {
+                                                                                     "type":  "panel",
+                                                                                     "settings":  {
+                                                                                                      "heading":  "Materials and care",
+                                                                                                      "content":  "\u003cul\u003e\u003cli\u003e\u003cstrong\u003eMain Material:\u003c/strong\u003e High elasticity doll cotton filling, high-resilience sponge cushioning, soft corduroy fabric upholstery, and thick steel adjustment frame for a robust yet plush feel.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eRemovable Fabric Cover:\u003c/strong\u003e Equipped with an easy-to-use zipper—simply unzip and remove the outer cover for machine washing or spot-cleaning as needed.\u003c/li\u003e\u003c/ul\u003e\u003ch4\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e\u003c/h4\u003e\u003cul\u003e\u003cli\u003eDust regularly with a soft brush or vacuum upholstery attachment to keep fabric lint-free and looking fresh.\u003c/li\u003e\u003cli\u003eWipe spills promptly with a dry or slightly damp cloth.For a deeper clean, machine wash the removable cover on a gentle cycle with a mild detergent and air dry flat.\u003c/li\u003e\u003cli\u003eAvoid direct sunlight or excessive moisture exposure to maintain color and durability.\u003c/li\u003e\u003c/ul\u003e\u003cp\u003e\u003cstrong\u003eDo Not:\u003c/strong\u003e Bleach, iron, or tumble dry the cover. Avoid placing sharp objects or heavy items on the sofa bed to prevent fabric tearing or deformation\u003c/p\u003e",
+                                                                                                      "page":  "materials-and-care"
+                                                                                                  }
+                                                                                 }
+                                                       },
+                                            "block_order":  [
+                                                                "collapsible-row-0"
+                                                            ]
+                                        },
+                     "blueprint":  {
+                                       "type":  "product-dimensions-blueprint",
+                                       "settings":  {
+                                                        "depth_label":  "90 cm",
+                                                        "package_dimensions":  "95 x 90 x 35 cm",
+                                                        "assembly_note":  "Minimal assembly - legs attach in approx. 20 minutes.",
+                                                        "height_label":  "85 cm",
+                                                        "width_label":  "190 cm",
+                                                        "overall_dimensions":  "190 x 90 x 85 cm (sofa) / 190 x 110 cm (bed, unfolded)",
+                                                        "max_load":  "200 kg",
+                                                        "net_weight":  "35 kg",
+                                                        "clearance_below":  "N/A",
+                                                        "warranty_note":  "2-Year Manufacturer Warranty."
+                                                    }
+                                   },
+                     "recommendations":  {
+                                             "type":  "product-recommendations"
+                                         },
+                     "sticky_dock":  {
+                                         "type":  "product-sticky-buy-bar"
+                                     }
+                 },
+    "order":  [
+                  "main",
+                  "description",
+                  "features",
+                  "materials_care",
+                  "blueprint",
+                  "recommendations",
+                  "sticky_dock"
+              ]
+}

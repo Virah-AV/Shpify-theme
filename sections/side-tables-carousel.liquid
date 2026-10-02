@@ -1,0 +1,737 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign stc_collection = section.settings.collection
+  assign stc_limit = section.settings.products_to_show
+  assign stc_enable_buy_now = section.settings.enable_buy_now
+  assign stc_products = stc_collection.products
+-%}
+
+<div
+  class="stc-section"
+  style="--stc-bg: {{ section.settings.background_color }}; --stc-accent: {{ section.settings.button_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="stc-container page-width">
+    <stc-carousel class="stc-carousel">
+      <div class="stc-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="stc-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        <div class="stc-nav">
+          <button type="button" class="stc-arrow stc-arrow--prev" data-stc-prev aria-label="{{ 'general.slider.previous_slide' | t }}">&larr;</button>
+          <button type="button" class="stc-arrow stc-arrow--next" data-stc-next aria-label="{{ 'general.slider.next_slide' | t }}">&rarr;</button>
+        </div>
+      </div>
+
+      <ul class="stc-track" data-stc-track role="list">
+        {%- if stc_products != blank -%}
+          {%- for product in stc_products limit: stc_limit -%}
+            {%- liquid
+              assign stc_variant = product.selected_or_first_available_variant
+              assign stc_form_id = 'STC-Form-' | append: section.id | append: '-' | append: product.id
+              assign stc_swatch_option = product.options_with_values.first
+              assign stc_has_swatches = false
+              if stc_swatch_option
+                for value in stc_swatch_option.values
+                  if value.swatch
+                    assign stc_has_swatches = true
+                    break
+                  endif
+                endfor
+              endif
+            -%}
+            <li class="stc-slide">
+              <div class="stc-card">
+                <div class="stc-card__media">
+                  <a href="{{ product.url }}" class="stc-card__media-link" aria-label="{{ product.title | escape }}">
+                    {%- if product.featured_image -%}
+                      {{
+                        product.featured_image
+                        | image_url: width: 700
+                        | image_tag:
+                          class: 'stc-card__image',
+                          loading: 'lazy',
+                          widths: '350, 500, 700',
+                          sizes: '(min-width: 990px) 22vw, (min-width: 750px) 45vw, 85vw',
+                          alt: product.featured_image.alt | default: product.title
+                      }}
+                    {%- else -%}
+                      {{ 'product-apparel-1' | placeholder_svg_tag: 'stc-card__image stc-card__image--placeholder' }}
+                    {%- endif -%}
+                  </a>
+
+                  <form
+                    id="{{ stc_form_id }}"
+                    method="post"
+                    action="{{ routes.cart_add_url }}"
+                    accept-charset="UTF-8"
+                    class="stc-hidden-form"
+                  >
+                    <input type="hidden" name="id" value="{{ stc_variant.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                  </form>
+
+                  {%- if product.available -%}
+                    <stc-quick-add class="stc-tray">
+                      <button type="submit" form="{{ stc_form_id }}" name="add" class="stc-btn stc-btn--cart">
+                        <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+                        <span class="stc-btn__text">Add to Bag</span>
+                        <span class="svg-wrapper stc-btn__spinner hidden">{%- render 'loading-spinner' -%}</span>
+                      </button>
+                      {%- if stc_enable_buy_now -%}
+                        <button type="submit" form="{{ stc_form_id }}" name="buy" class="stc-btn stc-btn--buy">
+                          <span class="stc-btn__text">Buy Now</span>
+                          <span class="svg-wrapper stc-btn__spinner hidden">{%- render 'loading-spinner' -%}</span>
+                        </button>
+                      {%- endif -%}
+                    </stc-quick-add>
+                  {%- endif -%}
+                </div>
+
+                <div class="stc-card__row">
+                  <a href="{{ product.url }}" class="stc-card__title-link">
+                    <h3 class="stc-card__title">{{ product.title | escape }}</h3>
+                  </a>
+                  <div class="stc-card__price">
+                    {%- render 'price', product: product, price_class: '', show_badges: false, show_compare_at_price: true -%}
+                  </div>
+                </div>
+
+                {%- if stc_has_swatches -%}
+                  <div class="stc-swatches">
+                    {%- for value in stc_swatch_option.values -%}
+                      {%- assign stc_match_variant = product.variants | where: 'option1', value.value | first -%}
+                      <button
+                        type="button"
+                        class="stc-swatch-btn"
+                        data-image="{{ stc_match_variant.featured_image | image_url: width: 700 }}"
+                        aria-label="{{ value.value | escape }}"
+                      >
+                        {%- render 'swatch', swatch: value.swatch -%}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if product.available -%}
+                  <div class="stc-mobile-actions">
+                    <button type="submit" form="{{ stc_form_id }}" name="add" class="stc-pill stc-pill--cart">Add to Bag</button>
+                    {%- if stc_enable_buy_now -%}
+                      <button type="submit" form="{{ stc_form_id }}" name="buy" class="stc-pill stc-pill--buy">Buy Now</button>
+                    {%- endif -%}
+                  </div>
+                {%- else -%}
+                  <div class="stc-mobile-actions">
+                    <span class="stc-pill stc-pill--sold-out">{{ 'products.product.sold_out' | t }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..stc_limit) -%}
+            <li class="stc-slide">
+              <div class="stc-card">
+                <div class="stc-card__media">
+                  {{ 'product-apparel-1' | placeholder_svg_tag: 'stc-card__image stc-card__image--placeholder' }}
+                </div>
+                <div class="stc-card__row">
+                  <h3 class="stc-card__title">{{ 'onboarding.product_title' | t }}</h3>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </stc-carousel>
+  </div>
+</div>
+
+{% stylesheet %}
+.stc-section {
+  background: var(--stc-bg, #F2F4F1);
+}
+
+.stc-container {
+  max-width: 1180px;
+  border: 10px solid #D8DBD4;
+  border-radius: 24px;
+  padding: 40px 32px;
+}
+
+.stc-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.stc-title {
+  margin: 15px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 500;
+  color: #1F231F;
+}
+
+.stc-nav {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.stc-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid #D8DBD4;
+  background: transparent;
+  color: #1F231F;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.stc-arrow:not(:disabled):hover {
+  background: var(--stc-accent, #2D302E);
+  border-color: var(--stc-accent, #2D302E);
+  color: #FFFFFF;
+}
+
+.stc-arrow--prev:not(:disabled):hover {
+  transform: translateX(-3px);
+}
+
+.stc-arrow--next:not(:disabled):hover {
+  transform: translateX(3px);
+}
+
+.stc-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.stc-track {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 4px 4px 8px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.stc-track::-webkit-scrollbar {
+  display: none;
+}
+
+.stc-slide {
+  flex: 0 0 calc((100% - 4 * 28px) / 5);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.stc-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.stc-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.stc-card__media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.stc-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.stc-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 22, 18, 0.22) 100%);
+  transition: opacity 0.4s ease;
+}
+
+.stc-card:hover .stc-card__image {
+  transform: scale(1.05);
+}
+
+.stc-card:hover .stc-card__media::after {
+  opacity: 1;
+}
+
+.stc-hidden-form {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stc-tray {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  gap: 1px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.stc-card:hover .stc-tray,
+.stc-card:focus-within .stc-tray {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.stc-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  padding: 12px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stc-btn--cart {
+  background: #EBEBE6;
+  color: #1A1A18;
+}
+
+.stc-btn--buy {
+  background: var(--stc-accent, #2D302E);
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.stc-btn svg,
+.stc-btn .svg-wrapper {
+  width: 14px;
+  height: 14px;
+  display: flex;
+}
+
+.stc-btn__spinner.hidden {
+  display: none;
+}
+
+.stc-card__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px 0;
+}
+
+.stc-card__title-link {
+  text-decoration: none;
+  min-width: 0;
+}
+
+.stc-card__title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #1F231F;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stc-card__price {
+  width: 100%;
+}
+
+.stc-card__price .price__regular,
+.stc-card__price .price__sale {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stc-card__price .price__sale {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.stc-card__price .price__regular .price-item--regular {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F231F;
+}
+
+.stc-card__price .price__sale .price-item--sale {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F231F;
+}
+
+.stc-card__price .price__sale .price-item--regular {
+  font-size: 11.5px;
+  color: #9CA39A;
+}
+
+.stc-swatches {
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px 0;
+}
+
+.stc-swatch-btn {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+}
+
+.stc-swatch-btn.is-active {
+  border-color: #1F231F;
+}
+
+.stc-mobile-actions {
+  display: none;
+  gap: 8px;
+  padding: 12px 16px 16px;
+}
+
+.stc-pill {
+  flex: 1 1 0;
+  border: none;
+  border-radius: 9999px;
+  padding: 9px 12px;
+  font-size: 11.5px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stc-pill--cart {
+  background: #EBEBE6;
+  color: #1A1A18;
+}
+
+.stc-pill--buy {
+  background: var(--stc-accent, #2D302E);
+  color: #FFFFFF;
+}
+
+.stc-pill--sold-out {
+  flex: 1 1 0;
+  background: #E2E2DD;
+  color: #7A7D77;
+}
+
+@media screen and (max-width: 989px) and (min-width: 750px) {
+  .stc-track {
+    gap: 20px;
+  }
+
+  .stc-slide {
+    flex: 0 0 calc((100% - 2 * 20px) / 3);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .stc-container {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .stc-track {
+    gap: 14px;
+  }
+
+  .stc-slide {
+    flex: 0 0 calc((100% - 14px) / 2.15);
+  }
+
+  .stc-tray {
+    display: none;
+  }
+
+  .stc-mobile-actions {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stc-card__image,
+  .stc-card__media::after,
+  .stc-tray,
+  .stc-arrow {
+    transition: none;
+  }
+}
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('stc-carousel')) {
+    customElements.define(
+      'stc-carousel',
+      class StcCarousel extends HTMLElement {
+        connectedCallback() {
+          this.track = this.querySelector('[data-stc-track]');
+          this.prevBtn = this.querySelector('[data-stc-prev]');
+          this.nextBtn = this.querySelector('[data-stc-next]');
+          if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.scrollByDirection(-1));
+          if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.scrollByDirection(1));
+
+          this.updateArrowState = this.updateArrowState.bind(this);
+          if (this.track) this.track.addEventListener('scroll', this.updateArrowState, { passive: true });
+          window.addEventListener('resize', this.updateArrowState);
+          requestAnimationFrame(this.updateArrowState);
+        }
+
+        updateArrowState() {
+          if (!this.track) return;
+          const maxScroll = this.track.scrollWidth - this.track.clientWidth;
+          const current = this.track.scrollLeft;
+          if (this.prevBtn) this.prevBtn.disabled = current <= 1;
+          if (this.nextBtn) this.nextBtn.disabled = maxScroll <= 1 || current >= maxScroll - 1;
+        }
+
+        scrollByDirection(direction) {
+          if (!this.track) return;
+          const slide = this.track.querySelector('.stc-slide');
+          if (!slide) return;
+          const styles = getComputedStyle(this.track);
+          const gap = parseFloat(styles.columnGap || styles.gap || '0');
+          const amount = slide.getBoundingClientRect().width + gap;
+          this.track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+        }
+      }
+    );
+  }
+
+  if (!customElements.get('stc-quick-add')) {
+    customElements.define(
+      'stc-quick-add',
+      class StcQuickAdd extends HTMLElement {
+        constructor() {
+          super();
+          this.card = this.closest('.stc-card');
+          this.form = this.card.querySelector('form.stc-hidden-form');
+          this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+          if (this.form) this.form.addEventListener('submit', this.onSubmit.bind(this));
+        }
+
+        onSubmit(event) {
+          event.preventDefault();
+          const button = event.submitter;
+          if (!button || button.getAttribute('aria-disabled') === 'true') return;
+          const isBuyNow = button.name === 'buy';
+
+          const triggers = this.card.querySelectorAll(`button[form="${this.form.id}"]`);
+          triggers.forEach((trigger) => trigger.setAttribute('aria-disabled', 'true'));
+          const spinner = button.querySelector('.stc-btn__spinner');
+          if (spinner) spinner.classList.remove('hidden');
+
+          const formData = new FormData(this.form);
+          if (!isBuyNow && this.cart) {
+            formData.append(
+              'sections',
+              this.cart.getSectionsToRender().map((section) => section.id)
+            );
+            formData.append('sections_url', window.location.pathname);
+            this.cart.setActiveElement(document.activeElement);
+          }
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+          config.body = formData;
+
+          fetch(`${routes.cart_add_url}`, config)
+            .then((response) => response.json())
+            .then((response) => {
+              if (response.status) {
+                publish(PUB_SUB_EVENTS.cartError, {
+                  source: 'stc-quick-add',
+                  productVariantId: formData.get('id'),
+                  errors: response.errors || response.description,
+                  message: response.message,
+                });
+                return;
+              }
+
+              if (isBuyNow) {
+                window.location.href = `${window.Shopify.routes.root}checkout`;
+                return;
+              }
+
+              publish(PUB_SUB_EVENTS.cartUpdate, {
+                source: 'stc-quick-add',
+                productVariantId: formData.get('id'),
+                cartData: response,
+              });
+
+              if (!this.cart) {
+                window.location = window.routes.cart_url;
+                return;
+              }
+
+              this.cart.renderContents(response);
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+            .finally(() => {
+              if (isBuyNow) return;
+              triggers.forEach((trigger) => trigger.removeAttribute('aria-disabled'));
+              if (spinner) spinner.classList.add('hidden');
+              if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+            });
+        }
+      }
+    );
+  }
+
+  document.addEventListener('click', (event) => {
+    const swatchBtn = event.target.closest('.stc-swatch-btn');
+    if (swatchBtn) applyStcSwatch(swatchBtn);
+  });
+
+  document.addEventListener(
+    'mouseover',
+    (event) => {
+      const swatchBtn = event.target.closest('.stc-swatch-btn');
+      if (swatchBtn) applyStcSwatch(swatchBtn);
+    },
+    { passive: true }
+  );
+
+  function applyStcSwatch(swatchBtn) {
+    const newSrc = swatchBtn.getAttribute('data-image');
+    if (!newSrc) return;
+    const card = swatchBtn.closest('.stc-card');
+    const image = card && card.querySelector('.stc-card__image');
+    if (!image) return;
+    image.src = newSrc;
+    image.srcset = '';
+    swatchBtn.parentElement.querySelectorAll('.stc-swatch-btn').forEach((btn) => btn.classList.remove('is-active'));
+    swatchBtn.classList.add('is-active');
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Side tables carousel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Products to display"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Side Table Collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_buy_now",
+      "label": "Enable Direct Buy Now",
+      "info": "Adds a Buy Now action that adds the item then redirects straight to checkout.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F2F4F1"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Primary button color",
+      "default": "#2D302E"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Side tables carousel"
+    }
+  ]
+}
+{% endschema %}

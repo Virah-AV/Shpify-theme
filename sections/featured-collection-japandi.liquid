@@ -1,0 +1,579 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign jp_collection = section.settings.collection
+  assign jp_limit = section.settings.products_to_show
+  assign jp_show_secondary = section.settings.show_secondary_image
+  assign jp_products = jp_collection.products
+-%}
+
+<div
+  class="jp-section"
+  style="--jp-bg: {{ section.settings.background_color }}; --jp-card-bg: {{ section.settings.card_color }}; --jp-accent: {{ section.settings.accent_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="jp-container page-width">
+    <div class="jp-header jp-header--{{ section.settings.heading_alignment }}">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="jp-heading">
+          {{ section.settings.heading | escape }}
+          {%- if jp_products.size > 0 -%}
+            <span class="jp-count-badge">{{ jp_products.size }}</span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.show_view_all and jp_collection != blank -%}
+        <a href="{{ jp_collection.url }}" class="jp-view-all">{{ 'sections.featured_collection.view_all' | t }}</a>
+      {%- endif -%}
+    </div>
+
+    <ul class="jp-grid" role="list">
+      {%- if jp_products != blank -%}
+        {%- for product in jp_products limit: jp_limit -%}
+          {%- assign jp_variant = product.selected_or_first_available_variant -%}
+          <li class="jp-grid__item">
+            <div class="jp-card">
+              <div class="jp-card__media-wrapper">
+                <a href="{{ product.url }}" class="jp-card__media-link" aria-label="{{ product.title | escape }}" tabindex="-1">
+                  <div class="jp-card__media jp-card__media--{{ section.settings.image_ratio }}">
+                    {%- if product.featured_image -%}
+                      {{
+                        product.featured_image
+                        | image_url: width: 700
+                        | image_tag:
+                          class: 'jp-card__image jp-card__image--primary',
+                          loading: 'lazy',
+                          widths: '350, 500, 700',
+                          sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 90vw',
+                          alt: product.featured_image.alt
+                            | default: product.title
+                      }}
+                    {%- else -%}
+                      {{ 'product-apparel-2' | placeholder_svg_tag: 'jp-card__image jp-card__image--placeholder' }}
+                    {%- endif -%}
+
+                    {%- if jp_show_secondary and product.images[1] -%}
+                      {{
+                        product.images[1]
+                        | image_url: width: 700
+                        | image_tag:
+                          class: 'jp-card__image jp-card__image--secondary',
+                          loading: 'lazy',
+                          widths: '350, 500, 700',
+                          sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 90vw',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  </div>
+                </a>
+
+                <div class="jp-quick-add">
+                  {%- if product.available -%}
+                    <japandi-quick-add class="jp-pill-form">
+                      <form method="post" action="{{ routes.cart_add_url }}" accept-charset="UTF-8" class="jp-pill-form__form">
+                        <input type="hidden" name="id" value="{{ jp_variant.id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" name="add" class="jp-pill jp-pill--cart" aria-label="{{ 'products.product.add_to_cart' | t }} - {{ product.title | escape }}">
+                          <span class="jp-pill__text">{{ 'products.product.add_to_cart' | t }}</span>
+                          <span class="jp-pill__spinner svg-wrapper hidden">{%- render 'loading-spinner' -%}</span>
+                        </button>
+                        <button type="submit" name="checkout" class="jp-pill jp-pill--buy" aria-label="Buy it now - {{ product.title | escape }}">
+                          <span class="jp-pill__text">Buy Now</span>
+                          <span class="jp-pill__spinner svg-wrapper hidden">{%- render 'loading-spinner' -%}</span>
+                        </button>
+                      </form>
+                    </japandi-quick-add>
+                  {%- else -%}
+                    <span class="jp-pill jp-pill--sold-out">{{ 'products.product.sold_out' | t }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <div class="jp-card__info">
+                <a href="{{ product.url }}" class="jp-card__title-link">
+                  <h3 class="jp-card__title">{{ product.title | escape }}</h3>
+                </a>
+                <div class="jp-card__price">
+                  {%- render 'price', product: product, price_class: '', show_badges: false, show_compare_at_price: true -%}
+                </div>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..jp_limit) -%}
+          <li class="jp-grid__item">
+            <div class="jp-card">
+              <div class="jp-card__media-wrapper">
+                <div class="jp-card__media jp-card__media--{{ section.settings.image_ratio }}">
+                  {{ 'product-apparel-2' | placeholder_svg_tag: 'jp-card__image jp-card__image--placeholder' }}
+                </div>
+                <div class="jp-quick-add">
+                  <span class="jp-pill">{{ 'products.product.add_to_cart' | t }}</span>
+                </div>
+              </div>
+              <div class="jp-card__info">
+                <h3 class="jp-card__title">{{ 'onboarding.product_title' | t }}</h3>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+.jp-section {
+  background: var(--jp-bg, #F9F6F0);
+}
+
+.jp-container {
+  max-width: 1180px;
+}
+
+.jp-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.jp-header--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.jp-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 600;
+  color: #2B2A27;
+}
+
+.jp-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--jp-accent, #1A1A18);
+  color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.jp-view-all {
+  font-size: 13px;
+  color: #2B2A27;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.jp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jp-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--jp-card-bg, #FFFFFF);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(40, 35, 28, 0.04);
+}
+
+.jp-card__media-wrapper {
+  position: relative;
+}
+
+.jp-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 6px;
+}
+
+.jp-card__media--portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.jp-card__media--square {
+  aspect-ratio: 1 / 1;
+}
+
+.jp-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.jp-card__image--primary {
+  z-index: 1;
+  opacity: 1;
+}
+
+.jp-card__image--secondary {
+  z-index: 2;
+  opacity: 0;
+}
+
+.jp-card:hover .jp-card__image--primary {
+  transform: scale(1.04);
+}
+
+.jp-card:hover .jp-card__image--secondary {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.jp-quick-add {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+}
+
+.jp-pill-form,
+.jp-pill-form__form {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+}
+
+.jp-pill {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1.5px solid var(--jp-accent, #1A1A18);
+  border-radius: 9999px;
+  padding: 9px 10px;
+  background: var(--jp-accent, #1A1A18);
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.jp-pill--buy {
+  background: var(--jp-accent, #1A1A18);
+  color: #FFFFFF;
+}
+
+.jp-pill--buy:hover {
+  background: var(--jp-accent, #1A1A18);
+  color: #FFFFFF;
+}
+
+.jp-pill--sold-out {
+  cursor: default;
+  background: #9b9690;
+  border-color: #9b9690;
+}
+
+.jp-card:hover .jp-pill,
+.jp-card:focus-within .jp-pill {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.jp-card:hover .jp-pill--buy,
+.jp-card:focus-within .jp-pill--buy {
+  transition-delay: 0.03s;
+}
+
+.jp-pill__spinner {
+  width: 16px;
+  height: 16px;
+  display: flex;
+}
+
+.jp-pill__spinner.hidden {
+  display: none;
+}
+
+.jp-card__info {
+  padding: 12px 14px 16px;
+}
+
+.jp-card__title-link {
+  text-decoration: none;
+}
+
+.jp-card__title {
+  margin: 0 0 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2B2A27;
+}
+
+.jp-card__price .price {
+  color: #6B6459;
+  font-size: 13px;
+}
+
+.jp-card__price .price__sale .price-item--regular {
+  color: #A39C90;
+}
+
+@media screen and (max-width: 989px) and (min-width: 750px) {
+  .jp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .jp-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .jp-grid__item {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-card__image,
+  .jp-pill {
+    transition: none;
+  }
+}
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('japandi-quick-add')) {
+    customElements.define(
+      'japandi-quick-add',
+      class JapandiQuickAdd extends HTMLElement {
+        constructor() {
+          super();
+          this.form = this.querySelector('form');
+          this.buttons = this.querySelectorAll('button');
+          this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+          this.form.addEventListener('submit', this.onSubmit.bind(this));
+        }
+
+        onSubmit(event) {
+          event.preventDefault();
+          const button = event.submitter || this.form.querySelector('button[type="submit"]');
+          const isBuyNow = button.name === 'checkout';
+
+          if (button.getAttribute('aria-disabled') === 'true') return;
+
+          this.buttons.forEach((btn) => btn.setAttribute('aria-disabled', 'true'));
+          button.classList.add('loading');
+          const spinner = button.querySelector('.jp-pill__spinner');
+          if (spinner) spinner.classList.remove('hidden');
+
+          const formData = new FormData(this.form);
+          if (!isBuyNow && this.cart) {
+            formData.append(
+              'sections',
+              this.cart.getSectionsToRender().map((section) => section.id)
+            );
+            formData.append('sections_url', window.location.pathname);
+            this.cart.setActiveElement(document.activeElement);
+          }
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+          config.body = formData;
+
+          fetch(`${routes.cart_add_url}`, config)
+            .then((response) => response.json())
+            .then((response) => {
+              if (response.status) {
+                publish(PUB_SUB_EVENTS.cartError, {
+                  source: 'japandi-quick-add',
+                  productVariantId: formData.get('id'),
+                  errors: response.errors || response.description,
+                  message: response.message,
+                });
+                return;
+              }
+
+              if (isBuyNow) {
+                window.location.href = `${window.Shopify.routes.root}checkout`;
+                return;
+              }
+
+              if (!this.cart) {
+                window.location = window.routes.cart_url;
+                return;
+              }
+
+              publish(PUB_SUB_EVENTS.cartUpdate, {
+                source: 'japandi-quick-add',
+                productVariantId: formData.get('id'),
+                cartData: response,
+              });
+
+              this.cart.renderContents(response);
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+            .finally(() => {
+              if (isBuyNow) return;
+              this.buttons.forEach((btn) => {
+                btn.classList.remove('loading');
+                btn.removeAttribute('aria-disabled');
+              });
+              if (spinner) spinner.classList.add('hidden');
+              if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+            });
+        }
+      }
+    );
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Japandi collection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "label": "Product limit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View all\" link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Show secondary hover image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "square", "label": "Square (1:1)" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F9F6F0"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card surface",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (quick-add pill, badge)",
+      "default": "#1A1A18"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Japandi collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,212 @@
+{% comment %}
+  You may also like — native Shopify product recommendations, restyled.
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<section class="pdp-recs" id="PdpRecs-{{ sid }}">
+  <div class="pdp-recs__inner page-width">
+    <product-recommendations
+      class="pdp-recs__wrapper"
+      data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+      data-section-id="{{ sid }}"
+      data-product-id="{{ product.id }}"
+    >
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <span class="pdp-recs__eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="pdp-recs__heading">{{ section.settings.heading }}</h2>
+
+        <ul class="pdp-recs__grid" role="list">
+          {%- for recommendation in recommendations.products -%}
+            <li class="pdp-recs__item">
+              <a href="{{ recommendation.url }}" class="pdp-recs__card">
+                <span class="pdp-recs__media">
+                  {%- if recommendation.featured_media -%}
+                    <img
+                      src="{{ recommendation.featured_media.preview_image | image_url: width: 600 }}"
+                      alt="{{ recommendation.featured_media.alt | default: recommendation.title | escape }}"
+                      loading="lazy"
+                      width="300"
+                      height="338"
+                    >
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pdp-recs__placeholder' }}
+                  {%- endif -%}
+                </span>
+                <span class="pdp-recs__info">
+                  <span class="pdp-recs__title">{{ recommendation.title }}</span>
+                  <span class="pdp-recs__price">
+                    {{ recommendation.price | money }}
+                    {%- if recommendation.compare_at_price > recommendation.price -%}
+                      <s class="pdp-recs__compare">{{ recommendation.compare_at_price | money }}</s>
+                    {%- endif -%}
+                  </span>
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </product-recommendations>
+  </div>
+</section>
+
+{%- style -%}
+  #PdpRecs-{{ sid }} {
+    background: #FBF9F5;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C47355;
+    margin-bottom: 10px;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1F1D1A;
+    margin: 0 0 32px;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__media {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    aspect-ratio: 4 / 4.5;
+    background: #F0ECE4;
+    margin-bottom: 14px;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__media img,
+  #PdpRecs-{{ sid }} .pdp-recs__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__card:hover .pdp-recs__media img {
+    transform: scale(1.05);
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F1D1A;
+    margin-bottom: 6px;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__price {
+    display: block;
+    font-size: 13px;
+    color: #76726B;
+  }
+
+  #PdpRecs-{{ sid }} .pdp-recs__compare {
+    margin-left: 6px;
+    color: #B3ADA3;
+  }
+
+  @media screen and (max-width: 989px) {
+    #PdpRecs-{{ sid }} .pdp-recs__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PdpRecs-{{ sid }} .pdp-recs__heading {
+      font-size: 22px;
+    }
+
+    #PdpRecs-{{ sid }} .pdp-recs__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Recommended products",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Curated For You"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Bottom padding"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommended products"
+    }
+  ]
+}
+{% endschema %}

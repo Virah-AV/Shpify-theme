@@ -1,281 +1,128 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
-
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
-{%- if section.settings.menu_type_desktop == 'mega' -%}
-  <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- endif -%}
-
-
-<style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -1.2rem;
-  }
-
-  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
-    .scrolled-past-header .header__heading-logo-wrapper {
-      width: 75%;
-    }
-  {%- endif -%}
-
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
-      header-drawer {
-        display: none;
-      }
-    }
-  {%- endif -%}
-
-  .menu-drawer-container {
-    display: flex;
-  }
-
-  .list-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .list-menu--inline {
-    display: inline-flex;
-    flex-wrap: wrap;
-  }
-
-  summary.list-menu__item {
-    padding-right: 2.7rem;
-  }
-
-  .list-menu__item {
-    display: flex;
-    align-items: center;
-    line-height: calc(1 + 0.3 / var(--font-body-scale));
-  }
-
-  .list-menu__item--link {
-    text-decoration: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    line-height: calc(1 + 0.8 / var(--font-body-scale));
-  }
-
-  @media screen and (min-width: 750px) {
-    .list-menu__item--link {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
-    }
-  }
-</style>
+{%- liquid
+  assign logo_image = section.settings.logo_image | default: settings.logo
+  assign category_blocks = section.blocks | where: 'type', 'category_dropdown'
+  assign secondary_link_blocks = section.blocks | where: 'type', 'secondary_link'
+  assign highlight_query = section.settings.highlight_menu_item_title | strip | downcase
+-%}
 
 {%- style -%}
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
-  }
-
-  .section-header {
-    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
+  .lux-header {
+    --lux-logo-width: {{ section.settings.logo_width }}px;
+    --lux-highlight-color: {{ section.settings.highlight_color }};
   }
 {%- endstyle -%}
 
-<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
-
-{%- liquid
-  for block in section.blocks
-    if block.type == '@app'
-      assign has_app_block = true
-    endif
-  endfor
--%}
-
-{% liquid
-  assign header_tag = 'div'
-
-  if section.settings.sticky_header_type != 'none'
-    assign header_tag = 'sticky-header'
-  endif
-%}
-
-<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
-  {%- liquid
-    assign social_links = false
-    assign localization_forms = false
-
-    if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
-      assign social_links = true
-    endif
-
-    if localization.available_countries.size > 1 and section.settings.enable_country_selector or section.settings.enable_language_selector and localization.available_languages.size > 1
-      assign localization_forms = true
-    endif
-  -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
-    {%- liquid
-      if section.settings.menu != blank
-        render 'header-drawer'
-      endif
-
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
-    -%}
-
-    {%- if section.settings.logo_position != 'middle-center' -%}
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
-      {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo motion-reduce',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    {%- endif -%}
-
-    {%- liquid
-      if section.settings.menu != blank
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
-        endif
-      endif
-    %}
-
-    {%- if section.settings.logo_position == 'middle-center' -%}
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
-      {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
-          </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    {%- endif -%}
-
-    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
-      <div class="desktop-localization-wrapper">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <localization-form class="small-hide medium-hide" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
-        {% endif %}
-
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <localization-form class="small-hide medium-hide" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
+<lux-header
+  class="lux-header color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} lux-header--divided{% endif %}{% if section.settings.sticky_behavior == 'sticky_blur' %} lux-header--frosted{% endif %}"
+  data-sticky="{{ section.settings.sticky_behavior }}"
+  data-hover-style="{{ section.settings.hover_style }}"
+  data-highlight-anim="{{ section.settings.highlight_animation }}"
+>
+  <div class="lux-tier lux-tier--brand page-width">
+    <div class="lux-brand-left">
+      <button type="button" class="lux-mobile-toggle" aria-label="{{ 'sections.header.menu' | t }}" aria-expanded="false" aria-controls="LuxMobileDrawer">
+        <span class="svg-wrapper lux-icon-menu">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
+        <span class="svg-wrapper lux-icon-close">{{ 'icon-close.svg' | inline_asset_content }}</span>
+      </button>
+      <a href="{{ routes.root_url }}" class="lux-logo">
+        {%- if logo_image != blank -%}
+          {%- assign logo_alt = logo_image.alt | default: shop.name | escape -%}
+          {%- assign logo_height = section.settings.logo_width | divided_by: logo_image.aspect_ratio -%}
+          {{ logo_image | image_url: width: 520 | image_tag:
+            class: 'lux-logo__image',
+            width: section.settings.logo_width,
+            height: logo_height,
+            alt: logo_alt,
+            widths: '160, 240, 320, 520',
+            loading: 'eager',
+            preload: true
+          }}
+        {%- else -%}
+          <span class="lux-logo__text">{{ shop.name }}</span>
         {%- endif -%}
-      </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      </a>
+    </div>
 
+    <div class="lux-brand-center">
+      {%- if settings.predictive_search_enabled -%}
+        <predictive-search class="lux-search" data-loading-text="{{ 'accessibility.loading' | t }}">
+      {%- else -%}
+        <search-form class="lux-search">
+      {%- endif -%}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="lux-search__form">
+          <div class="lux-search__field">
+            <input
+              class="lux-search__input"
+              id="Lux-Search-Input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ 'general.search.search' | t }}"
+              {%- if settings.predictive_search_enabled -%}
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results"
+                aria-controls="predictive-search-results"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+              {%- endif -%}
+              autocorrect="off"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+            >
+            <input type="hidden" name="options[prefix]" value="last">
+            <button type="reset" class="lux-search__reset hidden" aria-label="{{ 'general.search.reset' | t }}">
+              <span class="svg-wrapper">{{ 'icon-close-small.svg' | inline_asset_content }}</span>
+            </button>
+            <button type="submit" class="lux-search__submit" aria-label="{{ 'general.search.search' | t }}">
+              <span class="svg-wrapper">{{ 'icon-search.svg' | inline_asset_content }}</span>
+            </button>
+          </div>
+
+          {%- if settings.predictive_search_enabled -%}
+            <div class="predictive-search predictive-search--header lux-search__panel" tabindex="-1" data-predictive-search>
+              {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+            </div>
+            <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+          {%- endif -%}
+        </form>
+      {%- if settings.predictive_search_enabled -%}
+        </predictive-search>
+      {%- else -%}
+        </search-form>
+      {%- endif -%}
+    </div>
+
+    <div class="lux-brand-right">
       {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}"
+          class="lux-icon-btn"
           rel="nofollow"
+          aria-label="{% if customer %}{{ 'customer.account_fallback' | t }}{% else %}{{ 'customer.log_in' | t }}{% endif %}"
         >
-          {%- if section.settings.enable_customer_avatar -%}
-            <account-icon>
-              {%- if customer and customer.has_avatar? -%}
-                {{ customer | avatar }}
-              {%- else -%}
-                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-              {%- endif -%}
-            </account-icon>
-          {%- else -%}
-            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-          {%- endif -%}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
+          <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
         </a>
       {%- endif -%}
 
       {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}
-            {% render block %}
-        {%- endcase -%}
+        {%- if block.type == '@app' -%}
+          {% render block %}
+        {%- endif -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-          {% if cart == empty %}
-            <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
-          {% else %}
-            <span class="svg-wrapper">{{'icon-cart.svg' | inline_asset_content }}</span>
-          {% endif %}
+      <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lux-icon-btn lux-icon-btn--cart">
+        {%- if cart == empty -%}
+          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+        {%- else -%}
+          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+        {%- endif -%}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
           <div class="cart-count-bubble">
@@ -287,123 +134,803 @@
         {%- endif -%}
       </a>
     </div>
-  </header>
-</{{ header_tag }}>
+  </div>
+
+  {%- if secondary_link_blocks.size > 0 -%}
+    <nav class="lux-tier lux-tier--aux" aria-label="{{ 'sections.header.menu' | t }}">
+      <ul class="lux-aux-list">
+        {%- for block in secondary_link_blocks -%}
+          <li class="lux-aux-item" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: '#' }}" class="lux-aux-link">{{ block.settings.title | escape }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+
+  <nav class="lux-tier lux-tier--primary" aria-label="{{ 'sections.header.menu' | t }}">
+    <ul class="lux-primary-list" role="list">
+      {%- if category_blocks.size > 0 -%}
+        {%- for block in category_blocks -%}
+          {%- assign item_title = block.settings.title | default: 'Category' -%}
+          {%- assign item_title_downcase = item_title | downcase -%}
+          {%- assign is_highlighted = false -%}
+          {%- if block.settings.highlight -%}
+            {%- assign is_highlighted = true -%}
+          {%- elsif highlight_query != blank and item_title_downcase == highlight_query -%}
+            {%- assign is_highlighted = true -%}
+          {%- endif -%}
+          <li class="lux-primary-item{% if block.settings.image != blank %} lux-primary-item--has-panel{% endif %}" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: '#' }}" class="lux-primary-link{% if is_highlighted %} lux-primary-link--highlight{% endif %}">
+              <span class="lux-primary-link__text">{{ item_title | escape }}</span>
+              {%- if is_highlighted -%}
+                <span class="lux-badge" style="--lux-badge-color: {{ block.settings.badge_color | default: section.settings.highlight_color }};">
+                  <svg class="lux-badge__sparkle" viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" fill="currentColor"><path d="M12 0l2.2 7.2L21 9l-6.8 1.8L12 18l-2.2-7.2L3 9l6.8-1.8z"/></svg>
+                  {{ block.settings.badge_label | default: section.settings.highlight_menu_item_title | escape }}
+                </span>
+              {%- endif -%}
+            </a>
+            {%- if block.settings.image != blank -%}
+              <div class="lux-mega-panel">
+                <a href="{{ block.settings.link | default: '#' }}" class="lux-mega-panel__link" tabindex="-1">
+                  {{ block.settings.image | image_url: width: 480 | image_tag: loading: 'lazy', width: 240, height: 240, class: 'lux-mega-panel__image', alt: item_title }}
+                  <span class="lux-mega-panel__label">{{ item_title | escape }}</span>
+                </a>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for link in section.settings.main_menu.links -%}
+          {%- assign link_title_downcase = link.title | downcase -%}
+          {%- assign is_highlighted = false -%}
+          {%- if highlight_query != blank and link_title_downcase == highlight_query -%}
+            {%- assign is_highlighted = true -%}
+          {%- endif -%}
+          <li class="lux-primary-item{% if link.links != blank %} lux-primary-item--has-panel{% endif %}">
+            <a href="{{ link.url }}" class="lux-primary-link{% if is_highlighted %} lux-primary-link--highlight{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+              <span class="lux-primary-link__text">{{ link.title | escape }}</span>
+              {%- if is_highlighted -%}
+                <span class="lux-badge" style="--lux-badge-color: {{ section.settings.highlight_color }};">
+                  <svg class="lux-badge__sparkle" viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" fill="currentColor"><path d="M12 0l2.2 7.2L21 9l-6.8 1.8L12 18l-2.2-7.2L3 9l6.8-1.8z"/></svg>
+                  {{ section.settings.highlight_menu_item_title | escape }}
+                </span>
+              {%- endif -%}
+            </a>
+            {%- if link.links != blank -%}
+              <div class="lux-dropdown-panel">
+                <ul class="lux-dropdown-list">
+                  {%- for childlink in link.links -%}
+                    <li><a href="{{ childlink.url }}" class="lux-dropdown-link">{{ childlink.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </nav>
+</lux-header>
+
+<div id="LuxMobileDrawer" class="lux-drawer" hidden>
+  <div class="lux-drawer__overlay" data-lux-drawer-close></div>
+  <div class="lux-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'sections.header.menu' | t }}">
+    <div class="lux-drawer__header">
+      <a href="{{ routes.root_url }}" class="lux-logo lux-logo--drawer">
+        {%- if logo_image != blank -%}
+          {{ logo_image | image_url: width: 240 | image_tag: width: 120, height: 120, alt: shop.name }}
+        {%- else -%}
+          <span class="lux-logo__text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      <button type="button" class="lux-drawer__close" aria-label="{{ 'accessibility.close' | t }}" data-lux-drawer-close>
+        <span class="svg-wrapper">{{ 'icon-close.svg' | inline_asset_content }}</span>
+      </button>
+    </div>
+    <nav class="lux-drawer__nav">
+      <ul class="lux-drawer__list lux-drawer__list--primary">
+        {%- if category_blocks.size > 0 -%}
+          {%- for block in category_blocks -%}
+            <li><a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title | default: 'Category' | escape }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for link in section.settings.main_menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+      {%- if secondary_link_blocks.size > 0 -%}
+        <ul class="lux-drawer__list lux-drawer__list--aux">
+          {%- for block in secondary_link_blocks -%}
+            <li><a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </nav>
+    <div class="lux-drawer__footer">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="lux-drawer__account">
+          {%- if customer -%}{{ 'customer.account_fallback' | t }}{%- else -%}{{ 'customer.log_in' | t }}{%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
 
 {%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: 'drawer' -%}
 {%- endif -%}
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+{% stylesheet %}
+.lux-header {
+  position: relative;
+  z-index: 3;
+  display: block;
+  background: rgb(var(--color-background));
+}
+
+.lux-header--divided {
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.lux-header--frosted {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lux-tier {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lux-tier--brand {
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 3rem;
+}
+
+.lux-brand-left,
+.lux-brand-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  min-width: 140px;
+}
+
+.lux-brand-right {
+  justify-content: flex-end;
+}
+
+.lux-brand-center {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.lux-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+
+.lux-mobile-toggle .lux-icon-close {
+  display: none;
+}
+
+.lux-mobile-toggle[aria-expanded="true"] .lux-icon-menu {
+  display: none;
+}
+
+.lux-mobile-toggle[aria-expanded="true"] .lux-icon-close {
+  display: flex;
+}
+
+.lux-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lux-logo__image {
+  width: var(--lux-logo-width, 150px);
+  height: auto;
+  display: block;
+}
+
+.lux-logo__text {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.lux-search {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.lux-search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  background: #F4F4F4;
+  padding: 0 6px 0 20px;
+}
+
+.lux-search__input {
+  flex: 1 1 auto;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  min-width: 0;
+}
+
+.lux-search__input::placeholder {
+  color: #9b9b9b;
+}
+
+.lux-search__reset {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: #8a8a8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lux-search__reset.hidden {
+  display: none;
+}
+
+.lux-search__submit {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #ECECEC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1a1a1a;
+  transition: background 0.2s ease;
+}
+
+.lux-search__submit:hover {
+  background: #E2E2E2;
+}
+
+.lux-search__submit .svg-wrapper,
+.lux-search__reset .svg-wrapper {
+  width: 16px;
+  height: 16px;
+  display: flex;
+}
+
+.lux-search__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+.lux-icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F0F0F0;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.lux-icon-btn:hover {
+  background: #E6E6E6;
+}
+
+.lux-icon-btn .svg-wrapper {
+  width: 18px;
+  height: 18px;
+  display: flex;
+}
+
+.lux-icon-btn .cart-count-bubble {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  bottom: auto;
+  left: auto;
+  border-radius: 50%;
+  font-size: 11px;
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.lux-tier--aux {
+  justify-content: center;
+  border-top: 1px solid #E5E5E5;
+  padding: 8px 0;
+}
+
+.lux-aux-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.lux-aux-item {
+  border-right: 1px solid #E5E5E5;
+}
+
+.lux-aux-item:last-child {
+  border-right: none;
+}
+
+.lux-aux-link {
+  display: inline-block;
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #4A4A4A;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.lux-aux-link:hover,
+.lux-aux-link[aria-current="page"] {
+  color: #000000;
+}
+
+.lux-tier--primary {
+  justify-content: center;
+  border-top: 1px solid #E5E5E5;
+  padding: 12px 0;
+}
+
+.lux-primary-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.lux-primary-item {
+  position: relative;
+}
+
+.lux-primary-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.lux-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #FBEDE7;
+  color: var(--lux-badge-color, var(--lux-highlight-color, #E07A5F));
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lux-mega-panel,
+.lux-dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 15;
+}
+
+.lux-primary-item--has-panel:hover .lux-mega-panel,
+.lux-primary-item--has-panel:hover .lux-dropdown-panel,
+.lux-primary-item--has-panel:focus-within .lux-mega-panel,
+.lux-primary-item--has-panel:focus-within .lux-dropdown-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(4px);
+}
+
+.lux-mega-panel__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 160px;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.lux-mega-panel__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.lux-mega-panel__label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lux-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 180px;
+}
+
+.lux-dropdown-link {
+  display: block;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #1a1a1a;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 6px;
+}
+
+.lux-dropdown-link:hover {
+  background: #F6F6F6;
+}
+
+[data-hover-style="expand_line"] .lux-primary-link::after,
+[data-hover-style="expand_line"] .lux-aux-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: calc(100% - 32px);
+  height: 1.5px;
+  background: #000000;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+[data-hover-style="expand_line"] .lux-primary-link:hover::after,
+[data-hover-style="expand_line"] .lux-aux-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+[data-hover-style="color_fade"] .lux-primary-link,
+[data-hover-style="color_fade"] .lux-aux-link {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+[data-hover-style="color_fade"] .lux-primary-link:hover,
+[data-hover-style="color_fade"] .lux-aux-link:hover {
+  color: #6b6b6b;
+  transform: translateY(-2px);
+}
+
+[data-hover-style="pill_highlight"] .lux-primary-link,
+[data-hover-style="pill_highlight"] .lux-aux-link {
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+[data-hover-style="pill_highlight"] .lux-primary-link:hover,
+[data-hover-style="pill_highlight"] .lux-aux-link:hover {
+  background: #F4EBE1;
+}
+
+[data-highlight-anim="pulse"] .lux-badge {
+  animation: lux-badge-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes lux-badge-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+[data-highlight-anim="shimmer"] .lux-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-highlight-anim="shimmer"] .lux-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  animation: lux-badge-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes lux-badge-shimmer {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+
+.lux-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.lux-drawer[hidden] {
+  display: none;
+}
+
+.lux-drawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.lux-drawer__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(320px, 86vw);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.lux-drawer.is-open .lux-drawer__panel {
+  transform: translateX(0);
+}
+
+.lux-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.lux-drawer__close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lux-drawer__nav {
+  flex: 1 1 auto;
+  padding: 12px 8px;
+}
+
+.lux-drawer__list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.lux-drawer__list a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.lux-drawer__list--primary a {
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lux-drawer__list--aux a {
+  font-size: 13px;
+  color: #4A4A4A;
+}
+
+.lux-drawer__list a:hover {
+  background: #F6F6F6;
+}
+
+.lux-drawer__footer {
+  padding: 16px 20px;
+  border-top: 1px solid #E5E5E5;
+}
+
+.lux-drawer__account {
+  font-size: 13px;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 989px) {
+  .lux-tier--aux,
+  .lux-tier--primary {
+    display: none;
+  }
+
+  .lux-mobile-toggle {
+    display: flex;
+  }
+
+  .lux-tier--brand {
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+
+  .lux-brand-center {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+    margin-top: 10px;
+  }
+
+  .lux-brand-left,
+  .lux-brand-right {
+    min-width: auto;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .lux-mobile-toggle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-badge,
+  .lux-badge::before,
+  .lux-primary-link::after,
+  .lux-aux-link::after,
+  .lux-drawer__panel {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+{% endstylesheet %}
 
 {% javascript %}
-  class StickyHeader extends HTMLElement {
-    constructor() {
-      super();
-    }
-
+  class LuxHeader extends HTMLElement {
     connectedCallback() {
-      this.header = document.querySelector('.section-header');
-      this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
-      this.headerBounds = {};
+      this.sectionHeader = this.closest('.section-header') || this.parentElement;
+      this.stickyMode = this.dataset.sticky;
+      this.toggleBtn = this.querySelector('.lux-mobile-toggle');
+      this.drawer = document.getElementById('LuxMobileDrawer');
+
+      this.setHeaderHeight = this.setHeaderHeight.bind(this);
+      this.onScroll = this.onScroll.bind(this);
 
       this.setHeaderHeight();
+      window.addEventListener('resize', this.setHeaderHeight);
 
-      window.matchMedia('(max-width: 990px)').addEventListener('change', this.setHeaderHeight.bind(this));
+      if (this.stickyMode === 'sticky_blur') {
+        this.sectionHeader.classList.add('shopify-section-header-sticky');
+      } else if (this.stickyMode === 'hide_reveal') {
+        this.lastScroll = 0;
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+      }
 
-      if (this.headerIsAlwaysSticky) {
-        this.header.classList.add('shopify-section-header-sticky');
-      };
+      if (this.toggleBtn && this.drawer) {
+        this.toggleBtn.addEventListener('click', () => this.openDrawer());
 
-      this.currentScrollTop = 0;
-      this.preventReveal = false;
-      this.predictiveSearch = this.querySelector('predictive-search');
+        this.drawer.querySelectorAll('[data-lux-drawer-close]').forEach((element) => {
+          element.addEventListener('click', () => this.closeDrawer());
+        });
 
-      this.onScrollHandler = this.onScroll.bind(this);
-      this.hideHeaderOnScrollUp = () => this.preventReveal = true;
+        this.drawer.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') this.closeDrawer();
+        });
 
-      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-      window.addEventListener('scroll', this.onScrollHandler, false);
-
-      this.createObserver();
+        this.drawer.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => this.closeDrawer());
+        });
+      }
     }
 
     setHeaderHeight() {
-      document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
-    }
-
-    disconnectedCallback() {
-      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-      window.removeEventListener('scroll', this.onScrollHandler);
-    }
-
-    createObserver() {
-      let observer = new IntersectionObserver((entries, observer) => {
-        this.headerBounds = entries[0].intersectionRect;
-        observer.disconnect();
-      });
-
-      observer.observe(this.header);
+      if (!this.sectionHeader) return;
+      document.documentElement.style.setProperty('--header-height', `${this.sectionHeader.offsetHeight}px`);
     }
 
     onScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
-
-      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-        this.header.classList.add('scrolled-past-header');
-        if (this.preventHide) return;
-        requestAnimationFrame(this.hide.bind(this));
-      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-        this.header.classList.add('scrolled-past-header');
-        if (!this.preventReveal) {
-          requestAnimationFrame(this.reveal.bind(this));
-        } else {
-          window.clearTimeout(this.isScrolling);
-
-          this.isScrolling = setTimeout(() => {
-            this.preventReveal = false;
-          }, 66);
-
-          requestAnimationFrame(this.hide.bind(this));
-        }
-      } else if (scrollTop <= this.headerBounds.top) {
-        this.header.classList.remove('scrolled-past-header');
-        requestAnimationFrame(this.reset.bind(this));
+      if (scrollTop > this.lastScroll && scrollTop > this.offsetHeight) {
+        this.sectionHeader.classList.add('shopify-section-header-sticky', 'shopify-section-header-hidden', 'animate');
+      } else if (scrollTop < this.lastScroll) {
+        this.sectionHeader.classList.add('shopify-section-header-sticky', 'animate');
+        this.sectionHeader.classList.remove('shopify-section-header-hidden');
       }
 
-      this.currentScrollTop = scrollTop;
+      if (scrollTop <= 0) {
+        this.sectionHeader.classList.remove('shopify-section-header-sticky', 'shopify-section-header-hidden', 'animate');
+      }
+
+      this.lastScroll = scrollTop;
     }
 
-    hide() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
-      this.closeMenuDisclosure();
-      this.closeSearchModal();
+    openDrawer() {
+      this.drawer.hidden = false;
+      requestAnimationFrame(() => this.drawer.classList.add('is-open'));
+      this.toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
     }
 
-    reveal() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.add('shopify-section-header-sticky', 'animate');
-      this.header.classList.remove('shopify-section-header-hidden');
-    }
-
-    reset() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
-    }
-
-    closeMenuDisclosure() {
-      this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
-      this.disclosures.forEach(disclosure => disclosure.close());
-    }
-
-    closeSearchModal() {
-      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
-      this.searchModal.close(false);
+    closeDrawer() {
+      this.drawer.classList.remove('is-open');
+      this.toggleBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      window.setTimeout(() => {
+        this.drawer.hidden = true;
+      }, 300);
     }
   }
 
-  customElements.define('sticky-header', StickyHeader);
+  customElements.define('lux-header', LuxHeader);
 {% endjavascript %}
 
 <script type="application/ld+json">
@@ -448,191 +975,174 @@
 
 {% schema %}
 {
-  "name": "t:sections.header.name",
+  "name": "Header",
   "class": "section-header",
-  "max_blocks": 3,
   "settings": [
     {
-      "type": "select",
-      "id": "logo_position",
-      "options": [
-        {
-          "value": "top-left",
-          "label": "t:sections.header.settings.logo_position.options__2.label"
-        },
-        {
-          "value": "top-center",
-          "label": "t:sections.header.settings.logo_position.options__3.label"
-        },
-        {
-          "value": "middle-left",
-          "label": "t:sections.header.settings.logo_position.options__1.label"
-        },
-        {
-          "value": "middle-center",
-          "label": "t:sections.header.settings.logo_position.options__4.label"
-        }
-      ],
-      "default": "middle-left",
-      "label": "t:sections.header.settings.logo_position.label",
-      "info": "t:sections.header.settings.logo_help.content"
+      "type": "header",
+      "content": "Logo"
     },
     {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "options": [
-        {
-          "value": "center",
-          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
-        },
-        {
-          "value": "left",
-          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
-        }
-      ],
-      "default": "center",
-      "label": "t:sections.header.settings.mobile_logo_position.label"
-    },    
-    {
-      "type": "link_list",
-      "id": "menu",
-      "default": "main-menu",
-      "label": "t:sections.header.settings.menu.label"
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Transparent PNG or SVG recommended. Falls back to the theme logo, then the store name."
     },
     {
-      "type": "select",
-      "id": "menu_type_desktop",
-      "options": [
-        {
-          "value": "dropdown",
-          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
-        },
-        {
-          "value": "mega",
-          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
-        },
-        {
-          "value": "drawer",
-          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
-        }
-      ],
-      "default": "dropdown",
-      "label": "t:sections.header.settings.menu_type_desktop.label"
-    },
-    {
-      "type": "select",
-      "id": "sticky_header_type",
-      "options": [
-        {
-          "value": "none",
-          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
-        },
-        {
-          "value": "on-scroll-up",
-          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
-        },
-        {
-          "value": "always",
-          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
-        },
-        {
-          "value": "reduce-logo-size",
-          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
-        }
-      ],
-      "default": "on-scroll-up",
-      "label": "t:sections.header.settings.sticky_header_type.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop logo width",
+      "default": 160
     },
     {
       "type": "header",
-      "content": "t:sections.header.settings.header__1.content"
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu (Tier 3 categories)",
+      "default": "main-menu",
+      "info": "Used when no Category blocks are added below."
+    },
+    {
+      "type": "header",
+      "content": "Highlight tag"
+    },
+    {
+      "type": "text",
+      "id": "highlight_menu_item_title",
+      "label": "Highlight menu item title",
+      "default": "Ready to Ship",
+      "info": "Matches a Tier 3 menu item by title. Individual Category blocks can also be flagged below."
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight color",
+      "default": "#E07A5F"
+    },
+    {
+      "type": "header",
+      "content": "Animation & behavior"
+    },
+    {
+      "type": "select",
+      "id": "hover_style",
+      "label": "Link hover style",
+      "options": [
+        { "value": "expand_line", "label": "Minimal expand line" },
+        { "value": "color_fade", "label": "Smooth color fade & lift" },
+        { "value": "pill_highlight", "label": "Subtle pill highlight" }
+      ],
+      "default": "expand_line"
+    },
+    {
+      "type": "select",
+      "id": "sticky_behavior",
+      "label": "Sticky header behavior",
+      "options": [
+        { "value": "sticky_blur", "label": "Always sticky with frosted blur" },
+        { "value": "hide_reveal", "label": "Hide on scroll down, reveal on scroll up" },
+        { "value": "static", "label": "Static (scrolls with page)" }
+      ],
+      "default": "sticky_blur"
+    },
+    {
+      "type": "select",
+      "id": "highlight_animation",
+      "label": "Highlight tag animation",
+      "options": [
+        { "value": "pulse", "label": "Gentle pulse" },
+        { "value": "shimmer", "label": "Shimmer / sparkle" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "pulse"
+    },
+    {
+      "type": "header",
+      "content": "Style"
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
+      "label": "Color scheme",
       "default": "scheme-1"
     },
     {
-      "type": "color_scheme",
-      "id": "menu_color_scheme",
-      "label": "t:sections.header.settings.menu_color_scheme.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__utilities.content"
-    },
-    {
       "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": true,
-      "label": "t:sections.header.settings.enable_country_selector.label",
-      "info":"t:sections.header.settings.enable_country_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "t:sections.header.settings.enable_language_selector.label",
-      "info":"t:sections.header.settings.enable_language_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_customer_avatar",
-      "default": true,
-      "label": "t:sections.header.settings.enable_customer_avatar.label",
-      "info": "t:sections.header.settings.enable_customer_avatar.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.spacing"
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.header.settings.margin_bottom.label",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 20
+      "id": "show_line_separator",
+      "label": "Show bottom border",
+      "default": true
     }
   ],
   "blocks": [
     {
+      "type": "secondary_link",
+      "name": "Secondary link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link title",
+          "default": "Gifting"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "category_dropdown",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Dropdown preview image",
+          "info": "Optional. Adds a visual mega-menu preview panel under this category."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Flag as highlighted",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Highlight badge label",
+          "default": "Ready to Ship"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Highlight badge color",
+          "default": "#E07A5F"
+        }
+      ]
+    },
+    {
       "type": "@app"
     }
-  ]
+  ],
+  "max_blocks": 8
 }
 {% endschema %}

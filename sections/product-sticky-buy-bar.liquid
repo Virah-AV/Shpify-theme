@@ -1,0 +1,231 @@
+{% comment %}
+  Persistent bottom conversion dock. Appears once the user scrolls past the
+  main buy box and proxies clicks to the primary product form.
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+  assign current_variant = product.selected_or_first_available_variant
+  assign thumb_image = current_variant.featured_image | default: product.featured_image
+-%}
+
+{%- if product -%}
+  <div class="pdp-sticky-bar" id="PdpStickyBar-{{ sid }}" data-pdp-sticky-bar aria-hidden="true">
+    <div class="pdp-sticky-bar__inner page-width">
+      <div class="pdp-sticky-bar__product">
+        {%- if thumb_image -%}
+          <img
+            src="{{ thumb_image | image_url: width: 96, height: 96, crop: 'center' }}"
+            alt="{{ thumb_image.alt | default: product.title | escape }}"
+            width="48"
+            height="48"
+            loading="lazy"
+            class="pdp-sticky-bar__thumb"
+          >
+        {%- endif -%}
+        <div class="pdp-sticky-bar__info">
+          <p class="pdp-sticky-bar__title">{{ product.title }}</p>
+          <p class="pdp-sticky-bar__price" data-pdp-sticky-price>{{ current_variant.price | money }}</p>
+        </div>
+      </div>
+
+      <div class="pdp-sticky-bar__actions">
+        <button type="button" class="pdp-sticky-bar__btn pdp-sticky-bar__btn--outline" data-pdp-sticky-add>
+          Add to Cart
+        </button>
+        <button type="button" class="pdp-sticky-bar__btn pdp-sticky-bar__btn--solid" data-pdp-sticky-checkout>
+          Instant Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- style -%}
+    #PdpStickyBar-{{ sid }} {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 12px 24px;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    #PdpStickyBar-{{ sid }}.is-visible {
+      transform: translateY(0);
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__product {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__thumb {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__info {
+      min-width: 0;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F1D1A;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 320px;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__price {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #76726B;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: none;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn {
+      appearance: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border-radius: 999px;
+      padding: 12px 18px;
+      white-space: nowrap;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn:active {
+      transform: scale(0.97);
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn--outline {
+      background: #ffffff;
+      color: #1F1D1A;
+      border: 1px solid #121212;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn--solid {
+      background: #121212;
+      color: #ffffff;
+      border: 1px solid #121212;
+    }
+
+    #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn:hover {
+      opacity: 0.85;
+    }
+
+    @media screen and (max-width: 599px) {
+      #PdpStickyBar-{{ sid }} .pdp-sticky-bar__title {
+        max-width: 140px;
+      }
+
+      #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn {
+        padding: 10px 14px;
+        font-size: 12px;
+      }
+    }
+  {%- endstyle -%}
+
+  <script>
+    (function () {
+      var bar = document.getElementById('PdpStickyBar-{{ sid }}');
+      if (!bar || bar.dataset.pdpInitialized) return;
+      bar.dataset.pdpInitialized = 'true';
+
+      var buyBox = document.querySelector('.pdp-buy-box');
+      var priceEl = bar.querySelector('[data-pdp-sticky-price]');
+      var addButton = bar.querySelector('[data-pdp-sticky-add]');
+      var checkoutButton = bar.querySelector('[data-pdp-sticky-checkout]');
+
+      function syncPrice() {
+        if (!buyBox || !priceEl) return;
+        var sourcePrice = buyBox.querySelector('[data-pdp-price-current]');
+        if (sourcePrice && sourcePrice.textContent.trim()) {
+          priceEl.textContent = sourcePrice.textContent.trim();
+        }
+      }
+
+      if (buyBox) {
+        var priceTarget = buyBox.querySelector('[data-pdp-price-current]');
+        if (priceTarget && 'MutationObserver' in window) {
+          new MutationObserver(syncPrice).observe(priceTarget, { childList: true, characterData: true, subtree: true });
+        }
+
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                var pastBuyBox = entry.boundingClientRect.top < 0 && !entry.isIntersecting;
+                bar.classList.toggle('is-visible', pastBuyBox);
+                bar.setAttribute('aria-hidden', pastBuyBox ? 'false' : 'true');
+              });
+            },
+            { threshold: 0 }
+          );
+          observer.observe(buyBox);
+        }
+      }
+
+      if (addButton) {
+        addButton.addEventListener('click', function () {
+          if (!buyBox) return;
+          var mainAddButton = buyBox.querySelector('[data-pdp-add-to-cart]');
+          if (mainAddButton && !mainAddButton.hasAttribute('disabled')) {
+            mainAddButton.click();
+          }
+        });
+      }
+
+      if (checkoutButton) {
+        checkoutButton.addEventListener('click', function () {
+          if (!buyBox) return;
+          var mainInstantButton = buyBox.querySelector('[data-pdp-instant-buy]');
+          if (mainInstantButton && !mainInstantButton.hasAttribute('disabled')) {
+            mainInstantButton.click();
+          }
+        });
+      }
+
+      syncPrice();
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky buy bar",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": []
+}
+{% endschema %}

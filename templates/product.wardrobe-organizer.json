@@ -1,1 +1,88 @@
-{"sections":{"main":{"type":"main-product","blocks":{"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"judge_me_reviews_preview_badge_4nD7qC":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{}},"variant_picker_RhtMxm":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"buy_buttons_UVTjh3":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"collapsible_tab_B98Keb":{"type":"collapsible_tab","settings":{"heading":"Product Specifications","icon":"clipboard","content":"<p><strong>Upgraded Steel Frame Design:<\/strong> Built with a solid steel frame and thickened bottom plate, this organizer maintains shape and durability even when fully loaded. They maintain their shape even when filled to capacity, ensuring your items remain well-organized.<\/p><p><strong>Cationic Fabric Construction:<\/strong> Wrapped in high-quality cationic fabric, the box is breathable, wear-resistant, and visually elegant—perfect for modern homes.<\/p><p><strong>Protective Cover:<\/strong> Integrated transparent cover keeps stored clothing, socks, or accessories dust-free and protected, while still allowing for easy viewing and quick access<\/p><p><strong>Handy Leather-Style Handle:<\/strong> Features a comfortable, sturdy pull-out handle for convenient sliding or carrying; smooth gliding lets the bin act as a drawer or portable caddy, easy to remove, transport, and replace items as needed. <\/p>","page":""}},"collapsible-row-1":{"type":"collapsible_tab","settings":{"heading":"Product features","icon":"star","content":"<p><strong>Multi-Compartment Storage:<\/strong> Interior slots keep items neatly separated and organized; ideal for underwear, towels, accessories, and more.<\/p><p><strong>Stackable & Space-Saving:<\/strong> Designed for efficient vertical or horizontal stacking, maximizing wardrobe, closet, or shelf space without clutter.<\/p><p><strong>Foldable & Lightweight:<\/strong> Easily collapses when not in use for compact storage and portability.<\/p>","page":"product-features"}},"collapsible-row-0":{"type":"collapsible_tab","settings":{"heading":"Materials and care","icon":"leaf","content":"<h4><strong>Materials:<\/strong> <\/h4><p>Premium cationic fabric exterior, reinforced with a steel frame, thickened bottom plate, and synthetic leather handle for strength and style.<\/p><h4><strong>Care Instructions:<\/strong><\/h4><ul><li>Wipe clean with a soft damp cloth to remove surface dust; spot-clean stains using mild detergent.<\/li><li>Avoid prolonged exposure to moisture or direct sunlight to maintain fabric integrity.<\/li><li>Remove stored items before folding for safe, compact storage.<\/li><li>Do not overload compartments; observe suggested maximum weight to preserve frame and fabric longevity.Store in a dry environment when not in use.<\/li><\/ul>","page":"materials-and-care"}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["title","price","judge_me_reviews_preview_badge_4nD7qC","variant_picker_RhtMxm","buy_buttons_UVTjh3","description","collapsible_tab_B98Keb","collapsible-row-1","collapsible-row-0","share"],"settings":{"enable_sticky_info":true,"color_scheme":"","media_size":"small","constrain_to_viewport":false,"media_fit":"cover","gallery_layout":"thumbnail_slider","mobile_thumbnails":"show","media_position":"right","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":36}},"quick-order-list":{"type":"quick-order-list","settings":{"variants_per_page":50,"show_image":true,"show_sku":true,"color_scheme":"scheme-2","padding_top":36,"padding_bottom":16}},"17601896727ac7baa0":{"type":"apps","blocks":{"judge_me_reviews_review_widget_33npje":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{"review_data":"sample_data","show_shop_reviews":false,"empty_state":"empty_widget","max_width":1200}}},"block_order":["judge_me_reviews_review_widget_33npje"],"settings":{"include_margins":true}},"related-products":{"type":"related-products","settings":{"heading":"Other industry favorites","heading_size":"h2","products_to_show":5,"columns_desktop":5,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":44}}},"order":["main","quick-order-list","17601896727ac7baa0","related-products"]}
+{
+    "sections":  {
+                     "main":  {
+                                  "type":  "product-main-showcase",
+                                  "blocks":  {
+                                                 "judge_me_reviews_preview_badge_4nD7qC":  {
+                                                                                               "type":  "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+                                                                                               "settings":  {
+
+                                                                                                            }
+                                                                                           }
+                                             }
+                              },
+                     "description":  {
+                                         "type":  "product-description"
+                                     },
+                     "features":  {
+                                      "type":  "product-features",
+                                      "blocks":  {
+                                                     "collapsible_tab_B98Keb":  {
+                                                                                    "type":  "feature",
+                                                                                    "settings":  {
+                                                                                                     "heading":  "Product Specifications",
+                                                                                                     "content":  "\u003cp\u003e\u003cstrong\u003eUpgraded Steel Frame Design:\u003c/strong\u003e Built with a solid steel frame and thickened bottom plate, this organizer maintains shape and durability even when fully loaded. They maintain their shape even when filled to capacity, ensuring your items remain well-organized.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCationic Fabric Construction:\u003c/strong\u003e Wrapped in high-quality cationic fabric, the box is breathable, wear-resistant, and visually elegant—perfect for modern homes.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eProtective Cover:\u003c/strong\u003e Integrated transparent cover keeps stored clothing, socks, or accessories dust-free and protected, while still allowing for easy viewing and quick access\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eHandy Leather-Style Handle:\u003c/strong\u003e Features a comfortable, sturdy pull-out handle for convenient sliding or carrying; smooth gliding lets the bin act as a drawer or portable caddy, easy to remove, transport, and replace items as needed. \u003c/p\u003e"
+                                                                                                 }
+                                                                                },
+                                                     "collapsible-row-1":  {
+                                                                               "type":  "feature",
+                                                                               "settings":  {
+                                                                                                "heading":  "Product features",
+                                                                                                "content":  "\u003cp\u003e\u003cstrong\u003eMulti-Compartment Storage:\u003c/strong\u003e Interior slots keep items neatly separated and organized; ideal for underwear, towels, accessories, and more.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eStackable \u0026 Space-Saving:\u003c/strong\u003e Designed for efficient vertical or horizontal stacking, maximizing wardrobe, closet, or shelf space without clutter.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eFoldable \u0026 Lightweight:\u003c/strong\u003e Easily collapses when not in use for compact storage and portability.\u003c/p\u003e",
+                                                                                                "page":  "product-features"
+                                                                                            }
+                                                                           }
+                                                 },
+                                      "block_order":  [
+                                                          "collapsible_tab_B98Keb",
+                                                          "collapsible-row-1"
+                                                      ]
+                                  },
+                     "materials_care":  {
+                                            "type":  "product-materials-care",
+                                            "blocks":  {
+                                                           "collapsible-row-0":  {
+                                                                                     "type":  "panel",
+                                                                                     "settings":  {
+                                                                                                      "heading":  "Materials and care",
+                                                                                                      "content":  "\u003ch4\u003e\u003cstrong\u003eMaterials:\u003c/strong\u003e \u003c/h4\u003e\u003cp\u003ePremium cationic fabric exterior, reinforced with a steel frame, thickened bottom plate, and synthetic leather handle for strength and style.\u003c/p\u003e\u003ch4\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e\u003c/h4\u003e\u003cul\u003e\u003cli\u003eWipe clean with a soft damp cloth to remove surface dust; spot-clean stains using mild detergent.\u003c/li\u003e\u003cli\u003eAvoid prolonged exposure to moisture or direct sunlight to maintain fabric integrity.\u003c/li\u003e\u003cli\u003eRemove stored items before folding for safe, compact storage.\u003c/li\u003e\u003cli\u003eDo not overload compartments; observe suggested maximum weight to preserve frame and fabric longevity.Store in a dry environment when not in use.\u003c/li\u003e\u003c/ul\u003e",
+                                                                                                      "page":  "materials-and-care"
+                                                                                                  }
+                                                                                 }
+                                                       },
+                                            "block_order":  [
+                                                                "collapsible-row-0"
+                                                            ]
+                                        },
+                     "blueprint":  {
+                                       "type":  "product-dimensions-blueprint",
+                                       "settings":  {
+                                                        "depth_label":  "45 cm",
+                                                        "package_dimensions":  "105 x 48 x 15 cm",
+                                                        "assembly_note":  "Flat-pack assembly - approx. 35 minutes with included hardware.",
+                                                        "height_label":  "175 cm",
+                                                        "width_label":  "100 cm",
+                                                        "overall_dimensions":  "100 x 45 x 175 cm (W x D x H)",
+                                                        "max_load":  "60 kg total shelf capacity",
+                                                        "net_weight":  "20 kg",
+                                                        "clearance_below":  "N/A",
+                                                        "warranty_note":  "2-Year Manufacturer Warranty."
+                                                    }
+                                   },
+                     "recommendations":  {
+                                             "type":  "product-recommendations"
+                                         },
+                     "sticky_dock":  {
+                                         "type":  "product-sticky-buy-bar"
+                                     }
+                 },
+    "order":  [
+                  "main",
+                  "description",
+                  "features",
+                  "materials_care",
+                  "blueprint",
+                  "recommendations",
+                  "sticky_dock"
+              ]
+}

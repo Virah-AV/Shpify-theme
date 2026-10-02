@@ -1,0 +1,208 @@
+{%- liquid
+  assign sb_p1 = section.settings.phrase_one
+  assign sb_p2 = section.settings.phrase_two
+  assign sb_p3 = section.settings.phrase_three
+-%}
+
+<div
+  class="sb-section"
+  style="--sb-bg: {{ section.settings.background_color }}; --sb-text: {{ section.settings.text_color }}; --sb-accent: {{ section.settings.accent_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="sb-container page-width">
+    <ul class="sb-list" role="list">
+      {%- if sb_p1 != blank -%}
+        <li class="sb-item">
+          <span class="sb-item__icon svg-wrapper">{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+          <span class="sb-item__text">{{ sb_p1 | escape }}</span>
+        </li>
+      {%- endif -%}
+      {%- if sb_p2 != blank -%}
+        <li class="sb-item">
+          <span class="sb-item__icon svg-wrapper">{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+          <span class="sb-item__text">{{ sb_p2 | escape }}</span>
+        </li>
+      {%- endif -%}
+      {%- if sb_p3 != blank -%}
+        <li class="sb-item">
+          <span class="sb-item__icon svg-wrapper">{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+          <span class="sb-item__text">{{ sb_p3 | escape }}</span>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+.sb-section {
+  background: var(--sb-bg, #14140F);
+}
+
+.sb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sb-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 32px;
+}
+
+.sb-item + .sb-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.sb-item__icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  color: var(--sb-accent, #C9A227);
+  transition: transform 0.3s ease;
+}
+
+.sb-item:hover .sb-item__icon {
+  transform: scale(1.2) rotate(-8deg);
+}
+
+.sb-item__text {
+  position: relative;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sb-text, #F5F1E8);
+  transition: letter-spacing 0.3s ease;
+}
+
+.sb-item__text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: var(--sb-accent, #C9A227);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.sb-item:hover .sb-item__text {
+  letter-spacing: 0.12em;
+}
+
+.sb-item:hover .sb-item__text::after {
+  transform: scaleX(1);
+}
+
+@media screen and (max-width: 749px) {
+  .sb-item {
+    padding: 6px 16px;
+  }
+
+  .sb-item + .sb-item::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-item__icon,
+  .sb-item__text,
+  .sb-item__text::after {
+    transition: none;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Statement banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "phrase_one",
+      "label": "Phrase 1",
+      "default": "Outstanding service"
+    },
+    {
+      "type": "text",
+      "id": "phrase_two",
+      "label": "Phrase 2",
+      "default": "Exclusive pricing"
+    },
+    {
+      "type": "text",
+      "id": "phrase_three",
+      "label": "Phrase 3",
+      "default": "Industry expertise"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#14140F"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#F5F1E8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (icon + underline)",
+      "default": "#C9A227"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Statement banner"
+    }
+  ]
+}
+{% endschema %}

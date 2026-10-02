@@ -1,0 +1,200 @@
+{% comment %}
+  Features & specifications — numbered editorial card grid.
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="pdp-features" id="PdpFeatures-{{ sid }}">
+    <div class="pdp-features__inner page-width">
+      <h2 class="pdp-features__heading">{{ section.settings.heading }}</h2>
+
+      <div class="pdp-features__grid">
+        {%- for block in section.blocks -%}
+          <div class="pdp-features__card" {{ block.shopify_attributes }}>
+            <span class="pdp-features__index">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+            <h3 class="pdp-features__card-heading">{{ block.settings.heading }}</h3>
+            <div class="pdp-features__card-content rte">
+              {{ block.settings.content }}
+              {{ block.settings.page.content }}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- style -%}
+    #PdpFeatures-{{ sid }} {
+      background: #FFFFFF;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1F1D1A;
+      margin: 0 0 36px;
+      text-align: center;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card {
+      position: relative;
+      background: #FBF9F5;
+      border-radius: 16px;
+      padding: 32px 28px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(31, 29, 26, 0.08);
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__index {
+      display: block;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: rgba(196, 115, 85, 0.22);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card-heading {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1F1D1A;
+      margin: 0 0 10px;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card-content {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #76726B;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card-content p {
+      margin: 0 0 10px;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3px;
+      background: #C47355;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    #PdpFeatures-{{ sid }} .pdp-features__card:hover::before {
+      transform: scaleX(1);
+    }
+
+    @media screen and (max-width: 599px) {
+      #PdpFeatures-{{ sid }} .pdp-features__heading {
+        font-size: 22px;
+      }
+
+      #PdpFeatures-{{ sid }} .pdp-features__card {
+        padding: 24px 20px;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product features",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Features & Specifications"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 72,
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Feature heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Describe this feature.</p>"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Linked page (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Product features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "heading": "Thoughtful Design",
+            "content": "<p>Every detail is considered, from proportion to finish, for a piece that feels effortless in any room.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "heading": "Built to Last",
+            "content": "<p>Constructed with premium materials and reinforced joinery for lasting everyday durability.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,939 @@
+{% comment %}
+  Warm Japandi / Editorial Minimalist product showcase.
+  Split layout: asymmetrical media gallery (left) + sticky buy box (right).
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+  assign product_form_id = 'PdpForm-' | append: sid
+
+  if product
+    assign current_variant = product.selected_or_first_available_variant
+    assign price = current_variant.price
+    assign compare_at_price = current_variant.compare_at_price
+    assign is_on_sale = false
+    if compare_at_price > price
+      assign is_on_sale = true
+      assign save_amount = compare_at_price | minus: price
+      assign save_percent = save_amount | times: 100.0 | divided_by: compare_at_price | round: 0
+    endif
+
+    assign crumb_collection = collection
+    if crumb_collection == blank
+      assign crumb_collection = product.collections.first
+    endif
+  endif
+-%}
+
+<section class="pdp-showcase" id="PdpShowcase-{{ sid }}" data-pdp-showcase>
+  {%- if product -%}
+    <div class="pdp-showcase__inner page-width">
+      <div class="pdp-gallery" data-pdp-gallery>
+        <div class="pdp-gallery__thumbs" data-pdp-thumbs>
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              <button
+                type="button"
+                class="pdp-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                data-pdp-thumb
+                data-index="{{ forloop.index0 }}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80 }}
+              </button>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="pdp-gallery__stage">
+          <button type="button" class="pdp-gallery__wishlist" data-pdp-wishlist aria-label="Save to wishlist" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <path d="M12 20.5s-7.5-4.6-10-9.3C.4 7.8 2 4.5 5.3 3.8c2-.4 4 .5 5 2.2 1-1.7 3-2.6 5-2.2C18.6 4.5 20.2 7.8 18.6 11.2c-2.5 4.7-10 9.3-10 9.3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              {%- liquid
+                assign loading_value = 'lazy'
+                if forloop.first
+                  assign loading_value = 'eager'
+                endif
+              -%}
+              <div class="pdp-gallery__frame{% if forloop.first %} is-active{% endif %}" data-pdp-slide data-index="{{ forloop.index0 }}">
+                {{
+                  media
+                  | media_tag:
+                    image_size: '1200x',
+                    loading: loading_value,
+                    class: 'pdp-gallery__media',
+                    controls: true,
+                    loop: false
+                }}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="pdp-gallery__frame is-active pdp-gallery__frame--placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'pdp-gallery__placeholder' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="pdp-buybox-col">
+        <div class="pdp-buy-box pdp-buy-box" id="ProductBuyBox-{{ sid }}" data-pdp-buy-box>
+          {%- if section.settings.show_breadcrumb -%}
+            <nav class="pdp-breadcrumb" aria-label="Breadcrumb">
+              <a href="{{ routes.root_url }}">Home</a>
+              {%- if crumb_collection != blank -%}
+                <span class="pdp-breadcrumb__sep" aria-hidden="true">/</span>
+                <a href="{{ crumb_collection.url }}">{{ crumb_collection.title }}</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+
+          <h1 class="pdp-title">{{ product.title }}</h1>
+
+          <div class="pdp-price" data-pdp-price>
+            <span class="pdp-price__current" data-pdp-price-current>{{ price | money }}</span>
+            <s class="pdp-price__compare" data-pdp-price-compare {% unless is_on_sale %}hidden{% endunless %}>
+              {% if is_on_sale %}{{ compare_at_price | money }}{% endif %}
+            </s>
+            <span class="pdp-price__badge" data-pdp-save-badge {% unless is_on_sale %}hidden{% endunless %}>
+              Save {{ save_percent }}%
+            </span>
+          </div>
+
+          <div class="pdp-stock" data-pdp-stock>
+            <span class="pdp-stock__dot{% unless current_variant.available %} pdp-stock__dot--off{% endunless %}" data-pdp-stock-dot></span>
+            <span data-pdp-stock-text>
+              {%- if current_variant.available -%}
+                In Stock — Dispatched in 48 Hours with White Glove Delivery
+              {%- else -%}
+                Currently Unavailable — Join the Waitlist
+              {%- endif -%}
+            </span>
+          </div>
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="pdp-options" data-pdp-options>
+              {%- for option in product.options_with_values -%}
+                <div class="pdp-option" data-option-index="{{ forloop.index0 }}">
+                  <p class="pdp-option__label">
+                    {{ option.name }}: <span data-pdp-option-value>{{ option.selected_value }}</span>
+                  </p>
+                  <div class="pdp-pills">
+                    {%- for value in option.values -%}
+                      <button
+                        type="button"
+                        class="pdp-pill{% if value == option.selected_value %} is-active{% endif %}"
+                        data-option-index="{{ forloop.parentloop.index0 }}"
+                        data-value="{{ value | escape }}"
+                      >
+                        {{- value -}}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <script type="application/json" data-pdp-variants>
+            {{ product.variants | json }}
+          </script>
+
+          <div
+            class="pdp-form-wrapper"
+            data-pdp-currency="{{ cart.currency.iso_code }}"
+            data-pdp-locale="{{ request.locale.iso_code }}"
+          >
+            <div class="pdp-form-error" data-pdp-error hidden></div>
+            {%- form 'product', product, id: product_form_id, class: 'pdp-form', novalidate: 'novalidate' -%}
+              <input
+                type="hidden"
+                name="id"
+                value="{{ current_variant.id }}"
+                data-pdp-variant-id
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+              <input type="hidden" name="quantity" value="1">
+              <div class="pdp-actions">
+                <button
+                  type="submit"
+                  name="add"
+                  class="pdp-btn pdp-btn--outline"
+                  data-pdp-add-to-cart
+                  {% unless current_variant.available %}disabled{% endunless %}
+                >
+                  <span data-pdp-add-label>
+                    {%- if current_variant.available -%}
+                      Add to Cart
+                    {%- else -%}
+                      Sold Out
+                    {%- endif -%}
+                  </span>
+                  <span class="pdp-btn__spinner" data-pdp-spinner hidden></span>
+                </button>
+                <button
+                  type="button"
+                  class="pdp-btn pdp-btn--solid"
+                  data-pdp-instant-buy
+                  data-variant-id="{{ current_variant.id }}"
+                  {% unless current_variant.available %}disabled{% endunless %}
+                >
+                  Instant Buy Now
+                </button>
+              </div>
+            {%- endform -%}
+          </div>
+
+          {%- assign app_blocks = section.blocks | where: 'type', '@app' -%}
+          {%- if app_blocks.size > 0 -%}
+            <div class="pdp-app-blocks">
+              {%- for block in app_blocks -%}
+                {% render block %}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="pdp-showcase__placeholder page-width">
+      <p>Add a product to preview the showcase.</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{%- style -%}
+  #PdpShowcase-{{ sid }} {
+    --pdp-bg: #FBF9F5;
+    --pdp-surface: #FFFFFF;
+    --pdp-text: #1F1D1A;
+    --pdp-muted: #76726B;
+    --pdp-accent: #C47355;
+    --pdp-onyx: #121212;
+    background: var(--pdp-bg);
+    color: var(--pdp-text);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-showcase__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 560px;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumb {
+    appearance: none;
+    cursor: pointer;
+    padding: 0;
+    border: 1px solid rgba(31, 29, 26, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    flex: none;
+    background: #F0ECE4;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumb:hover {
+    opacity: 0.9;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__thumb.is-active {
+    opacity: 1;
+    border-color: var(--pdp-accent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage {
+    position: relative;
+    aspect-ratio: 4 / 4.5;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #F0ECE4;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__wishlist {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--pdp-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__wishlist:hover {
+    transform: scale(1.08);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__wishlist[aria-pressed="true"] {
+    color: var(--pdp-accent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__wishlist[aria-pressed="true"] svg path {
+    fill: currentColor;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__frame.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__media,
+  #PdpShowcase-{{ sid }} .pdp-gallery__frame img,
+  #PdpShowcase-{{ sid }} .pdp-gallery__frame video,
+  #PdpShowcase-{{ sid }} .pdp-gallery__frame model-viewer,
+  #PdpShowcase-{{ sid }} .pdp-gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active .pdp-gallery__media,
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active img,
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active video {
+    transform: scale(1.03);
+  }
+
+
+
+  #PdpShowcase-{{ sid }} .pdp-buy-box {
+    background: var(--pdp-surface);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(31, 29, 26, 0.04);
+  }
+
+  @media screen and (min-width: 990px) {
+    #PdpShowcase-{{ sid }} .pdp-buy-box {
+      position: sticky;
+      top: 32px;
+    }
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-breadcrumb {
+    font-size: 13px;
+    color: var(--pdp-muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-breadcrumb a {
+    color: var(--pdp-muted);
+    text-decoration: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-breadcrumb a:hover {
+    color: var(--pdp-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-breadcrumb__sep {
+    margin: 0 6px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 0 0 18px;
+    color: var(--pdp-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-price__current {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--pdp-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-price__compare {
+    font-size: 16px;
+    color: var(--pdp-muted);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-price__badge {
+    background: rgba(196, 115, 85, 0.12);
+    color: var(--pdp-accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-stock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--pdp-muted);
+    background: rgba(31, 29, 26, 0.03);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 28px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-stock__dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    border-radius: 50%;
+    background: #3DA35D;
+    box-shadow: 0 0 0 0 rgba(61, 163, 93, 0.6);
+    animation: pdp-pulse 1.8s infinite;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-stock__dot--off {
+    background: #B3ADA3;
+    animation: none;
+  }
+
+  @keyframes pdp-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(61, 163, 93, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 7px rgba(61, 163, 93, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(61, 163, 93, 0);
+    }
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-options {
+    margin-bottom: 28px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-option + .pdp-option {
+    margin-top: 16px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-option__label {
+    font-size: 13px;
+    color: var(--pdp-muted);
+    margin: 0 0 10px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-option__label span {
+    color: var(--pdp-text);
+    font-weight: 600;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-pill {
+    appearance: none;
+    cursor: pointer;
+    background: var(--pdp-surface);
+    border: 1px solid rgba(31, 29, 26, 0.14);
+    color: var(--pdp-text);
+    font-size: 13px;
+    line-height: 1;
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-pill:hover {
+    border-color: var(--pdp-accent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-pill.is-active {
+    background: var(--pdp-onyx);
+    border-color: var(--pdp-onyx);
+    color: #fff;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-form-error {
+    background: #FBEAE5;
+    color: #A3391E;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn {
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 999px;
+    padding: 16px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn:active {
+    transform: scale(0.98);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn--outline {
+    background: #ffffff;
+    color: var(--pdp-text);
+    border: 1px solid var(--pdp-onyx);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn--solid {
+    background: var(--pdp-onyx);
+    color: #ffffff;
+    border: 1px solid var(--pdp-onyx);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn--outline:hover,
+  #PdpShowcase-{{ sid }} .pdp-btn--solid:hover {
+    opacity: 0.85;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn__spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: currentColor;
+    animation: pdp-spin 0.7s linear infinite;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-btn--outline .pdp-btn__spinner {
+    border: 2px solid rgba(31, 29, 26, 0.2);
+    border-top-color: var(--pdp-text);
+  }
+
+  @keyframes pdp-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-app-blocks {
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #PdpShowcase-{{ sid }} .pdp-showcase__inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-buy-box {
+      padding: 28px;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #PdpShowcase-{{ sid }} .pdp-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-gallery__thumbs {
+      flex-direction: row;
+      order: 2;
+      max-height: none;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-gallery__stage {
+      order: 1;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-actions {
+      grid-template-columns: 1fr;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-title {
+      font-size: 26px;
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('PdpShowcase-{{ sid }}');
+    if (!root || root.dataset.pdpInitialized) return;
+    root.dataset.pdpInitialized = 'true';
+
+    var buyBox = root.querySelector('[data-pdp-buy-box]');
+    var variantScript = root.querySelector('[data-pdp-variants]');
+    var variants = [];
+    try {
+      variants = variantScript ? JSON.parse(variantScript.textContent) : [];
+    } catch (e) {
+      variants = [];
+    }
+
+    var thumbs = root.querySelectorAll('[data-pdp-thumb]');
+    var slides = root.querySelectorAll('[data-pdp-slide]');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var index = thumb.dataset.index;
+        thumbs.forEach(function (t) {
+          t.classList.toggle('is-active', t === thumb);
+        });
+        slides.forEach(function (slide) {
+          slide.classList.toggle('is-active', slide.dataset.index === index);
+        });
+      });
+    });
+
+    var wishlistButton = root.querySelector('[data-pdp-wishlist]');
+    if (wishlistButton) {
+      var wishlistKey = 'pdp-wishlist-{{ product.id }}';
+      if (window.localStorage && window.localStorage.getItem(wishlistKey)) {
+        wishlistButton.setAttribute('aria-pressed', 'true');
+      }
+      wishlistButton.addEventListener('click', function () {
+        var pressed = wishlistButton.getAttribute('aria-pressed') === 'true';
+        wishlistButton.setAttribute('aria-pressed', String(!pressed));
+        try {
+          if (window.localStorage) {
+            if (pressed) {
+              window.localStorage.removeItem(wishlistKey);
+            } else {
+              window.localStorage.setItem(wishlistKey, '1');
+            }
+          }
+        } catch (e) {
+          /* localStorage unavailable */
+        }
+      });
+    }
+
+    var optionsWrapper = root.querySelector('[data-pdp-options]');
+    var selected = [];
+    if (optionsWrapper) {
+      var groups = optionsWrapper.querySelectorAll('.pdp-option');
+      groups.forEach(function (group) {
+        var active = group.querySelector('.pdp-pill.is-active');
+        selected[parseInt(group.dataset.optionIndex, 10)] = active ? active.dataset.value : null;
+      });
+    }
+
+    var formWrapper = root.querySelector('.pdp-form-wrapper');
+    var currencyCode = (formWrapper && formWrapper.dataset.pdpCurrency) || 'USD';
+    var localeCode = (formWrapper && formWrapper.dataset.pdpLocale) || 'en';
+
+    function formatMoney(cents) {
+      try {
+        return new Intl.NumberFormat(localeCode, { style: 'currency', currency: currencyCode }).format(cents / 100);
+      } catch (e) {
+        return '$' + (cents / 100).toFixed(2);
+      }
+    }
+
+    function findMatchingVariant() {
+      if (!selected.length) return variants[0];
+      for (var i = 0; i < variants.length; i++) {
+        var v = variants[i];
+        var matches = true;
+        for (var j = 0; j < selected.length; j++) {
+          if (selected[j] && v.options[j] !== selected[j]) {
+            matches = false;
+            break;
+          }
+        }
+        if (matches) return v;
+      }
+      return null;
+    }
+
+    function updateUI(variant) {
+      var priceEl = buyBox.querySelector('[data-pdp-price-current]');
+      var compareEl = buyBox.querySelector('[data-pdp-price-compare]');
+      var badgeEl = buyBox.querySelector('[data-pdp-save-badge]');
+      var stockDot = buyBox.querySelector('[data-pdp-stock-dot]');
+      var stockText = buyBox.querySelector('[data-pdp-stock-text]');
+      var variantIdInput = buyBox.querySelector('[data-pdp-variant-id]');
+      var addButton = buyBox.querySelector('[data-pdp-add-to-cart]');
+      var addLabel = buyBox.querySelector('[data-pdp-add-label]');
+      var instantButton = buyBox.querySelector('[data-pdp-instant-buy]');
+
+      if (!variant) {
+        if (addButton) addButton.setAttribute('disabled', 'disabled');
+        if (instantButton) instantButton.setAttribute('disabled', 'disabled');
+        if (addLabel) addLabel.textContent = 'Unavailable';
+        return;
+      }
+
+      if (priceEl) priceEl.textContent = formatMoney(variant.price);
+
+      var onSale = variant.compare_at_price && variant.compare_at_price > variant.price;
+      if (compareEl) {
+        compareEl.textContent = onSale ? formatMoney(variant.compare_at_price) : '';
+        compareEl.hidden = !onSale;
+      }
+      if (badgeEl) {
+        if (onSale) {
+          var pct = Math.round(((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100);
+          badgeEl.textContent = 'Save ' + pct + '%';
+          badgeEl.hidden = false;
+        } else {
+          badgeEl.hidden = true;
+        }
+      }
+
+      if (stockDot) stockDot.classList.toggle('pdp-stock__dot--off', !variant.available);
+      if (stockText) {
+        stockText.textContent = variant.available
+          ? 'In Stock — Dispatched in 48 Hours with White Glove Delivery'
+          : 'Currently Unavailable — Join the Waitlist';
+      }
+
+      if (variantIdInput) {
+        variantIdInput.value = variant.id;
+        variantIdInput.toggleAttribute('disabled', !variant.available);
+      }
+      if (addButton) addButton.toggleAttribute('disabled', !variant.available);
+      if (addLabel) addLabel.textContent = variant.available ? 'Add to Cart' : 'Sold Out';
+      if (instantButton) {
+        instantButton.toggleAttribute('disabled', !variant.available);
+        instantButton.dataset.variantId = variant.id;
+      }
+    }
+
+    if (optionsWrapper) {
+      optionsWrapper.addEventListener('click', function (evt) {
+        var pill = evt.target.closest('.pdp-pill');
+        if (!pill) return;
+
+        var group = pill.closest('.pdp-option');
+        var index = parseInt(pill.dataset.optionIndex, 10);
+        selected[index] = pill.dataset.value;
+
+        group.querySelectorAll('.pdp-pill').forEach(function (el) {
+          el.classList.toggle('is-active', el === pill);
+        });
+
+        var valueLabel = group.querySelector('[data-pdp-option-value]');
+        if (valueLabel) valueLabel.textContent = pill.dataset.value;
+
+        updateUI(findMatchingVariant());
+      });
+    }
+
+    function getCartSectionIds() {
+      var ids = ['cart-icon-bubble'];
+      if (document.querySelector('cart-drawer')) ids.push('cart-drawer');
+      if (document.querySelector('cart-notification')) ids.push('cart-notification');
+      return ids;
+    }
+
+    function updateCartBubbleFallback(itemCount) {
+      var bubble = document.querySelector('.cart-count-bubble span[aria-hidden="true"]');
+      if (bubble && typeof itemCount === 'number') bubble.textContent = itemCount;
+    }
+
+    var form = root.querySelector('.pdp-form');
+    if (form) {
+      form.addEventListener('submit', function (evt) {
+        evt.preventDefault();
+        var addButton = buyBox.querySelector('[data-pdp-add-to-cart]');
+        var addLabel = buyBox.querySelector('[data-pdp-add-label]');
+        var spinner = buyBox.querySelector('[data-pdp-spinner]');
+        var errorBox = buyBox.querySelector('[data-pdp-error]');
+
+        if (addButton.hasAttribute('disabled')) return;
+
+        addButton.setAttribute('aria-disabled', 'true');
+        if (spinner) spinner.hidden = false;
+        if (errorBox) {
+          errorBox.hidden = true;
+          errorBox.textContent = '';
+        }
+
+        var formData = new FormData(form);
+        formData.append('sections', JSON.stringify(getCartSectionIds()));
+        formData.append('sections_url', window.location.pathname);
+
+        fetch((window.routes && window.routes.cart_add_url) || '/cart/add', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: formData,
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status) {
+              if (errorBox) {
+                errorBox.hidden = false;
+                errorBox.textContent = data.description || data.message || 'This item could not be added to your cart.';
+              }
+              return;
+            }
+
+            var cartDrawer = document.querySelector('cart-drawer');
+            var cartNotification = document.querySelector('cart-notification');
+            var cartUpdater = cartDrawer || cartNotification;
+
+            if (cartUpdater && typeof cartUpdater.renderContents === 'function') {
+              cartUpdater.renderContents(data);
+            } else {
+              updateCartBubbleFallback(data.item_count);
+            }
+
+            if (addLabel) {
+              var previousLabel = addLabel.textContent;
+              addLabel.textContent = 'Added ✓';
+              setTimeout(function () {
+                addLabel.textContent = previousLabel;
+              }, 1800);
+            }
+          })
+          .catch(function () {
+            if (errorBox) {
+              errorBox.hidden = false;
+              errorBox.textContent = 'Something went wrong. Please try again.';
+            }
+          })
+          .finally(function () {
+            addButton.removeAttribute('aria-disabled');
+            if (spinner) spinner.hidden = true;
+          });
+      });
+    }
+
+    window.triggerDirectCheckout = function (variantId) {
+      var id = variantId || (buyBox.querySelector('[data-pdp-instant-buy]') || {}).dataset.variantId;
+      if (!id) return;
+      window.location.href = '/cart/' + id + ':1?checkout';
+    };
+
+    var instantBuyButton = root.querySelector('[data-pdp-instant-buy]');
+    if (instantBuyButton) {
+      instantBuyButton.addEventListener('click', function () {
+        if (instantBuyButton.hasAttribute('disabled')) return;
+        window.triggerDirectCheckout(instantBuyButton.dataset.variantId);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product showcase",
+  "tag": "section",
+  "class": "section pdp-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Product showcase"
+    }
+  ]
+}
+{% endschema %}
