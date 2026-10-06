@@ -184,7 +184,7 @@
         "enable_click_to_slide": true,
         "show_arrows": false,
         "show_dots": true,
-        "image_size": "medium",
+        "image_size": "large",
         "padding_top": 4,
         "padding_bottom": 4
       }
