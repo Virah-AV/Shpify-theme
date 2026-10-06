@@ -5,11 +5,43 @@
   assign stc_limit = section.settings.products_to_show
   assign stc_enable_buy_now = section.settings.enable_buy_now
   assign stc_products = stc_collection.products
+  assign stc_card_style = section.settings.card_style
+  assign stc_radius = section.settings.card_corner_radius
+  assign stc_hover_effect = section.settings.hover_effect
+  assign stc_gap = section.settings.card_spacing
+  assign stc_autoplay = section.settings.enable_autoplay
+  assign stc_autoplay_speed = section.settings.autoplay_speed
+
+  case section.settings.image_ratio
+    when 'square'
+      assign stc_ratio = '1/1'
+    when 'landscape'
+      assign stc_ratio = '4/3'
+    else
+      assign stc_ratio = '4/5'
+  endcase
+
+  case section.settings.card_size
+    when 'small'
+      assign stc_slides_desktop = 5
+      assign stc_slides_tablet = 3
+      assign stc_slides_mobile = 2.3
+    when 'large'
+      assign stc_slides_desktop = 3
+      assign stc_slides_tablet = 2
+      assign stc_slides_mobile = 1.2
+    else
+      assign stc_slides_desktop = 4
+      assign stc_slides_tablet = 2.5
+      assign stc_slides_mobile = 1.6
+  endcase
 -%}
 
 <div
   class="stc-section"
-  style="--stc-bg: {{ section.settings.background_color }}; --stc-accent: {{ section.settings.button_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="--stc-bg: {{ section.settings.background_color }}; --stc-accent: {{ section.settings.button_color }}; --stc-radius: {{ stc_radius }}px; --stc-ratio: {{ stc_ratio }}; --stc-gap: {{ stc_gap }}px; --stc-slides-desktop: {{ stc_slides_desktop }}; --stc-slides-tablet: {{ stc_slides_tablet }}; --stc-slides-mobile: {{ stc_slides_mobile }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  data-autoplay="{{ stc_autoplay }}"
+  data-autoplay-speed="{{ stc_autoplay_speed }}"
 >
   <div class="stc-container page-width">
     <stc-carousel class="stc-carousel">
@@ -41,7 +73,7 @@
               endif
             -%}
             <li class="stc-slide">
-              <div class="stc-card">
+              <div class="stc-card stc-card--{{ stc_card_style }} stc-card--hover-{{ stc_hover_effect }}">
                 <div class="stc-card__media">
                   <a href="{{ product.url }}" class="stc-card__media-link" aria-label="{{ product.title | escape }}">
                     {%- if product.featured_image -%}
@@ -131,7 +163,7 @@
         {%- else -%}
           {%- for i in (1..stc_limit) -%}
             <li class="stc-slide">
-              <div class="stc-card">
+              <div class="stc-card stc-card--{{ stc_card_style }} stc-card--hover-{{ stc_hover_effect }}">
                 <div class="stc-card__media">
                   {{ 'product-apparel-1' | placeholder_svg_tag: 'stc-card__image stc-card__image--placeholder' }}
                 </div>
@@ -219,7 +251,7 @@
 
 .stc-track {
   display: flex;
-  gap: 28px;
+  gap: var(--stc-gap, 28px);
   margin: 0;
   padding: 4px 4px 8px;
   list-style: none;
@@ -234,7 +266,7 @@
 }
 
 .stc-slide {
-  flex: 0 0 calc((100% - 4 * 28px) / 5);
+  flex: 0 0 calc((100% - (var(--stc-slides-desktop, 4) - 1) * var(--stc-gap, 28px)) / var(--stc-slides-desktop, 4));
   scroll-snap-align: start;
   min-width: 0;
 }
@@ -244,13 +276,22 @@
   flex-direction: column;
   height: 100%;
   background: #FFFFFF;
-  border-radius: 16px;
+  border-radius: var(--stc-radius, 16px);
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stc-card--bordered {
+  border: 1px solid #D8DBD4;
+}
+
+.stc-card--shadow {
+  box-shadow: 0 10px 24px rgba(20, 22, 18, 0.12);
 }
 
 .stc-card__media {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: var(--stc-ratio, 4 / 5);
   overflow: hidden;
 }
 
@@ -278,12 +319,18 @@
   transition: opacity 0.4s ease;
 }
 
-.stc-card:hover .stc-card__image {
+.stc-card--hover-zoom:hover .stc-card__image {
   transform: scale(1.05);
 }
 
-.stc-card:hover .stc-card__media::after {
+.stc-card--hover-zoom:hover .stc-card__media::after,
+.stc-card--hover-fade:hover .stc-card__media::after {
   opacity: 1;
+}
+
+.stc-card--hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(20, 22, 18, 0.16);
 }
 
 .stc-hidden-form {
@@ -463,12 +510,8 @@
 }
 
 @media screen and (max-width: 989px) and (min-width: 750px) {
-  .stc-track {
-    gap: 20px;
-  }
-
   .stc-slide {
-    flex: 0 0 calc((100% - 2 * 20px) / 3);
+    flex: 0 0 calc((100% - (var(--stc-slides-tablet, 2.5) - 1) * var(--stc-gap, 28px)) / var(--stc-slides-tablet, 2.5));
   }
 }
 
@@ -479,11 +522,11 @@
   }
 
   .stc-track {
-    gap: 14px;
+    gap: calc(var(--stc-gap, 28px) / 2);
   }
 
   .stc-slide {
-    flex: 0 0 calc((100% - 14px) / 2.15);
+    flex: 0 0 calc((100% - (var(--stc-slides-mobile, 1.6) - 1) * (var(--stc-gap, 28px) / 2)) / var(--stc-slides-mobile, 1.6));
   }
 
   .stc-tray {
@@ -521,6 +564,33 @@
           if (this.track) this.track.addEventListener('scroll', this.updateArrowState, { passive: true });
           window.addEventListener('resize', this.updateArrowState);
           requestAnimationFrame(this.updateArrowState);
+
+          this.initAutoplay();
+        }
+
+        initAutoplay() {
+          const section = this.closest('.stc-section');
+          if (!this.track || !section || section.dataset.autoplay !== 'true') return;
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+          clearInterval(this.autoplayTimer);
+          const speed = (parseFloat(section.dataset.autoplaySpeed) || 5) * 1000;
+          this.autoplayTimer = setInterval(() => {
+            const maxScroll = this.track.scrollWidth - this.track.clientWidth;
+            if (this.track.scrollLeft >= maxScroll - 1) {
+              this.track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+              this.scrollByDirection(1);
+            }
+          }, speed);
+
+          if (!this.autoplayBound) {
+            this.autoplayBound = true;
+            this.addEventListener('mouseenter', () => clearInterval(this.autoplayTimer));
+            this.addEventListener('mouseleave', () => this.initAutoplay());
+            this.addEventListener('focusin', () => clearInterval(this.autoplayTimer));
+            this.addEventListener('focusout', () => this.initAutoplay());
+          }
         }
 
         updateArrowState() {
@@ -669,10 +739,11 @@
       "type": "range",
       "id": "products_to_show",
       "min": 4,
-      "max": 8,
+      "max": 16,
       "step": 1,
       "default": 4,
-      "label": "Products to display"
+      "label": "Products to display",
+      "info": "Only 4 show at a time; add more to let shoppers swipe to the next set."
     },
     {
       "type": "text",
@@ -686,6 +757,104 @@
       "label": "Enable Direct Buy Now",
       "info": "Adds a Buy Now action that adds the item then redirects straight to checkout.",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Design"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "minimal", "label": "Minimal" },
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "shadow", "label": "Shadow" }
+      ],
+      "default": "minimal"
+    },
+    {
+      "type": "range",
+      "id": "card_corner_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait (4:5)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "landscape", "label": "Landscape (4:3)" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between cards",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Hover effects"
+    },
+    {
+      "type": "select",
+      "id": "hover_effect",
+      "label": "Hover effect",
+      "options": [
+        { "value": "zoom", "label": "Zoom image" },
+        { "value": "lift", "label": "Lift card" },
+        { "value": "fade", "label": "Fade overlay" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "zoom"
+    },
+    {
+      "type": "header",
+      "content": "Size"
+    },
+    {
+      "type": "select",
+      "id": "card_size",
+      "label": "Card size",
+      "info": "Controls how many products are visible at once per view.",
+      "options": [
+        { "value": "small", "label": "Small (5 per view)" },
+        { "value": "medium", "label": "Medium (4 per view)" },
+        { "value": "large", "label": "Large (3 per view)" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Carousel behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
     },
     {
       "type": "header",
