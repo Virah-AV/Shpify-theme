@@ -3,6 +3,14 @@
   assign ib_autoplay = section.settings.enable_autoplay
   assign ib_autoplay_speed = section.settings.autoplay_speed
   assign ib_click_to_slide = section.settings.enable_click_to_slide
+
+  # Banner height is 70% of the first image's natural height; every slide shares it.
+  assign ib_ratio = blank
+  for block in section.blocks
+    if block.settings.image and ib_ratio == blank
+      assign ib_ratio = block.settings.image.aspect_ratio | divided_by: 0.7
+    endif
+  endfor
 -%}
 
 <div
@@ -15,6 +23,9 @@
     data-autoplay="{{ ib_autoplay }}"
     data-autoplay-speed="{{ ib_autoplay_speed }}"
     data-click-to-slide="{{ ib_click_to_slide }}"
+    {% if ib_ratio != blank %}
+      style="--ib-ratio: {{ ib_ratio }};"
+    {% endif %}
   >
     <div class="ib-viewport">
       <div class="ib-track" data-ib-track role="list">
@@ -45,7 +56,10 @@
               aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"
               {{ block.shopify_attributes }}
             >
-              <div class="ib-slide__media" data-ib-media>
+              <div
+                class="ib-slide__media{% if ib_ratio != blank %} ib-slide__media--natural{% endif %}"
+                data-ib-media
+              >
                 {%- if block.settings.image -%}
                   {{
                     block.settings.image
@@ -147,6 +161,7 @@
 
 .ib-track {
   display: flex;
+  align-items: flex-start;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -163,18 +178,25 @@
 .ib-slide__media {
   position: relative;
   width: 100%;
-  aspect-ratio: var(--ib-ratio, 16 / 9);
-  max-height: var(--ib-max-height, 50vh);
-  min-height: var(--ib-min-height, 200px);
+  height: var(--ib-height, clamp(260px, 42vh, 480px));
   overflow: hidden;
   background: rgb(var(--color-background));
+}
+
+.ib-slide__media--natural {
+  height: auto;
+  aspect-ratio: var(--ib-ratio);
+}
+
+.ib-slide__media--natural .ib-slide__image {
+  object-fit: contain;
 }
 
 .ib-slide__image {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .ib-slide__overlay {
@@ -284,27 +306,21 @@
 }
 
 .ib-size--small .ib-slide__media {
-  --ib-ratio: 3 / 1;
-  --ib-max-height: 40vh;
-  --ib-min-height: 180px;
+  --ib-height: clamp(200px, 30vh, 380px);
 }
 
 .ib-size--medium .ib-slide__media {
-  --ib-ratio: 1920 / 980;
-  --ib-max-height: 60vh;
-  --ib-min-height: 260px;
+  --ib-height: clamp(260px, 42vh, 480px);
 }
 
 .ib-size--large .ib-slide__media {
-  --ib-ratio: 16 / 9;
-  --ib-max-height: 80vh;
-  --ib-min-height: 320px;
+  --ib-height: clamp(320px, 54vh, 620px);
 }
 
 @media screen and (min-width: 750px) {
-  .ib-size--small .ib-slide__media { --ib-max-height: 50vh; }
-  .ib-size--medium .ib-slide__media { --ib-max-height: 70vh; }
-  .ib-size--large .ib-slide__media { --ib-max-height: 88vh; }
+  .ib-size--small .ib-slide__media { --ib-height: clamp(260px, 36vh, 440px); }
+  .ib-size--medium .ib-slide__media { --ib-height: clamp(340px, 48vh, 560px); }
+  .ib-size--large .ib-slide__media { --ib-height: clamp(420px, 60vh, 700px); }
 
   .ib-slide__content {
     padding: 4rem;
@@ -463,7 +479,7 @@
       "type": "select",
       "id": "image_size",
       "label": "Banner size",
-      "info": "Medium matches a 1920 x 980px banner. Small and large scale from that.",
+      "info": "When slides have images, the banner is 70% of the first image's height and every image is shown in full. This size applies only when no slide has an image.",
       "options": [
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium (1920 x 980px)" },

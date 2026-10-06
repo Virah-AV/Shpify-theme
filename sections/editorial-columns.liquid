@@ -4,21 +4,65 @@
 
 <div
   class="ec-section"
-  style="--ec-bg: {{ section.settings.background_color }}; --ec-accent: {{ section.settings.accent_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="--ec-bg: {{ section.settings.background_color }}; --ec-card-bg: {{ section.settings.card_background }}; --ec-accent: {{ section.settings.accent_color }}; --ec-text: {{ section.settings.text_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <div class="ec-container page-width">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="ec-heading">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="ec-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ec-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="ec-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        <span class="ec-rule" aria-hidden="true"></span>
+        {%- if section.settings.subheading != blank -%}
+          <p class="ec-subheading">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
-    <ul class="ec-grid" role="list">
+    <ul class="ec-grid ec-grid--{{ ec_blocks.size }}" role="list">
       {%- for block in ec_blocks -%}
-        <li class="ec-item" {{ block.shopify_attributes }}>
-          <span class="ec-item__index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <li
+          class="ec-item{% if block.settings.link != blank %} ec-item--linked{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+          <span class="ec-item__watermark" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+
+          <div class="ec-item__top">
+            {%- if block.settings.icon != blank -%}
+              <span class="ec-item__icon">
+                {{
+                  block.settings.icon
+                  | image_url: width: 160
+                  | image_tag: loading: 'lazy', widths: '80, 160', sizes: '56px', alt: block.settings.title
+                }}
+              </span>
+            {%- else -%}
+              <span class="ec-item__icon ec-item__icon--index">
+                {{- forloop.index | prepend: '0' | slice: -2, 2 -}}
+              </span>
+            {%- endif -%}
+          </div>
+
           <h3 class="ec-item__title">{{ block.settings.title | escape }}</h3>
-          <div class="ec-item__text">{{ block.settings.text }}</div>
+          {%- if block.settings.text != blank -%}
+            <div class="ec-item__text rte">{{ block.settings.text }}</div>
+          {%- endif -%}
+
           {%- if block.settings.link_label != blank -%}
-            <a href="{{ block.settings.link | default: '#' }}" class="ec-item__link">
+            <a
+              {% if block.settings.link != blank %}
+                href="{{ block.settings.link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+              class="ec-item__link"
+            >
               <span>{{ block.settings.link_label | escape }}</span>
               <span class="ec-item__arrow svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
             </a>
@@ -31,99 +75,216 @@
 
 {% stylesheet %}
 .ec-section {
-  background: var(--ec-bg, #FFFFFF);
-}
-
-.ec-heading {
-  margin: 0 0 32px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(24px, 3vw, 32px);
-  font-weight: 500;
-  color: #1A1A18;
-}
-
-.ec-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid #E5E1D8;
-}
-
-.ec-item {
   position: relative;
-  padding: 32px 28px 32px 0;
-  border-bottom: 1px solid #E5E1D8;
-  border-right: 1px solid #E5E1D8;
-  transition: background 0.3s ease;
+  overflow: hidden;
+  background: var(--ec-bg, #FAF7F2);
 }
 
-.ec-item:first-child {
-  padding-left: 0;
+/* Header */
+.ec-header {
+  max-width: 64rem;
+  margin: 0 auto 48px;
+  text-align: center;
 }
 
-.ec-item:last-child {
-  border-right: none;
-}
-
-.ec-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 0%;
-  height: 2px;
-  background: var(--ec-accent, #C9A227);
-  transition: width 0.4s ease;
-}
-
-.ec-item:hover::before {
-  width: 100%;
-}
-
-.ec-item:hover {
-  background: rgba(0, 0, 0, 0.015);
-}
-
-.ec-item__index {
-  display: block;
-  margin-bottom: 18px;
-  font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace;
-  font-size: 13px;
-  letter-spacing: 0.1em;
+.ec-eyebrow {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   color: var(--ec-accent, #C9A227);
 }
 
-.ec-item__title {
-  margin: 0 0 12px;
-  font-size: 19px;
+.ec-heading {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ec-text, #1A1A18);
+}
+
+.ec-rule {
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin: 20px auto 0;
+  border-radius: 3px;
+  background: var(--ec-accent, #C9A227);
+}
+
+.ec-subheading {
+  margin: 20px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ec-text, #1A1A18);
+  opacity: 0.7;
+}
+
+/* Grid */
+.ec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ec-grid--1 { grid-template-columns: minmax(0, 48rem); justify-content: center; }
+.ec-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Card */
+.ec-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 32px 36px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+  background: var(--ec-card-bg, #FFFFFF);
+  box-shadow: 0 1px 2px rgba(26, 26, 24, 0.04), 0 8px 24px rgba(26, 26, 24, 0.05);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* Accent bar that grows across the top on hover */
+.ec-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--ec-accent, #C9A227);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.ec-item:hover {
+  transform: translateY(-6px);
+  border-color: transparent;
+  box-shadow: 0 2px 4px rgba(26, 26, 24, 0.04), 0 24px 48px rgba(26, 26, 24, 0.12);
+}
+
+.ec-item:hover::before {
+  transform: scaleX(1);
+}
+
+/* Large faded number in the corner */
+.ec-item__watermark {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ec-accent, #C9A227);
+  opacity: 0.08;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ec-item:hover .ec-item__watermark {
+  opacity: 0.16;
+  transform: translateY(-4px);
+}
+
+.ec-item__top {
+  margin-bottom: 28px;
+}
+
+.ec-item__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ec-accent, #C9A227) 14%, transparent);
+  transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease;
+}
+
+.ec-item__icon img {
+  width: 56%;
+  height: 56%;
+  object-fit: contain;
+}
+
+.ec-item__icon--index {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
   font-weight: 600;
-  color: #1A1A18;
+  color: var(--ec-accent, #C9A227);
+}
+
+.ec-item:hover .ec-item__icon {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.ec-item:hover .ec-item__icon--index {
+  background: var(--ec-accent, #C9A227);
+  color: #FFFFFF;
+}
+
+.ec-item__title {
+  margin: 0 0 14px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ec-text, #1A1A18);
 }
 
 .ec-item__text {
-  margin: 0 0 20px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #5A574F;
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ec-text, #1A1A18);
+  opacity: 0.72;
 }
 
 .ec-item__text p {
   margin: 0;
 }
 
+.ec-item__text p + p {
+  margin-top: 10px;
+}
+
 .ec-item__link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  margin-top: auto;
+  align-self: flex-start;
+  padding-bottom: 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ec-text, #1A1A18) 25%, transparent);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #1A1A18;
+  color: var(--ec-text, #1A1A18);
   text-decoration: none;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Make the whole card clickable when a link is set */
+.ec-item--linked .ec-item__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ec-item:hover .ec-item__link {
+  color: var(--ec-accent, #C9A227);
+  border-color: var(--ec-accent, #C9A227);
 }
 
 .ec-item__arrow {
@@ -134,30 +295,58 @@
 }
 
 .ec-item:hover .ec-item__arrow {
-  transform: translateX(4px);
+  transform: translateX(5px);
+}
+
+.ec-item__link:focus-visible {
+  outline: 2px solid var(--ec-accent, #C9A227);
+  outline-offset: 4px;
 }
 
 @media screen and (max-width: 989px) {
-  .ec-grid {
+  .ec-grid,
+  .ec-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .ec-grid--3 .ec-item:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .ec-header {
+    margin-bottom: 32px;
+  }
+
+  .ec-grid,
+  .ec-grid--2 {
     grid-template-columns: 1fr;
-    border-top: none;
+    gap: 16px;
   }
 
   .ec-item {
-    padding: 24px 0;
-    border-right: none;
+    padding: 32px 24px 28px;
   }
 
-  .ec-item:first-child {
-    border-top: 1px solid #E5E1D8;
+  .ec-item__watermark {
+    font-size: 72px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ec-item,
   .ec-item::before,
+  .ec-item__watermark,
+  .ec-item__icon,
+  .ec-item__link,
   .ec-item__arrow {
     transition: none;
+  }
+
+  .ec-item:hover {
+    transform: none;
   }
 }
 {% endstylesheet %}
@@ -170,9 +359,20 @@
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Small label above heading",
+      "default": "What we do"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Services We Provide"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Intro text"
     },
     {
       "type": "header",
@@ -182,12 +382,24 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
+      "default": "#FAF7F2"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1A1A18"
+    },
+    {
+      "type": "color",
       "id": "accent_color",
-      "label": "Accent (index, underline, arrow)",
+      "label": "Accent (label, icon, hover bar, link)",
       "default": "#C9A227"
     },
     {
@@ -220,6 +432,12 @@
       "type": "column",
       "name": "Column",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Optional. Shows the column number when empty."
+        },
         {
           "type": "text",
           "id": "title",
