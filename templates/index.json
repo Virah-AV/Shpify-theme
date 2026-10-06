@@ -70,8 +70,8 @@
         "heading": "Shop by category",
         "background_color": "#ffffff",
         "pill_background": "#f4ebe1",
-        "pill_radius": 24,
-        "card_theme": "warm_minimalist",
+        "pill_radius": 30,
+        "card_theme": "editorial_monochrome",
         "padding_top": 20,
         "padding_bottom": 20,
         "padding_top_mobile": 16,
@@ -228,8 +228,8 @@
         "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 52
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "multicolumn2": {
