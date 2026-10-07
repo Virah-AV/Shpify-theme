@@ -54,7 +54,12 @@
 
   {%- style -%}
     #PdpCare-{{ sid }} {
-      background: #F3F1EA;
+      --pc-bg: {{ section.settings.background_color }};
+      --pc-panel: {{ section.settings.panel_color }};
+      --pc-heading: {{ section.settings.heading_color }};
+      --pc-text: {{ section.settings.text_color }};
+      --pc-accent: {{ section.settings.accent_color }};
+      background: var(--pc-bg);
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
@@ -73,8 +78,8 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: rgba(107, 142, 111, 0.14);
-      color: #6B8E6F;
+      background: color-mix(in srgb, var(--pc-accent) 16%, transparent);
+      color: var(--pc-accent);
       margin-bottom: 18px;
     }
 
@@ -82,21 +87,22 @@
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 28px;
       font-weight: 600;
-      color: #1F1D1A;
+      color: var(--pc-heading);
       margin: 0 0 14px;
     }
 
     #PdpCare-{{ sid }} .pdp-care__subheading {
       font-size: 15px;
       line-height: 1.7;
-      color: #76726B;
+      color: var(--pc-text);
       margin: 0;
       max-width: 320px;
     }
 
     #PdpCare-{{ sid }} .pdp-care__panel {
-      background: #FFFFFF;
+      background: var(--pc-panel);
       border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(43, 36, 32, 0.06);
       padding: 8px;
     }
 
@@ -118,12 +124,12 @@
       padding: 10px 18px;
       font-size: 13px;
       font-weight: 600;
-      color: #76726B;
+      color: var(--pc-text);
       transition: background 0.2s ease, color 0.2s ease;
     }
 
     #PdpCare-{{ sid }} .pdp-care__tab.is-active {
-      background: #6B8E6F;
+      background: var(--pc-accent);
       color: #ffffff;
     }
 
@@ -132,7 +138,8 @@
       padding: 24px 28px 28px;
       font-size: 14px;
       line-height: 1.8;
-      color: #4A4640;
+      color: var(--pc-heading);
+      opacity: 0.85;
     }
 
     #PdpCare-{{ sid }} .pdp-care__content.is-active {
@@ -142,7 +149,7 @@
     #PdpCare-{{ sid }} .pdp-care__content h4 {
       font-size: 14px;
       font-weight: 600;
-      color: #1F1D1A;
+      color: var(--pc-heading);
       margin: 0 0 8px;
     }
 
@@ -162,7 +169,7 @@
       content: '✓';
       position: absolute;
       left: 0;
-      color: #6B8E6F;
+      color: var(--pc-accent);
       font-weight: 700;
     }
 
@@ -224,6 +231,44 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "How to keep your piece looking its best for years to come."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#E4E6DC"
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Tabs panel background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Headings",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Secondary text",
+      "default": "#6F655C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (icon, active tab, checkmarks)",
+      "default": "#5C6B53"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",

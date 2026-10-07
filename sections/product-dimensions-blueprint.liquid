@@ -106,12 +106,15 @@
 
 {%- style -%}
   #PdpBlueprint-{{ sid }} {
-    background: #F4F0E8;
-    border-top: 1px solid rgba(31, 29, 26, 0.06);
-    border-bottom: 1px solid rgba(31, 29, 26, 0.06);
+    --pb-bg: {{ section.settings.background_color }};
+    --pb-panel: {{ section.settings.panel_color }};
+    --pb-heading: {{ section.settings.heading_color }};
+    --pb-text: {{ section.settings.text_color }};
+    --pb-accent: {{ section.settings.accent_color }};
+    background: var(--pb-bg);
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    color: #1F1D1A;
+    color: var(--pb-heading);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-blueprint__heading {
@@ -122,7 +125,7 @@
   }
 
   #PdpBlueprint-{{ sid }} .pdp-blueprint__subheading {
-    color: #76726B;
+    color: var(--pb-text);
     font-size: 15px;
     margin: 0 0 36px;
     max-width: 640px;
@@ -136,8 +139,8 @@
 
   #PdpBlueprint-{{ sid }} .pdp-schematic {
     position: relative;
-    border: 1px dashed #D1CCC2;
-    background: #FFFFFF;
+    border: 1px dashed color-mix(in srgb, var(--pb-text) 35%, transparent);
+    background: var(--pb-panel);
     border-radius: 16px;
     padding: 48px 48px 64px 64px;
     overflow: hidden;
@@ -168,7 +171,7 @@
     bottom: 0;
     left: 50%;
     width: 0;
-    border-left: 1px dashed #A8A298;
+    border-left: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::before,
@@ -178,8 +181,8 @@
     left: 50%;
     width: 8px;
     height: 8px;
-    border-left: 1px dashed #A8A298;
-    border-bottom: 1px dashed #A8A298;
+    border-left: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
+    border-bottom: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__height .pdp-schematic__line::before {
@@ -193,8 +196,8 @@
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__label--height {
-    background: #FFFFFF;
-    color: #1F1D1A;
+    background: var(--pb-panel);
+    color: var(--pb-heading);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -223,7 +226,7 @@
     right: 0;
     top: 50%;
     height: 0;
-    border-top: 1px dashed #A8A298;
+    border-top: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::before,
@@ -233,8 +236,8 @@
     top: 50%;
     width: 8px;
     height: 8px;
-    border-left: 1px dashed #A8A298;
-    border-bottom: 1px dashed #A8A298;
+    border-left: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
+    border-bottom: 1px dashed color-mix(in srgb, var(--pb-text) 60%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__width .pdp-schematic__line::before {
@@ -248,8 +251,8 @@
   }
 
   #PdpBlueprint-{{ sid }} .pdp-schematic__label--width {
-    background: #FFFFFF;
-    color: #1F1D1A;
+    background: var(--pb-panel);
+    color: var(--pb-heading);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -262,13 +265,13 @@
   #PdpBlueprint-{{ sid }} .pdp-specs-table {
     width: 100%;
     border-collapse: collapse;
-    background: #FFFFFF;
+    background: var(--pb-panel);
     border-radius: 16px;
     overflow: hidden;
   }
 
   #PdpBlueprint-{{ sid }} .pdp-specs-table tr {
-    border-bottom: 1px solid rgba(31, 29, 26, 0.08);
+    border-bottom: 1px solid color-mix(in srgb, var(--pb-heading) 9%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-specs-table tr:last-child {
@@ -284,13 +287,13 @@
   }
 
   #PdpBlueprint-{{ sid }} .pdp-specs-table th {
-    color: #76726B;
+    color: var(--pb-text);
     font-weight: 500;
     width: 55%;
   }
 
   #PdpBlueprint-{{ sid }} .pdp-specs-table td {
-    color: #1F1D1A;
+    color: var(--pb-heading);
     font-weight: 600;
     text-align: right;
   }
@@ -300,7 +303,7 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    background: #FFFFFF;
+    background: var(--pb-panel);
     border-radius: 16px;
     padding: 24px 28px;
     margin-top: 8px;
@@ -316,7 +319,7 @@
   #PdpBlueprint-{{ sid }} .pdp-promise__divider {
     width: 1px;
     align-self: stretch;
-    background: rgba(31, 29, 26, 0.08);
+    background: color-mix(in srgb, var(--pb-heading) 9%, transparent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-promise__badge {
@@ -324,27 +327,27 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #1F1D1A;
+    background: var(--pb-heading);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   #PdpBlueprint-{{ sid }} .pdp-promise__badge--accent {
-    background: #C47355;
+    background: var(--pb-accent);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-promise__title {
     margin: 0 0 4px;
     font-size: 15px;
     font-weight: 600;
-    color: #1F1D1A;
+    color: var(--pb-heading);
   }
 
   #PdpBlueprint-{{ sid }} .pdp-promise__note {
     margin: 0;
     font-size: 14px;
-    color: #76726B;
+    color: var(--pb-text);
     line-height: 1.6;
   }
 
@@ -457,6 +460,44 @@
       "id": "warranty_note",
       "label": "Warranty note",
       "default": "2-Year Manufacturer Warranty against structural defects."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F7F3ED"
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Panel background (drawing, table, promise bar)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Headings and values",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Secondary text and guide lines",
+      "default": "#6F655C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent badge",
+      "default": "#9A6B43"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",

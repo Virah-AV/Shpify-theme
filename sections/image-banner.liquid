@@ -14,7 +14,7 @@
 -%}
 
 <div
-  class="ib-section"
+  class="ib-section color-{{ section.settings.color_scheme }} gradient"
   style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <ib-carousel
@@ -490,6 +490,13 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Background color scheme",
+      "info": "Also fills the space beside images that don't fill the banner.",
+      "default": "scheme-1"
     },
     {
       "type": "range",

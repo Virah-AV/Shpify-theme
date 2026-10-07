@@ -208,12 +208,14 @@
 
 {%- style -%}
   #PdpShowcase-{{ sid }} {
-    --pdp-bg: #FBF9F5;
-    --pdp-surface: #FFFFFF;
-    --pdp-text: #1F1D1A;
-    --pdp-muted: #76726B;
-    --pdp-accent: #C47355;
-    --pdp-onyx: #121212;
+    --pdp-bg: {{ section.settings.background_color }};
+    --pdp-surface: {{ section.settings.surface_color }};
+    --pdp-image-bg: {{ section.settings.image_background }};
+    --pdp-text: {{ section.settings.text_color }};
+    --pdp-muted: {{ section.settings.muted_color }};
+    --pdp-accent: {{ section.settings.accent_color }};
+    --pdp-onyx: {{ section.settings.button_color }};
+    --pdp-onyx-text: {{ section.settings.button_text_color }};
     background: var(--pdp-bg);
     color: var(--pdp-text);
     padding-top: {{ section.settings.padding_top }}px;
@@ -257,7 +259,7 @@
     width: 80px;
     height: 80px;
     flex: none;
-    background: #F0ECE4;
+    background: var(--pdp-image-bg);
     opacity: 0.6;
     transition: opacity 0.2s ease, border-color 0.2s ease;
   }
@@ -283,7 +285,8 @@
     aspect-ratio: 4 / 4.5;
     border-radius: 14px;
     overflow: hidden;
-    background: #F0ECE4;
+    background: var(--pdp-image-bg);
+    box-shadow: 0 14px 40px rgba(43, 36, 32, 0.08);
   }
 
   #PdpShowcase-{{ sid }} .pdp-gallery__wishlist {
@@ -355,7 +358,7 @@
     background: var(--pdp-surface);
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 10px 40px rgba(31, 29, 26, 0.04);
+    box-shadow: 0 14px 40px rgba(43, 36, 32, 0.08);
   }
 
   @media screen and (min-width: 990px) {
@@ -414,7 +417,7 @@
   }
 
   #PdpShowcase-{{ sid }} .pdp-price__badge {
-    background: rgba(196, 115, 85, 0.12);
+    background: color-mix(in srgb, var(--pdp-accent) 14%, transparent);
     color: var(--pdp-accent);
     font-size: 12px;
     font-weight: 600;
@@ -429,7 +432,7 @@
     gap: 10px;
     font-size: 13px;
     color: var(--pdp-muted);
-    background: rgba(31, 29, 26, 0.03);
+    background: var(--pdp-bg);
     border-radius: 10px;
     padding: 10px 14px;
     margin-bottom: 28px;
@@ -507,7 +510,7 @@
   #PdpShowcase-{{ sid }} .pdp-pill.is-active {
     background: var(--pdp-onyx);
     border-color: var(--pdp-onyx);
-    color: #fff;
+    color: var(--pdp-onyx-text);
   }
 
   #PdpShowcase-{{ sid }} .pdp-form-error {
@@ -553,14 +556,14 @@
   }
 
   #PdpShowcase-{{ sid }} .pdp-btn--outline {
-    background: #ffffff;
+    background: transparent;
     color: var(--pdp-text);
     border: 1px solid var(--pdp-onyx);
   }
 
   #PdpShowcase-{{ sid }} .pdp-btn--solid {
     background: var(--pdp-onyx);
-    color: #ffffff;
+    color: var(--pdp-onyx-text);
     border: 1px solid var(--pdp-onyx);
   }
 
@@ -904,6 +907,62 @@
       "id": "show_breadcrumb",
       "label": "Show breadcrumb",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F1EAE0"
+    },
+    {
+      "type": "color",
+      "id": "surface_color",
+      "label": "Product info panel",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Product image background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Secondary text",
+      "default": "#6F655C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (selected thumbnail, discount, wishlist)",
+      "default": "#9A6B43"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button and selected option",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",

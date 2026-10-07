@@ -19,7 +19,11 @@
 
   {%- style -%}
     #PdpDescription-{{ sid }} {
-      background: #FBF9F5;
+      --pd-bg: {{ section.settings.background_color }};
+      --pd-heading: {{ section.settings.heading_color }};
+      --pd-text: {{ section.settings.text_color }};
+      --pd-accent: {{ section.settings.accent_color }};
+      background: var(--pd-bg);
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
@@ -36,7 +40,7 @@
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #C47355;
+      color: var(--pd-accent);
       margin-bottom: 14px;
     }
 
@@ -44,7 +48,7 @@
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 30px;
       font-weight: 600;
-      color: #1F1D1A;
+      color: var(--pd-heading);
       margin: 0 0 28px;
       position: relative;
     }
@@ -54,14 +58,14 @@
       display: block;
       width: 48px;
       height: 2px;
-      background: #C47355;
+      background: var(--pd-accent);
       margin: 18px auto 0;
     }
 
     #PdpDescription-{{ sid }} .pdp-description__body {
       font-size: 17px;
       line-height: 1.85;
-      color: #4A4640;
+      color: var(--pd-text);
       text-align: left;
     }
 
@@ -71,7 +75,7 @@
       font-size: 64px;
       line-height: 0.8;
       font-weight: 600;
-      color: #C47355;
+      color: var(--pd-accent);
       padding: 6px 10px 0 0;
     }
 
@@ -112,6 +116,38 @@
       "id": "heading",
       "label": "Heading",
       "default": "Crafted With Intention"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#5A5048"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (eyebrow, underline, drop cap)",
+      "default": "#9A6B43"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",

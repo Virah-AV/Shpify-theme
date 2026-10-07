@@ -47,10 +47,15 @@
       left: 0;
       width: 100%;
       z-index: 999;
-      background: rgba(255, 255, 255, 0.94);
+      --psb-bg: {{ section.settings.background_color }};
+      --psb-text: {{ section.settings.text_color }};
+      --psb-button: {{ section.settings.button_color }};
+      --psb-button-text: {{ section.settings.button_text_color }};
+      background: color-mix(in srgb, var(--psb-bg) 94%, transparent);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      border-top: 1px solid color-mix(in srgb, var(--psb-text) 12%, transparent);
+      box-shadow: 0 -8px 24px rgba(43, 36, 32, 0.08);
       padding: 12px 24px;
       transform: translateY(100%);
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -92,7 +97,7 @@
       margin: 0;
       font-size: 14px;
       font-weight: 600;
-      color: #1F1D1A;
+      color: var(--psb-text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -102,7 +107,8 @@
     #PdpStickyBar-{{ sid }} .pdp-sticky-bar__price {
       margin: 2px 0 0;
       font-size: 13px;
-      color: #76726B;
+      color: var(--psb-text);
+      opacity: 0.7;
     }
 
     #PdpStickyBar-{{ sid }} .pdp-sticky-bar__actions {
@@ -129,15 +135,15 @@
     }
 
     #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn--outline {
-      background: #ffffff;
-      color: #1F1D1A;
-      border: 1px solid #121212;
+      background: transparent;
+      color: var(--psb-text);
+      border: 1px solid var(--psb-button);
     }
 
     #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn--solid {
-      background: #121212;
-      color: #ffffff;
-      border: 1px solid #121212;
+      background: var(--psb-button);
+      color: var(--psb-button-text);
+      border: 1px solid var(--psb-button);
     }
 
     #PdpStickyBar-{{ sid }} .pdp-sticky-bar__btn:hover {
@@ -226,6 +232,35 @@
   "name": "Sticky buy bar",
   "tag": "section",
   "class": "section pdp-section",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button",
+      "default": "#2B2420"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ]
 }
 {% endschema %}

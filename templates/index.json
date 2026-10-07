@@ -68,8 +68,8 @@
       ],
       "settings": {
         "heading": "Shop by category",
-        "background_color": "#ffffff",
-        "pill_background": "#f4ebe1",
+        "background_color": "#f7f3ed",
+        "pill_background": "#ffffff",
         "pill_radius": 30,
         "card_theme": "editorial_monochrome",
         "padding_top": 20,
@@ -86,9 +86,9 @@
         "phrase_one": "Outstanding service",
         "phrase_two": "Exclusive pricing",
         "phrase_three": "Industry expertise",
-        "background_color": "#b36b3b",
-        "text_color": "#f5f1e8",
-        "accent_color": "#c9a227",
+        "background_color": "#7a4f31",
+        "text_color": "#fff8f0",
+        "accent_color": "#e2c08d",
         "padding_top": 12,
         "padding_bottom": 12
       }
@@ -104,9 +104,9 @@
         "show_view_all": true,
         "show_secondary_image": true,
         "image_ratio": "square",
-        "background_color": "#f9f6f0",
+        "background_color": "#ebe2d6",
         "card_color": "#ffffff",
-        "accent_color": "#1a1a18",
+        "accent_color": "#2b2420",
         "padding_top": 20,
         "padding_bottom": 20
       }
@@ -198,8 +198,8 @@
         "columns_desktop": "5",
         "heading": "Coffee Tables",
         "enable_buy_now": true,
-        "background_color": "#1b1812",
-        "accent_color": "#c9a227",
+        "background_color": "#211c18",
+        "accent_color": "#c29b6a",
         "padding_top": 16,
         "padding_bottom": 16
       }
@@ -270,8 +270,8 @@
       ],
       "settings": {
         "heading": "Services We Provide",
-        "background_color": "#faf7f2",
-        "accent_color": "#c9a227",
+        "background_color": "#ebe2d6",
+        "accent_color": "#9a6b43",
         "padding_top": 44,
         "padding_bottom": 48
       }
@@ -292,8 +292,8 @@
         "card_size": "medium",
         "enable_autoplay": false,
         "autoplay_speed": 5,
-        "background_color": "#f2f4f1",
-        "button_color": "#2d302e",
+        "background_color": "#e4e6dc",
+        "button_color": "#2b2420",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -381,9 +381,9 @@
       ],
       "name": "Trust badges",
       "settings": {
-        "background_color": "#f4f4f4",
-        "icon_color": "#1a1a18",
-        "accent_color": "#c9a227",
+        "background_color": "#ffffff",
+        "icon_color": "#2b2420",
+        "accent_color": "#9a6b43",
         "padding_top": 48,
         "padding_bottom": 48
       }
