@@ -1,72 +1,171 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible-row-1":  {
-                                                                               "type":  "feature",
-                                                                               "settings":  {
-                                                                                                "heading":  "Product features",
-                                                                                                "content":  "\u003cul\u003e\u003cli\u003e\u003cstrong\u003eSpace-saving C-shaped design\u003c/strong\u003e that slides close to sofas and beds without taking up much floor space.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eHeight adjustable\u003c/strong\u003e from 45–80 cm for flexible use with different seating heights.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eCompact tabletop\u003c/strong\u003e size of 40 x 30 cm, suitable for laptops, books, drinks, and snacks.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eScratch-resistant surface\u003c/strong\u003e designed for regular daily use.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eStable metal base and joint\u003c/strong\u003e for improved balance during use.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eEasy to assemble\u003c/strong\u003e with a simple setup process.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eMulti-purpose utility\u003c/strong\u003e as a couch side table, bed tray, tea table, or work-from-sofa table.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                "page":  "product-features"
-                                                                                            }
-                                                                           }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible-row-1"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003cul\u003e\u003cli\u003e\u003cstrong\u003eTop Material:\u003c/strong\u003e Engineered wood / wood-finish tabletop with a scratch-resistant surface, based on the product styling shown and comparable listings.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eFrame Material:\u003c/strong\u003e Powder-coated / heavy-duty metal frame and base for strength and durability.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e Wipe clean with a soft dry or lightly damp cloth; do not use abrasive cleaners or harsh chemicals; keep away from excess moisture.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eUsage Care:\u003c/strong\u003e Avoid overloading the tabletop, and tighten fittings periodically if needed to maintain stability.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eFloor Protection:\u003c/strong\u003e Lift when moving instead of dragging to avoid floor scratches.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "45 cm",
-                                                        "package_dimensions":  "50 x 50 x 12 cm",
-                                                        "assembly_note":  "Tool-free height adjustment - ready to use in under 2 minutes.",
-                                                        "height_label":  "40-60 cm",
-                                                        "width_label":  "45 cm",
-                                                        "overall_dimensions":  "45 x 45 x 40-60 cm (W x D x H, height-adjustable)",
-                                                        "max_load":  "15 kg",
-                                                        "net_weight":  "4.2 kg",
-                                                        "clearance_below":  "Adjustable 34-54 cm",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible-row-1": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product features",
+            "content": "<ul><li><strong>Space-saving C-shaped design</strong>&nbsp;that slides close to sofas and beds without taking up much floor space.</li><li><strong>Scratch-resistant surface</strong>&nbsp;designed for regular daily use.</li><li><strong>Easy to assemble</strong>&nbsp;with a simple setup process.</li><li><strong>Multi-purpose utility</strong>&nbsp;as a couch side table, bed tray, tea table, or work-from-sofa table.</li></ul>",
+            "page": "product-features"
+          }
+        },
+        "feature_bcdPM8": {
+          "type": "feature",
+          "settings": {
+            "heading": "Specifications",
+            "content": "<ul><li><strong>Height adjustable</strong>&nbsp;from 45–80 cm for flexible use with different seating heights.</li><li><strong>Compact tabletop</strong>&nbsp;size of 40 x 30 cm, suitable for laptops, books, drinks, and snacks.</li><li><strong>Stable metal base and joint</strong>&nbsp;for improved balance during use.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-1",
+        "feature_bcdPM8"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<ul><li><strong>Top Material:</strong>&nbsp;Engineered wood / wood-finish tabletop with a scratch-resistant surface, based on the product styling shown and comparable listings.</li><li><strong>Frame Material:</strong>&nbsp;Powder-coated / heavy-duty metal frame and base for strength and durability.</li><li>Wipe clean with a soft dry or lightly damp cloth; do not use abrasive cleaners or harsh chemicals; keep away from excess moisture.</li><li>Avoid overloading the tabletop, and tighten fittings periodically if needed to maintain stability.</li><li>&nbsp;Lift when moving instead of dragging to avoid floor scratches.</li></ul>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "40-80 cm",
+        "width_label": "40 cm",
+        "depth_label": "30 cm",
+        "overall_dimensions": "40 x 30 x 40-60 cm (W x D x H, height-adjustable)",
+        "clearance_below": "Adjustable 40-80 cm",
+        "net_weight": "3 kg",
+        "max_load": "15 kg",
+        "package_dimensions": "50 x 50 x 12 cm",
+        "assembly_note": "Tool-free height adjustment - ready to use in under 2 minutes.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
