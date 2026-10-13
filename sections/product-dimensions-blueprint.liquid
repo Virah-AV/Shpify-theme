@@ -90,13 +90,15 @@
         <div class="pdp-promise__item">
           <span class="pdp-promise__badge pdp-promise__badge--accent" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M9.3 12.2l1.8 1.8 3.6-3.6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.5 6.5h11v9h-11z" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M13.5 9.5h4l3 3v3h-7" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/>
+              <circle cx="6.5" cy="17" r="1.8" stroke="#FFFFFF" stroke-width="1.6"/>
+              <circle cx="17" cy="17" r="1.8" stroke="#FFFFFF" stroke-width="1.6"/>
             </svg>
           </span>
           <div class="pdp-promise__text">
-            <p class="pdp-promise__title">Warranty</p>
-            <p class="pdp-promise__note">{{ section.settings.warranty_note }}</p>
+            <p class="pdp-promise__title">Delivery</p>
+            <p class="pdp-promise__note">{{ section.settings.delivery_note }}</p>
           </div>
         </div>
       </div>
@@ -457,9 +459,9 @@
     },
     {
       "type": "textarea",
-      "id": "warranty_note",
-      "label": "Warranty note",
-      "default": "2-Year Manufacturer Warranty against structural defects."
+      "id": "delivery_note",
+      "label": "Delivery note",
+      "default": "Ships in one compact box that fits easily through standard doorways and lifts."
     },
     {
       "type": "header",

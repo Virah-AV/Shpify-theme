@@ -1,6 +1,7 @@
 {% comment %}
   Warm Japandi / Editorial Minimalist product showcase.
-  Split layout: asymmetrical media gallery (left) + sticky buy box (right).
+  Split layout: media gallery (left) + buy box (right), equal height on desktop.
+  Clicking the main image opens a full-screen viewer with zoom.
 {% endcomment %}
 
 {%- liquid
@@ -17,6 +18,8 @@
       assign save_amount = compare_at_price | minus: price
       assign save_percent = save_amount | times: 100.0 | divided_by: compare_at_price | round: 0
     endif
+
+    assign lb_images = product.media | where: 'media_type', 'image'
 
     assign crumb_collection = collection
     if crumb_collection == blank
@@ -52,7 +55,22 @@
             </svg>
           </button>
 
+          {%- if lb_images.size > 0 -%}
+            <div class="pdp-gallery__tools">
+              <button type="button" class="pdp-gallery__tool" data-pdp-zoom-out aria-label="Zoom out" disabled>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5L20 20M7.8 10.5h5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </button>
+              <button type="button" class="pdp-gallery__tool" data-pdp-zoom-in aria-label="Zoom in">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5L20 20M7.8 10.5h5.4M10.5 7.8v5.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </button>
+              <button type="button" class="pdp-gallery__tool" data-pdp-expand aria-label="View images full screen">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          {%- endif -%}
+
           {%- if product.media.size > 0 -%}
+            {%- assign lb_count = 0 -%}
             {%- for media in product.media -%}
               {%- liquid
                 assign loading_value = 'lazy'
@@ -60,11 +78,21 @@
                   assign loading_value = 'eager'
                 endif
               -%}
-              <div class="pdp-gallery__frame{% if forloop.first %} is-active{% endif %}" data-pdp-slide data-index="{{ forloop.index0 }}">
+              <div
+                class="pdp-gallery__frame{% if forloop.first %} is-active{% endif %}"
+                data-pdp-slide
+                data-index="{{ forloop.index0 }}"
+                {% if media.media_type == 'image' %}
+                  data-lb-index="{{ lb_count }}"
+                {% endif %}
+              >
+                {%- if media.media_type == 'image' -%}
+                  {%- assign lb_count = lb_count | plus: 1 -%}
+                {%- endif -%}
                 {{
                   media
                   | media_tag:
-                    image_size: '1200x',
+                    image_size: '1600x',
                     loading: loading_value,
                     class: 'pdp-gallery__media',
                     controls: true,
@@ -104,16 +132,70 @@
             </span>
           </div>
 
+          {%- if section.settings.show_rating and product.metafields.reviews.rating.value != blank -%}
+            {%- liquid
+              assign rating = product.metafields.reviews.rating.value
+              assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+              assign rating_percent = rating.rating | times: 100.0 | divided_by: rating.scale_max
+            -%}
+            <a href="#judgeme_product_reviews" class="pdp-rating" aria-label="Rated {{ rating.rating | round: 1 }} out of {{ rating.scale_max }}, {{ rating_count }} reviews">
+              <span class="pdp-rating__stars" style="--pdp-rating: {{ rating_percent }}%;" aria-hidden="true"></span>
+              <span class="pdp-rating__value" aria-hidden="true">{{ rating.rating | round: 1 }}</span>
+              {%- if rating_count > 0 -%}
+                <span class="pdp-rating__count" aria-hidden="true">({{ rating_count }} {% if rating_count == 1 %}review{% else %}reviews{% endif %})</span>
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+
           <div class="pdp-stock" data-pdp-stock>
             <span class="pdp-stock__dot{% unless current_variant.available %} pdp-stock__dot--off{% endunless %}" data-pdp-stock-dot></span>
             <span data-pdp-stock-text>
               {%- if current_variant.available -%}
-                In Stock — Dispatched in 48 Hours with White Glove Delivery
+                In Stock
               {%- else -%}
                 Currently Unavailable — Join the Waitlist
               {%- endif -%}
             </span>
+            {%- liquid
+              assign low_stock_text = ''
+              if section.settings.show_low_stock and current_variant.available and current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny'
+                if current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= section.settings.low_stock_threshold
+                  assign low_stock_text = 'Only ' | append: current_variant.inventory_quantity | append: ' left'
+                endif
+              endif
+            -%}
+            <span class="pdp-stock__low" data-pdp-low-stock {% if low_stock_text == blank %}hidden{% endif %}>
+              {{- low_stock_text -}}
+            </span>
           </div>
+
+          {%- if section.settings.show_low_stock -%}
+            <script type="application/json" data-pdp-inventory>
+              {
+                {%- for variant in product.variants -%}
+                  {%- liquid
+                    assign tracked_qty = -1
+                    if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny'
+                      assign tracked_qty = variant.inventory_quantity
+                    endif
+                  -%}
+                  "{{ variant.id }}": {{ tracked_qty }}{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              }
+            </script>
+          {%- endif -%}
+
+          {%- if section.settings.delivery_estimate != blank -%}
+            <div class="pdp-delivery">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                <path d="M2.5 6.5h11v9h-11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M13.5 9.5h4l3 3v3h-7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <circle cx="6.5" cy="17" r="1.8" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="17" cy="17" r="1.8" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+              <span>{{ section.settings.delivery_label }} <strong>{{ section.settings.delivery_estimate }}</strong></span>
+            </div>
+          {%- endif -%}
 
           {%- unless product.has_only_default_variant -%}
             <div class="pdp-options" data-pdp-options>
@@ -157,7 +239,32 @@
                 data-pdp-variant-id
                 {% unless current_variant.available %}disabled{% endunless %}
               >
-              <input type="hidden" name="quantity" value="1">
+              {%- if section.settings.show_quantity -%}
+                <div class="pdp-quantity">
+                  <label class="pdp-option__label" for="Quantity-{{ sid }}">Quantity</label>
+                  <div class="pdp-quantity__control">
+                    <button type="button" class="pdp-quantity__btn" data-pdp-qty-minus aria-label="Decrease quantity">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </button>
+                    <input
+                      type="number"
+                      id="Quantity-{{ sid }}"
+                      class="pdp-quantity__input"
+                      name="quantity"
+                      value="1"
+                      min="1"
+                      step="1"
+                      inputmode="numeric"
+                      data-pdp-qty-input
+                    >
+                    <button type="button" class="pdp-quantity__btn" data-pdp-qty-plus aria-label="Increase quantity">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              {%- else -%}
+                <input type="hidden" name="quantity" value="1" data-pdp-qty-input>
+              {%- endif -%}
               <div class="pdp-actions">
                 <button
                   type="submit"
@@ -188,6 +295,75 @@
             {%- endform -%}
           </div>
 
+          {%- if section.settings.trust_1 != blank or section.settings.trust_2 != blank -%}
+            <ul class="pdp-trust" role="list">
+              {%- if section.settings.trust_1 != blank -%}
+                <li class="pdp-trust__item">
+                  <span class="pdp-trust__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="2.5" y="6" width="19" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M6 9.5v5M18 9.5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="pdp-trust__text">{{ section.settings.trust_1 }}</span>
+                </li>
+              {%- endif -%}
+              {%- if section.settings.trust_2 != blank -%}
+                <li class="pdp-trust__item">
+                  <span class="pdp-trust__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="4.5" y="10.5" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 14.5v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="pdp-trust__text">{{ section.settings.trust_2 }}</span>
+                </li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if section.settings.show_share -%}
+            {%- liquid
+              assign share_url = request.origin | append: product.url
+              assign share_text = product.title | append: ' - ' | append: shop.name
+              assign share_whatsapp = share_text | append: ' ' | append: share_url
+              assign share_image = product.featured_image | image_url: width: 1200 | prepend: 'https:'
+            -%}
+            <div class="pdp-share">
+              <span class="pdp-share__label">Share</span>
+              <div class="pdp-share__links">
+                <a
+                  class="pdp-share__link"
+                  href="https://wa.me/?text={{ share_whatsapp | url_encode }}"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Share on WhatsApp"
+                >
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg>
+                </a>
+                <a
+                  class="pdp-share__link"
+                  href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Share on Facebook"
+                >
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21z"/></svg>
+                </a>
+                <a
+                  class="pdp-share__link"
+                  href="https://pinterest.com/pin/create/button/?url={{ share_url | url_encode }}&media={{ share_image | url_encode }}&description={{ share_text | url_encode }}"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Pin on Pinterest"
+                >
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.5 2.1-4.5 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.1c0 .2-.2.2-.4.1-1.3-.6-2.1-2.5-2.1-4 0-3.3 2.4-6.3 6.9-6.3 3.6 0 6.4 2.6 6.4 6 0 3.6-2.3 6.5-5.4 6.5-1.1 0-2-.6-2.4-1.2l-.7 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z"/></svg>
+                </a>
+                <button type="button" class="pdp-share__link" data-pdp-instagram data-url="{{ share_url }}" aria-label="Share on Instagram">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>
+                </button>
+                <button type="button" class="pdp-share__link" data-pdp-copy-link data-url="{{ share_url }}" aria-label="Copy link">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </button>
+                <span class="pdp-share__copied" data-pdp-copied role="status" aria-live="polite"></span>
+              </div>
+            </div>
+          {%- endif -%}
+
           {%- assign app_blocks = section.blocks | where: 'type', '@app' -%}
           {%- if app_blocks.size > 0 -%}
             <div class="pdp-app-blocks">
@@ -199,6 +375,62 @@
         </div>
       </div>
     </div>
+
+    {%- if lb_images.size > 0 -%}
+      <div
+        class="pdp-lightbox{% if lb_images.size == 1 %} pdp-lightbox--single{% endif %}"
+        id="PdpLightbox-{{ sid }}"
+        data-pdp-lightbox
+        role="dialog"
+        aria-modal="true"
+        aria-label="{{ product.title | escape }} images"
+        hidden
+      >
+        <div class="pdp-lightbox__bar">
+          <span class="pdp-lightbox__counter" data-lb-counter aria-live="polite"></span>
+          <div class="pdp-lightbox__zoom">
+            <button type="button" class="pdp-lightbox__btn" data-lb-zoom-out aria-label="Zoom out">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+            <button type="button" class="pdp-lightbox__level" data-lb-zoom-reset aria-label="Reset zoom">100%</button>
+            <button type="button" class="pdp-lightbox__btn" data-lb-zoom-in aria-label="Zoom in">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button type="button" class="pdp-lightbox__btn pdp-lightbox__close" data-lb-close aria-label="Close">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+
+        <div class="pdp-lightbox__main">
+          <button type="button" class="pdp-lightbox__btn pdp-lightbox__nav pdp-lightbox__nav--prev" data-lb-prev aria-label="Previous image">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="pdp-lightbox__viewport" data-lb-viewport>
+            <img class="pdp-lightbox__image" data-lb-image alt="" draggable="false">
+          </div>
+          <button type="button" class="pdp-lightbox__btn pdp-lightbox__nav pdp-lightbox__nav--next" data-lb-next aria-label="Next image">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div class="pdp-lightbox__thumbs">
+          {%- for image in lb_images -%}
+            <button
+              type="button"
+              class="pdp-lightbox__thumb"
+              data-lb-thumb
+              data-index="{{ forloop.index0 }}"
+              data-src="{{ image | image_url: width: 2400 }}"
+              data-alt="{{ image.alt | default: product.title | escape }}"
+              aria-label="Show image {{ forloop.index }}"
+            >
+              {{ image | image_url: width: 160 | image_tag: loading: 'lazy', width: 64, height: 64, alt: '' }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
   {%- else -%}
     <div class="pdp-showcase__placeholder page-width">
       <p>Add a product to preview the showcase.</p>
@@ -216,6 +448,7 @@
     --pdp-accent: {{ section.settings.accent_color }};
     --pdp-onyx: {{ section.settings.button_color }};
     --pdp-onyx-text: {{ section.settings.button_text_color }};
+    --pdp-star: {{ section.settings.star_color }};
     background: var(--pdp-bg);
     color: var(--pdp-text);
     padding-top: {{ section.settings.padding_top }}px;
@@ -282,7 +515,8 @@
 
   #PdpShowcase-{{ sid }} .pdp-gallery__stage {
     position: relative;
-    aspect-ratio: 4 / 4.5;
+    aspect-ratio: 1 / 1;
+    cursor: zoom-in;
     border-radius: 14px;
     overflow: hidden;
     background: var(--pdp-image-bg);
@@ -340,16 +574,333 @@
   #PdpShowcase-{{ sid }} .pdp-gallery__placeholder {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage.is-zoomed {
+    cursor: zoom-out;
+    touch-action: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__stage.is-zoomed .pdp-gallery__frame.is-active img {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform-origin 0.08s linear;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__tools {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 2;
+    display: flex;
+    gap: 6px;
+    padding: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 18px rgba(43, 36, 32, 0.12);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__tool {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--pdp-text);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__tool:hover {
+    background: var(--pdp-onyx);
+    color: var(--pdp-onyx-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-gallery__tool[disabled] {
+    opacity: 0.35;
+    cursor: default;
+    background: transparent;
+    color: var(--pdp-text);
+  }
+
+  /* Desktop: gallery and buy box share one row height, top and bottom aligned. */
+  @media screen and (min-width: 990px) {
+    #PdpShowcase-{{ sid }} .pdp-showcase__inner {
+      align-items: stretch;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-gallery {
+      position: relative;
+      display: block;
+      min-height: 520px;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-gallery__thumbs {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      max-height: none;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-gallery__stage {
+      height: 100%;
+      margin-left: 96px;
+      aspect-ratio: auto;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-buybox-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #PdpShowcase-{{ sid }} .pdp-buy-box {
+      flex: 1;
+    }
+  }
+
+  /* Full-screen image viewer */
+  .pdp-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    background: rgba(20, 16, 13, 0.985);
+    color: #ffffff;
+    animation: pdp-lightbox-in 0.25s ease;
+  }
+
+  .pdp-lightbox[hidden] {
+    display: none;
+  }
+
+  @keyframes pdp-lightbox-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .pdp-lightbox__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px;
+  }
+
+  .pdp-lightbox__counter {
+    min-width: 64px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+  }
+
+  .pdp-lightbox__zoom {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .pdp-lightbox__btn {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+  }
+
+  .pdp-lightbox__btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .pdp-lightbox__btn[disabled] {
+    opacity: 0.3;
+    cursor: default;
+    background: transparent;
+  }
+
+  .pdp-lightbox__btn:focus-visible,
+  .pdp-lightbox__level:focus-visible,
+  .pdp-lightbox__thumb:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  .pdp-lightbox__level {
+    appearance: none;
+    min-width: 58px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .pdp-lightbox__main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 0;
+  }
+
+  .pdp-lightbox__viewport {
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    touch-action: none;
+    cursor: zoom-in;
+    user-select: none;
+  }
+
+  .pdp-lightbox__viewport.is-zoomed {
+    cursor: grab;
+  }
+
+  .pdp-lightbox__viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .pdp-lightbox__image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform-origin: center center;
+    transition: transform 0.25s ease;
     will-change: transform;
   }
 
-  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active .pdp-gallery__media,
-  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active img,
-  #PdpShowcase-{{ sid }} .pdp-gallery__stage:hover .pdp-gallery__frame.is-active video {
-    transform: scale(1.03);
+  .pdp-lightbox__viewport.is-dragging .pdp-lightbox__image {
+    transition: none;
+  }
+
+  .pdp-lightbox__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .pdp-lightbox__nav--prev {
+    left: 16px;
+  }
+
+  .pdp-lightbox__nav--next {
+    right: 16px;
+  }
+
+  .pdp-lightbox__thumbs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .pdp-lightbox__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pdp-lightbox__thumb {
+    appearance: none;
+    flex: none;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  .pdp-lightbox__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .pdp-lightbox__thumb:hover {
+    opacity: 0.85;
+  }
+
+  .pdp-lightbox__thumb.is-active {
+    opacity: 1;
+    border-color: #ffffff;
+  }
+
+  .pdp-lightbox--single .pdp-lightbox__nav,
+  .pdp-lightbox--single .pdp-lightbox__thumbs {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .pdp-lightbox__bar {
+      padding: 10px 12px;
+    }
+
+    .pdp-lightbox__nav {
+      width: 42px;
+      height: 42px;
+    }
+
+    .pdp-lightbox__nav--prev {
+      left: 8px;
+    }
+
+    .pdp-lightbox__nav--next {
+      right: 8px;
+    }
+
+    .pdp-lightbox__thumb {
+      width: 52px;
+      height: 52px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pdp-lightbox,
+    .pdp-lightbox__image,
+    #PdpShowcase-{{ sid }} .pdp-gallery__frame img {
+      animation: none;
+      transition: none;
+    }
   }
 
 
@@ -359,13 +910,6 @@
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 14px 40px rgba(43, 36, 32, 0.08);
-  }
-
-  @media screen and (min-width: 990px) {
-    #PdpShowcase-{{ sid }} .pdp-buy-box {
-      position: sticky;
-      top: 32px;
-    }
   }
 
   #PdpShowcase-{{ sid }} .pdp-breadcrumb {
@@ -592,6 +1136,227 @@
     }
   }
 
+  #PdpShowcase-{{ sid }} .pdp-stock__low {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--pdp-accent) 14%, transparent);
+    color: var(--pdp-accent);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-stock__low[hidden] {
+    display: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-delivery {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: -16px 0 28px;
+    padding: 0 14px;
+    font-size: 13px;
+    color: var(--pdp-muted);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-delivery svg {
+    flex: none;
+    color: var(--pdp-accent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-delivery strong {
+    color: var(--pdp-text);
+    font-weight: 600;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-trust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-trust__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 8px;
+    border-radius: 12px;
+    background: var(--pdp-bg);
+    text-align: center;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-trust__icon {
+    display: flex;
+    color: var(--pdp-accent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-trust__text {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--pdp-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: -6px 0 18px;
+    font-size: 13px;
+    color: var(--pdp-muted);
+    text-decoration: none;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating__stars {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating__stars::before {
+    content: '\2605\2605\2605\2605\2605';
+    color: color-mix(in srgb, var(--pdp-text) 18%, transparent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating__stars::after {
+    content: '\2605\2605\2605\2605\2605';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--pdp-rating);
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--pdp-star);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating__value {
+    font-weight: 600;
+    color: var(--pdp-text);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-rating:hover .pdp-rating__count {
+    color: var(--pdp-text);
+    text-decoration: underline;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity {
+    margin-bottom: 20px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity .pdp-option__label {
+    display: block;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--pdp-text) 18%, transparent);
+    border-radius: 999px;
+    background: var(--pdp-surface);
+    overflow: hidden;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__btn {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--pdp-text);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__btn:hover {
+    background: var(--pdp-bg);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__btn[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__input {
+    width: 48px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--pdp-text);
+    -moz-appearance: textfield;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__input::-webkit-outer-spin-button,
+  #PdpShowcase-{{ sid }} .pdp-quantity__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-quantity__input:focus-visible {
+    outline: 2px solid var(--pdp-accent);
+    outline-offset: -2px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid color-mix(in srgb, var(--pdp-text) 10%, transparent);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share__label {
+    font-size: 13px;
+    color: var(--pdp-muted);
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share__links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share__link {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--pdp-text) 14%, transparent);
+    background: transparent;
+    color: var(--pdp-text);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share__link:hover {
+    background: var(--pdp-accent);
+    border-color: var(--pdp-accent);
+    color: #ffffff;
+  }
+
+  #PdpShowcase-{{ sid }} .pdp-share__copied {
+    font-size: 12px;
+    color: var(--pdp-accent);
+  }
+
   #PdpShowcase-{{ sid }} .pdp-app-blocks {
     margin-top: 20px;
   }
@@ -649,19 +1414,368 @@
       variants = [];
     }
 
+    var inventoryScript = root.querySelector('[data-pdp-inventory]');
+    var inventory = {};
+    try {
+      inventory = inventoryScript ? JSON.parse(inventoryScript.textContent) : {};
+    } catch (e) {
+      inventory = {};
+    }
+    var lowStockThreshold = {{ section.settings.low_stock_threshold }};
+
     var thumbs = root.querySelectorAll('[data-pdp-thumb]');
     var slides = root.querySelectorAll('[data-pdp-slide]');
+
+    function showFrame(index) {
+      index = String(index);
+      thumbs.forEach(function (t) {
+        t.classList.toggle('is-active', t.dataset.index === index);
+      });
+      slides.forEach(function (slide) {
+        slide.classList.toggle('is-active', slide.dataset.index === index);
+      });
+      setStageZoom(1);
+    }
+
     thumbs.forEach(function (thumb) {
       thumb.addEventListener('click', function () {
-        var index = thumb.dataset.index;
-        thumbs.forEach(function (t) {
-          t.classList.toggle('is-active', t === thumb);
-        });
-        slides.forEach(function (slide) {
-          slide.classList.toggle('is-active', slide.dataset.index === index);
-        });
+        showFrame(thumb.dataset.index);
       });
     });
+
+    /* ---- Inline zoom on the main image ---- */
+    var stage = root.querySelector('.pdp-gallery__stage');
+    var stageZoomIn = root.querySelector('[data-pdp-zoom-in]');
+    var stageZoomOut = root.querySelector('[data-pdp-zoom-out]');
+    var stageExpand = root.querySelector('[data-pdp-expand]');
+    var stageZoom = 1;
+    var STAGE_MAX_ZOOM = 3;
+
+    function activeFrame() {
+      return root.querySelector('[data-pdp-slide].is-active');
+    }
+
+    function activeStageImage() {
+      var frame = activeFrame();
+      return frame && frame.hasAttribute('data-lb-index') ? frame.querySelector('img') : null;
+    }
+
+    function setStageZoom(level) {
+      var img = activeStageImage();
+      stageZoom = Math.min(STAGE_MAX_ZOOM, Math.max(1, level));
+      slides.forEach(function (slide) {
+        var slideImg = slide.querySelector('img');
+        if (slideImg && slideImg !== img) {
+          slideImg.style.transform = '';
+          slideImg.style.transformOrigin = '';
+        }
+      });
+      if (img) {
+        img.style.transform = stageZoom > 1 ? 'scale(' + stageZoom + ')' : '';
+        if (stageZoom === 1) img.style.transformOrigin = '';
+      } else {
+        stageZoom = 1;
+      }
+      if (stage) stage.classList.toggle('is-zoomed', stageZoom > 1);
+      if (stageZoomOut) stageZoomOut.disabled = stageZoom <= 1;
+      if (stageZoomIn) stageZoomIn.disabled = !img || stageZoom >= STAGE_MAX_ZOOM;
+    }
+
+    if (stage) {
+      if (stageZoomIn) {
+        stageZoomIn.addEventListener('click', function () {
+          setStageZoom(stageZoom + 0.5);
+        });
+      }
+      if (stageZoomOut) {
+        stageZoomOut.addEventListener('click', function () {
+          setStageZoom(stageZoom - 0.5);
+        });
+      }
+      stage.addEventListener('pointermove', function (evt) {
+        if (stageZoom <= 1) return;
+        var img = activeStageImage();
+        if (!img) return;
+        var rect = stage.getBoundingClientRect();
+        var x = ((evt.clientX - rect.left) / rect.width) * 100;
+        var y = ((evt.clientY - rect.top) / rect.height) * 100;
+        img.style.transformOrigin = x + '% ' + y + '%';
+      });
+      stage.addEventListener('click', function (evt) {
+        if (evt.target.closest('button, a, video, model-viewer')) return;
+        var frame = activeFrame();
+        if (frame && frame.hasAttribute('data-lb-index')) {
+          openLightbox(parseInt(frame.dataset.lbIndex, 10));
+        }
+      });
+      if (stageExpand) {
+        stageExpand.addEventListener('click', function () {
+          var frame = activeFrame();
+          var lbIndex = frame && frame.hasAttribute('data-lb-index') ? parseInt(frame.dataset.lbIndex, 10) : 0;
+          openLightbox(lbIndex);
+        });
+      }
+      setStageZoom(1);
+    }
+
+    /* ---- Full-screen viewer ---- */
+    var lightbox = root.querySelector('[data-pdp-lightbox]');
+    var lbThumbs = lightbox ? Array.prototype.slice.call(lightbox.querySelectorAll('[data-lb-thumb]')) : [];
+    var lbViewport = lightbox && lightbox.querySelector('[data-lb-viewport]');
+    var lbImage = lightbox && lightbox.querySelector('[data-lb-image]');
+    var lbCounter = lightbox && lightbox.querySelector('[data-lb-counter]');
+    var lbLevel = lightbox && lightbox.querySelector('[data-lb-zoom-reset]');
+    var lbZoomIn = lightbox && lightbox.querySelector('[data-lb-zoom-in]');
+    var lbZoomOut = lightbox && lightbox.querySelector('[data-lb-zoom-out]');
+    var lbClose = lightbox && lightbox.querySelector('[data-lb-close]');
+    var lbPrev = lightbox && lightbox.querySelector('[data-lb-prev]');
+    var lbNext = lightbox && lightbox.querySelector('[data-lb-next]');
+    var LB_MAX_ZOOM = 5;
+    var lbIndex = 0;
+    var lbScale = 1;
+    var lbX = 0;
+    var lbY = 0;
+    var lbLastFocus = null;
+    var lbPointers = {};
+    var lbDrag = null;
+    var lbPinch = null;
+
+    function lbApply() {
+      if (!lbImage) return;
+      lbImage.style.transform = 'translate(' + lbX + 'px, ' + lbY + 'px) scale(' + lbScale + ')';
+      lbViewport.classList.toggle('is-zoomed', lbScale > 1);
+      if (lbLevel) lbLevel.textContent = Math.round(lbScale * 100) + '%';
+      if (lbZoomOut) lbZoomOut.disabled = lbScale <= 1;
+      if (lbZoomIn) lbZoomIn.disabled = lbScale >= LB_MAX_ZOOM;
+    }
+
+    function lbClamp() {
+      var maxX = Math.max(0, (lbImage.offsetWidth * lbScale - lbViewport.clientWidth) / 2);
+      var maxY = Math.max(0, (lbImage.offsetHeight * lbScale - lbViewport.clientHeight) / 2);
+      lbX = Math.min(maxX, Math.max(-maxX, lbX));
+      lbY = Math.min(maxY, Math.max(-maxY, lbY));
+    }
+
+    // Zoom keeping the point (px, py), relative to the viewport centre, under the cursor.
+    function lbZoomTo(scale, px, py) {
+      var next = Math.min(LB_MAX_ZOOM, Math.max(1, scale));
+      px = px || 0;
+      py = py || 0;
+      var ratio = next / lbScale;
+      lbX = px - (px - lbX) * ratio;
+      lbY = py - (py - lbY) * ratio;
+      lbScale = next;
+      if (lbScale === 1) {
+        lbX = 0;
+        lbY = 0;
+      }
+      lbClamp();
+      lbApply();
+    }
+
+    function lbPointFromEvent(evt) {
+      var rect = lbViewport.getBoundingClientRect();
+      return {
+        x: evt.clientX - rect.left - rect.width / 2,
+        y: evt.clientY - rect.top - rect.height / 2,
+      };
+    }
+
+    function lbShow(index) {
+      if (!lbThumbs.length) return;
+      lbIndex = (index + lbThumbs.length) % lbThumbs.length;
+      var thumb = lbThumbs[lbIndex];
+      lbScale = 1;
+      lbX = 0;
+      lbY = 0;
+      // Show the already-loaded thumbnail at once, then swap in the full-size image.
+      var shownIndex = lbIndex;
+      var preview = root.querySelector('[data-pdp-slide][data-lb-index="' + lbIndex + '"] img');
+      if (!preview || !preview.complete || !preview.naturalWidth) preview = thumb.querySelector('img');
+      if (preview && preview.complete && preview.naturalWidth) lbImage.src = preview.currentSrc || preview.src;
+      var full = new Image();
+      full.onload = function () {
+        if (lbIndex === shownIndex) lbImage.src = full.src;
+      };
+      full.src = thumb.dataset.src;
+      lbImage.alt = thumb.dataset.alt || '';
+      lbApply();
+      if (lbCounter) lbCounter.textContent = lbIndex + 1 + ' / ' + lbThumbs.length;
+      lbThumbs.forEach(function (t, i) {
+        t.classList.toggle('is-active', i === lbIndex);
+        if (i === lbIndex) t.setAttribute('aria-current', 'true');
+        else t.removeAttribute('aria-current');
+      });
+      thumb.scrollIntoView({ block: 'nearest', inline: 'center' });
+      [lbIndex + 1, lbIndex - 1].forEach(function (i) {
+        var neighbour = lbThumbs[(i + lbThumbs.length) % lbThumbs.length];
+        if (neighbour) new Image().src = neighbour.dataset.src;
+      });
+    }
+
+    function onLightboxKey(evt) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        closeLightbox();
+      } else if (evt.key === 'ArrowRight') {
+        lbShow(lbIndex + 1);
+      } else if (evt.key === 'ArrowLeft') {
+        lbShow(lbIndex - 1);
+      } else if (evt.key === '+' || evt.key === '=') {
+        lbZoomTo(lbScale + 0.5);
+      } else if (evt.key === '-') {
+        lbZoomTo(lbScale - 0.5);
+      } else if (evt.key === 'Tab') {
+        var focusables = Array.prototype.filter.call(lightbox.querySelectorAll('button'), function (el) {
+          return !el.disabled && el.offsetParent !== null;
+        });
+        if (!focusables.length) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (evt.shiftKey && document.activeElement === first) {
+          evt.preventDefault();
+          last.focus();
+        } else if (!evt.shiftKey && document.activeElement === last) {
+          evt.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function openLightbox(index) {
+      if (!lightbox) return;
+      // Move to <body> so no transformed ancestor can clip the fixed overlay.
+      if (lightbox.parentNode !== document.body) document.body.appendChild(lightbox);
+      lbLastFocus = document.activeElement;
+      lightbox.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      lbShow(index || 0);
+      document.addEventListener('keydown', onLightboxKey);
+      if (lbClose) lbClose.focus();
+    }
+
+    function closeLightbox() {
+      if (!lightbox || lightbox.hidden) return;
+      lightbox.hidden = true;
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', onLightboxKey);
+      var frame = root.querySelector('[data-pdp-slide][data-lb-index="' + lbIndex + '"]');
+      if (frame) showFrame(frame.dataset.index);
+      if (lbLastFocus && lbLastFocus.focus) lbLastFocus.focus();
+    }
+
+    if (lightbox) {
+      lbClose.addEventListener('click', closeLightbox);
+      lbPrev.addEventListener('click', function () {
+        lbShow(lbIndex - 1);
+      });
+      lbNext.addEventListener('click', function () {
+        lbShow(lbIndex + 1);
+      });
+      lbZoomIn.addEventListener('click', function () {
+        lbZoomTo(lbScale + 0.5);
+      });
+      lbZoomOut.addEventListener('click', function () {
+        lbZoomTo(lbScale - 0.5);
+      });
+      lbLevel.addEventListener('click', function () {
+        lbZoomTo(1);
+      });
+      lbThumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('click', function () {
+          lbShow(i);
+        });
+      });
+
+      lbViewport.addEventListener(
+        'wheel',
+        function (evt) {
+          evt.preventDefault();
+          var point = lbPointFromEvent(evt);
+          lbZoomTo(lbScale * (evt.deltaY < 0 ? 1.2 : 1 / 1.2), point.x, point.y);
+        },
+        { passive: false }
+      );
+
+      lbViewport.addEventListener('dblclick', function (evt) {
+        var point = lbPointFromEvent(evt);
+        lbZoomTo(lbScale > 1 ? 1 : 2.5, point.x, point.y);
+      });
+
+      lbViewport.addEventListener('pointerdown', function (evt) {
+        lbViewport.setPointerCapture(evt.pointerId);
+        lbPointers[evt.pointerId] = { x: evt.clientX, y: evt.clientY };
+        var ids = Object.keys(lbPointers);
+        if (ids.length === 2) {
+          var a = lbPointers[ids[0]];
+          var b = lbPointers[ids[1]];
+          lbPinch = { distance: Math.hypot(a.x - b.x, a.y - b.y), scale: lbScale };
+          lbDrag = null;
+        } else if (ids.length === 1) {
+          lbDrag = { startX: evt.clientX, startY: evt.clientY, x: lbX, y: lbY, moved: false };
+        }
+      });
+
+      lbViewport.addEventListener('pointermove', function (evt) {
+        if (!lbPointers[evt.pointerId]) return;
+        lbPointers[evt.pointerId] = { x: evt.clientX, y: evt.clientY };
+        var ids = Object.keys(lbPointers);
+        if (lbPinch && ids.length === 2) {
+          var a = lbPointers[ids[0]];
+          var b = lbPointers[ids[1]];
+          var distance = Math.hypot(a.x - b.x, a.y - b.y);
+          lbScale = Math.min(LB_MAX_ZOOM, Math.max(1, lbPinch.scale * (distance / lbPinch.distance)));
+          if (lbScale === 1) {
+            lbX = 0;
+            lbY = 0;
+          }
+          lbClamp();
+          lbApply();
+          return;
+        }
+        if (!lbDrag) return;
+        var dx = evt.clientX - lbDrag.startX;
+        var dy = evt.clientY - lbDrag.startY;
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) lbDrag.moved = true;
+        if (lbScale > 1) {
+          lbViewport.classList.add('is-dragging');
+          lbX = lbDrag.x + dx;
+          lbY = lbDrag.y + dy;
+          lbClamp();
+          lbApply();
+        }
+      });
+
+      function endPointer(evt) {
+        if (!lbPointers[evt.pointerId]) return;
+        delete lbPointers[evt.pointerId];
+        lbViewport.classList.remove('is-dragging');
+        if (lbPinch) {
+          if (Object.keys(lbPointers).length < 2) lbPinch = null;
+          lbDrag = null;
+          return;
+        }
+        if (lbDrag && lbScale === 1 && evt.type === 'pointerup') {
+          var dx = evt.clientX - lbDrag.startX;
+          if (Math.abs(dx) > 50) lbShow(lbIndex + (dx < 0 ? 1 : -1));
+        }
+        lbDrag = null;
+      }
+
+      lbViewport.addEventListener('pointerup', endPointer);
+      lbViewport.addEventListener('pointercancel', endPointer);
+
+      // Clicking the dark backdrop around the image closes the viewer.
+      lightbox.addEventListener('click', function (evt) {
+        if (evt.target === lightbox || evt.target.classList.contains('pdp-lightbox__main')) closeLightbox();
+      });
+
+      window.addEventListener('resize', function () {
+        if (lightbox.hidden) return;
+        lbClamp();
+        lbApply();
+      });
+    }
 
     var wishlistButton = root.querySelector('[data-pdp-wishlist]');
     if (wishlistButton) {
@@ -760,9 +1874,16 @@
       }
 
       if (stockDot) stockDot.classList.toggle('pdp-stock__dot--off', !variant.available);
+      var lowStockEl = buyBox.querySelector('[data-pdp-low-stock]');
+      if (lowStockEl) {
+        var qtyLeft = inventory[variant.id];
+        var isLow = variant.available && typeof qtyLeft === 'number' && qtyLeft > 0 && qtyLeft <= lowStockThreshold;
+        lowStockEl.textContent = isLow ? 'Only ' + qtyLeft + ' left' : '';
+        lowStockEl.hidden = !isLow;
+      }
       if (stockText) {
         stockText.textContent = variant.available
-          ? 'In Stock — Dispatched in 48 Hours with White Glove Delivery'
+          ? 'In Stock'
           : 'Currently Unavailable — Join the Waitlist';
       }
 
@@ -880,10 +2001,92 @@
       });
     }
 
+    var qtyInput = root.querySelector('[data-pdp-qty-input]');
+    var qtyMinus = root.querySelector('[data-pdp-qty-minus]');
+    var qtyPlus = root.querySelector('[data-pdp-qty-plus]');
+
+    function getQuantity() {
+      var qty = qtyInput ? parseInt(qtyInput.value, 10) : 1;
+      return isNaN(qty) || qty < 1 ? 1 : qty;
+    }
+
+    function setQuantity(qty) {
+      if (!qtyInput) return;
+      qty = Math.max(1, qty);
+      qtyInput.value = qty;
+      if (qtyMinus) qtyMinus.toggleAttribute('disabled', qty <= 1);
+    }
+
+    if (qtyInput && qtyMinus && qtyPlus) {
+      setQuantity(getQuantity());
+      qtyMinus.addEventListener('click', function () {
+        setQuantity(getQuantity() - 1);
+      });
+      qtyPlus.addEventListener('click', function () {
+        setQuantity(getQuantity() + 1);
+      });
+      qtyInput.addEventListener('change', function () {
+        setQuantity(getQuantity());
+      });
+    }
+
+    var copyButton = root.querySelector('[data-pdp-copy-link]');
+    var copiedStatus = root.querySelector('[data-pdp-copied]');
+    if (copyButton) {
+      copyButton.addEventListener('click', function () {
+        var url = copyButton.dataset.url;
+        var showCopied = function () {
+          if (!copiedStatus) return;
+          copiedStatus.textContent = 'Link copied';
+          setTimeout(function () {
+            copiedStatus.textContent = '';
+          }, 2000);
+        };
+        if (navigator.share && window.matchMedia('(hover: none)').matches) {
+          navigator.share({ title: document.title, url: url }).catch(function () {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(showCopied).catch(function () {
+            window.prompt('Copy this link:', url);
+          });
+        } else {
+          window.prompt('Copy this link:', url);
+        }
+      });
+    }
+
+    var instagramButton = root.querySelector('[data-pdp-instagram]');
+    if (instagramButton) {
+      instagramButton.addEventListener('click', function () {
+        var url = instagramButton.dataset.url;
+        // Instagram has no web share link: use the device share sheet when available,
+        // otherwise copy the link and open Instagram so it can be pasted.
+        if (navigator.share && window.matchMedia('(hover: none)').matches) {
+          navigator.share({ title: document.title, url: url }).catch(function () {});
+          return;
+        }
+        var openInstagram = function () {
+          if (copiedStatus) {
+            copiedStatus.textContent = 'Link copied, paste it in Instagram';
+            setTimeout(function () {
+              copiedStatus.textContent = '';
+            }, 3000);
+          }
+          window.open('https://www.instagram.com/direct/inbox/', '_blank', 'noopener');
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(openInstagram).catch(function () {
+            window.prompt('Copy this link, then paste it in Instagram:', url);
+          });
+        } else {
+          window.prompt('Copy this link, then paste it in Instagram:', url);
+        }
+      });
+    }
+
     window.triggerDirectCheckout = function (variantId) {
       var id = variantId || (buyBox.querySelector('[data-pdp-instant-buy]') || {}).dataset.variantId;
       if (!id) return;
-      window.location.href = '/cart/' + id + ':1?checkout';
+      window.location.href = '/cart/' + id + ':' + getQuantity() + '?checkout';
     };
 
     var instantBuyButton = root.querySelector('[data-pdp-instant-buy]');
@@ -906,6 +2109,78 @@
       "type": "checkbox",
       "id": "show_breadcrumb",
       "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "info": "Shown only when the product has reviews from a reviews app such as Judge.me.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Stock and delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_low_stock",
+      "label": "Show low stock alert",
+      "info": "Only for products where Shopify tracks inventory.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "label": "Show alert when stock is at or below",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "delivery_label",
+      "label": "Delivery label",
+      "default": "Estimated Delivery Time:"
+    },
+    {
+      "type": "text",
+      "id": "delivery_estimate",
+      "label": "Delivery estimate",
+      "info": "Leave empty to hide the delivery line.",
+      "default": "5 - 7 Days"
+    },
+    {
+      "type": "header",
+      "content": "Trust highlights"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Highlight 1 (cash icon)",
+      "default": "Cash on Delivery"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Highlight 2 (lock icon)",
+      "default": "Secure Payment"
+    },
+    {
+      "type": "header",
+      "content": "Buying options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share buttons",
       "default": true
     },
     {
@@ -959,6 +2234,12 @@
       "id": "button_text_color",
       "label": "Button text",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star rating",
+      "default": "#C29B6A"
     },
     {
       "type": "header",
