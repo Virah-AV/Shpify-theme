@@ -1,46 +1,211 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features"
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care"
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "60 cm",
-                                                        "package_dimensions":  "125 x 65 x 8 cm (folded flat)",
-                                                        "assembly_note":  "No assembly required - unfolds and locks in seconds.",
-                                                        "height_label":  "74 cm",
-                                                        "width_label":  "120 cm",
-                                                        "overall_dimensions":  "120 x 60 x 74 cm (W x D x H)",
-                                                        "max_load":  "50 kg",
-                                                        "net_weight":  "8 kg",
-                                                        "clearance_below":  "68 cm",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_features_PEzMAN": {
+      "type": "product-features",
+      "blocks": {
+        "feature_7RaCna": {
+          "type": "feature",
+          "settings": {
+            "heading": "Features",
+            "content": "<ul><li><strong>Space-Saving foldable design:</strong> The table folds down for compact storage, making it suitable for homes with limited space or for users who need a table only when required.</li><li><strong>Folding metal legs:</strong> The metal leg structure allows the table to open and fold easily while providing a sturdy base during use. Folding-leg tables are popular because they combine strength with practical storage convenience.</li><li><strong>Easy to move and store:</strong> Because the table is foldable, it can be shifted from one room to another and kept aside when not needed. This makes it a flexible option for everyday home use.</li></ul>",
+            "page": ""
+          }
+        },
+        "feature_QVCU7M": {
+          "type": "feature",
+          "settings": {
+            "heading": "Material",
+            "content": "<p>The table appears to use a wood-finish top paired with a metal folding leg frame. Made of MDF, engineered wood, with powder-coated Metal Frame and &nbsp;folding supports for stability & convenience. .</p><p><strong>Top material: </strong>MDF Wood-finish tabletop / wooden top style.</p><p><strong>Frame / leg material:</strong> Metal Frame legs.</p><p><strong>Foldability:</strong> Yes, foldable for storage.</p><p><strong>Design style:</strong> Space-saving, compact, modern, multipurpose.</p><p><strong>Suitable spaces:</strong> Living room, dining area, balcony, terrace, study corner, and compact apartment rooms.</p>",
+            "page": ""
+          }
+        },
+        "feature_qgPyRx": {
+          "type": "feature",
+          "settings": {
+            "heading": "Specifications",
+            "content": "<ul><li><strong>Tabletop style:</strong> The Tabletop shape creates a softer, more conversational seating layout and gives the table a balanced visual appearance.</li><li><strong>Modern wood finish:</strong> The wood-finish top gives the table a warm, natural look that works well with contemporary interiors. It creates a premium visual effect in online product images and home interiors alike.</li><li><strong>Multipurpose usage:</strong> This table can be used for dining, tea time, casual work, study, serving guests, and balcony lounging. Its design makes it useful across multiple rooms and use cases</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_7RaCna",
+        "feature_QVCU7M",
+        "feature_qgPyRx"
+      ],
+      "name": "Product features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211C18",
+        "card_color": "#2E2723",
+        "heading_color": "#F5EEE4",
+        "text_color": "#C9BDAF",
+        "accent_color": "#C29B6A",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_materials_care_Pz8bCg": {
+      "type": "product-materials-care",
+      "blocks": {
+        "panel_Njgbbk": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials & Care",
+            "content": "<ul><li>Wipe the tabletop with a soft dry or slightly damp cloth after use.</li><li>Avoid harsh cleaners, bleach, or abrasive scrubbers on the wood surface.</li><li>Keep the table away from prolonged water exposure to protect the finish.</li><li>Fold and store the table in a dry indoor space when not in use.</li><li>Dust the metal legs regularly to keep them clean and neat.</li><li>Avoid dragging the table on rough surfaces to reduce wear on the legs and floor.</li><li>Place the table on a flat surface for better stability during use.</li><li>Use coasters, mats, or placemats to protect the tabletop from heat, stains, and scratches.</li><li>Check the folding mechanism occasionally to ensure smooth movement and safe use.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_Njgbbk"
+      ],
+      "name": "Materials & care",
+      "settings": {
+        "heading": "Care Instruction",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#E4E6DC",
+        "panel_color": "#FFFFFF",
+        "heading_color": "#2B2420",
+        "text_color": "#6F655C",
+        "accent_color": "#5C6B53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "70 cm",
+        "width_label": "80 cm",
+        "depth_label": "80 cm",
+        "overall_dimensions": "80 x 80 x 70 cm (W x D x H)",
+        "clearance_below": "70 cm",
+        "net_weight": "10 kg",
+        "max_load": "50 kg",
+        "package_dimensions": "88 x 83 x 9 cm (folded flat)",
+        "assembly_note": "No assembly required - unfolds and locks in seconds.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "product_features_PEzMAN",
+    "product_materials_care_Pz8bCg",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
