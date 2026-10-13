@@ -1,10 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "product-main-showcase"
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     },
     "description": {
-      "type": "product-description"
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     },
     "features": {
       "type": "product-features",
@@ -12,19 +54,34 @@
         "feature-1": {
           "type": "feature",
           "settings": {
-            "heading": "Thoughtful Design",
-            "content": "<p>Every detail is considered, from proportion to finish, for a piece that feels effortless in any room.</p>"
+            "heading": "Features",
+            "content": "<ul><li><strong>Foldable Frame:</strong> The table folds neatly for compact storage and easy handling when not in use.</li><li><strong>Easy to Move:</strong> Lightweight folding structure makes repositioning simple.</li><li><strong>Space-Saving Design:</strong> Ideal for homes, offices, and rooms where floor space matters.</li></ul>",
+            "page": ""
           }
         },
         "feature-2": {
           "type": "feature",
           "settings": {
-            "heading": "Built to Last",
-            "content": "<p>Constructed with premium materials and reinforced joinery for lasting everyday durability.</p>"
+            "heading": "Specifications",
+            "content": "<ul><li><strong>Black Metal Legs:</strong> Sturdy metal legs provide dependable support and a stable base.</li><li><strong>Secure Table Top:</strong> Similar tables use rigid tops with scratch-resistant and stain-resistant surfaces</li></ul>",
+            "page": ""
           }
         }
       },
-      "block_order": ["feature-1", "feature-2"]
+      "block_order": [
+        "feature-1",
+        "feature-2"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     },
     "materials_care": {
       "type": "product-materials-care",
@@ -33,20 +90,73 @@
           "type": "panel",
           "settings": {
             "heading": "Materials & Care",
-            "content": "<p>Crafted from solid wood and finished by hand. Dust regularly with a soft, dry cloth and wipe spills immediately. Avoid direct sunlight and heat sources to preserve the natural tone of the finish. Use coasters and felt pads to protect surfaces from scratches and moisture rings.</p>"
+            "content": "<h3>Material</h3><p>Folding Tables is commonly made with a melamine, MDF, vinyl and laminated tabletop combined with metal legs and folding hardware. Black folding tables are often finished with scratch-resistant surfaces for easier maintenance.</p><h3>Care Instructions</h3><ul><li>Wipe the top regularly with a soft, dry or slightly damp microfiber cloth.</li><li>Use mild soap for routine cleaning, then dry the surface immediately.</li><li>Avoid abrasive pads, harsh cleaners, bleach, or acidic liquids.</li><li>Keep the folding mechanism clean and check joints occasionally for tightness.</li><li>Do not overload the table beyond safe use to preserve stability.</li><li>Store folded in a dry area when not in use to protect the frame and finish.</li></ul>",
+            "page": ""
           }
         }
       },
-      "block_order": ["panel-1"]
+      "block_order": [
+        "panel-1"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     },
     "blueprint": {
-      "type": "product-dimensions-blueprint"
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "72 cm",
+        "width_label": "180 cm",
+        "depth_label": "65 cm",
+        "overall_dimensions": "180 × 65 × 75 cm (W × D × H)",
+        "clearance_below": "75 cm",
+        "net_weight": "12 kg",
+        "max_load": "65 kg",
+        "package_dimensions": "130 × 67 × 15 cm",
+        "assembly_note": "No Asembly Required OR Pre-Assembled - Unfold Legs for Full Functionality",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     },
     "recommendations": {
-      "type": "product-recommendations"
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 32,
+        "padding_bottom": 20
+      }
     },
     "sticky_dock": {
-      "type": "product-sticky-buy-bar"
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
     }
   },
   "order": [
