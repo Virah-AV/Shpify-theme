@@ -1,88 +1,171 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase",
-                                  "blocks":  {
-                                                 "judge_me_reviews_preview_badge_YTCf7N":  {
-                                                                                               "type":  "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-                                                                                               "settings":  {
-
-                                                                                                            }
-                                                                                           }
-                                             }
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible_tab_KekVky":  {
-                                                                                    "type":  "feature",
-                                                                                    "settings":  {
-                                                                                                     "heading":  "Product Specifications",
-                                                                                                     "content":  "\u003cp\u003e\u003cstrong\u003eHigh-Resilience Mattress:\u003c/strong\u003e Full-length mattress is generously filled with premium cotton or foam, supporting the body with a soft yet sturdy surface that fits the spine and relieves pressure points throughout the day.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eBreathable Fabric Upholstery:\u003c/strong\u003e Mattress is wrapped in high-quality plaid or woven fabric, which is comfortable, sweat-absorbent, and highly breathable, keeping users cool in summer and warm in winter.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eStable 8-Leg Support Structure:\u003c/strong\u003e Upgraded foldable bed stands on eight strong legs, providing increased load-bearing and enhancing safety during use. The frame sits flat and stable on any surface for secure rest\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMulti-Level Adjustable Backrest:\u003c/strong\u003e Enjoy personalized comfort with up to 6 gear positions for sitting, reclining, or sleeping. The bed transforms easily to suit reading, napping, or overnight rest needs\u003c/p\u003e"
-                                                                                                 }
-                                                                                },
-                                                     "collapsible-row-1":  {
-                                                                               "type":  "feature",
-                                                                               "settings":  {
-                                                                                                "heading":  "Product features",
-                                                                                                "content":  "\u003cul\u003e\u003cli\u003e\u003cstrong\u003eIntegrated Folding Design:\u003c/strong\u003e No installation required—simply unfold and use. The lightweight frame folds compactly for effortless storage and portability.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eSoundproof Cloth Stitching:\u003c/strong\u003e The frame and mattress are joined with sound-absorbing fabric, minimizing movement noise and ensuring restful, undisturbed sleep.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003ePremium Build Quality:\u003c/strong\u003e Features thickened metal accessories, oxford cloth supports, and non-slip foot pads for extra durability and user safety.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                "page":  "product-features"
-                                                                                            }
-                                                                           }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible_tab_KekVky",
-                                                          "collapsible-row-1"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003cul\u003e\u003cli\u003e\u003cstrong\u003eFrame:\u003c/strong\u003e High-grade steel pipe with flush connection technology for precise support, strong load-bearing, and long-lasting durability.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eMattress:\u003c/strong\u003e High-resilience cotton/foam filling encased in breathable plaid fabric or durable oxford cloth for comfort and health.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eUpholstery:\u003c/strong\u003e Cover is soft, sweat-absorbent, and non-irritating to skin. It is designed for all-season use, resisting pilling and maintaining shape.\u003c/li\u003e\u003cli\u003e\u003cstrong\u003eNon-Slip Foot Pads:\u003c/strong\u003e Provide additional safety on a variety of surfaces and protect flooring from scratches.\u003c/li\u003e\u003c/ul\u003e\u003ch3\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e\u003c/h3\u003e\u003cul\u003e\u003cli\u003eClean with a soft brush or vacuum regularly to remove dust from the \u003c/li\u003e\u003c/ul\u003e{{ block.settings.page.content }}\u003cul\u003e\u003cli\u003esurface.\u003c/li\u003e\u003cli\u003eSpot-clean spills with a damp cloth, using mild detergent if necessary.\u003c/li\u003e\u003cli\u003eAllow fabric to air dry naturally; avoid exposure to excessive moisture or direct sunlight for long periods.\u003c/li\u003e\u003cli\u003eDo not use bleach or abrasive cleaners.\u003c/li\u003e\u003cli\u003eStore folded bed in a dry, ventilated area when not in use.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "190 cm",
-                                                        "package_dimensions":  "95 x 22 x 22 cm (folded)",
-                                                        "assembly_note":  "No assembly required - unfolds in under a minute.",
-                                                        "height_label":  "35 cm",
-                                                        "width_label":  "80 cm",
-                                                        "overall_dimensions":  "190 x 80 x 35 cm (L x W x H)",
-                                                        "max_load":  "150 kg",
-                                                        "net_weight":  "22 kg",
-                                                        "clearance_below":  "N/A",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible_tab_KekVky": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product Specifications",
+            "content": "<p><strong>High-Resilience Mattress:</strong> Full-length mattress is generously filled with premium cotton or foam, supporting the body with a soft yet sturdy surface that fits the spine and relieves pressure points throughout the day.</p><p><strong>Breathable Fabric Upholstery:</strong> Mattress is wrapped in high-quality plaid or woven fabric, which is comfortable, sweat-absorbent, and highly breathable, keeping users cool in summer and warm in winter.</p><p><strong>Stable 8-Leg Support Structure:</strong> Upgraded foldable bed stands on eight strong legs, providing increased load-bearing and enhancing safety during use. The frame sits flat and stable on any surface for secure rest</p><p><strong>Multi-Level Adjustable Backrest:</strong> Enjoy personalized comfort with up to 6 gear positions for sitting, reclining, or sleeping. The bed transforms easily to suit reading, napping, or overnight rest needs</p>",
+            "page": ""
+          }
+        },
+        "collapsible-row-1": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product features",
+            "content": "<ul><li><strong>Integrated Folding Design:</strong> No installation required—simply unfold and use. The lightweight frame folds compactly for effortless storage and portability.</li><li><strong>Soundproof Cloth Stitching:</strong> The frame and mattress are joined with sound-absorbing fabric, minimizing movement noise and ensuring restful, undisturbed sleep.</li><li><strong>Premium Build Quality:</strong> Features thickened metal accessories, oxford cloth supports, and non-slip foot pads for extra durability and user safety.</li></ul>",
+            "page": "product-features"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_KekVky",
+        "collapsible-row-1"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<ul><li><strong>Frame:</strong> High-grade steel pipe with flush connection technology for precise support, strong load-bearing, and long-lasting durability.</li><li><strong>Mattress:</strong> High-resilience cotton/foam filling encased in breathable plaid fabric or durable oxford cloth for comfort and health.</li><li><strong>Upholstery:</strong> Cover is soft, sweat-absorbent, and non-irritating to skin. It is designed for all-season use, resisting pilling and maintaining shape.</li><li><strong>Non-Slip Foot Pads:</strong> Provide additional safety on a variety of surfaces and protect flooring from scratches.</li></ul><h3><strong>Care Instructions:</strong></h3><ul><li>Clean with a soft brush or vacuum regularly to remove dust from the </li></ul>{{ block.settings.page.content }}<ul><li>surface.</li><li>Spot-clean spills with a damp cloth, using mild detergent if necessary.</li><li>Allow fabric to air dry naturally; avoid exposure to excessive moisture or direct sunlight for long periods.</li><li>Do not use bleach or abrasive cleaners.</li><li>Store folded bed in a dry, ventilated area when not in use.</li></ul>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "35 cm",
+        "width_label": "180 cm",
+        "depth_label": "60 cm",
+        "overall_dimensions": "180 x 60 x 35 cm (L x W x H)",
+        "clearance_below": "30 cm",
+        "net_weight": "10 kg",
+        "max_load": "85 kg",
+        "package_dimensions": "75 x 65 x 15 cm (folded)",
+        "assembly_note": "No assembly required - unfolds in under a minute.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
