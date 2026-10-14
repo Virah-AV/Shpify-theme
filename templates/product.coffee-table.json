@@ -1,88 +1,171 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase",
-                                  "blocks":  {
-                                                 "judge_me_reviews_preview_badge_QLctb4":  {
-                                                                                               "type":  "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-                                                                                               "settings":  {
-
-                                                                                                            }
-                                                                                           }
-                                             }
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible_tab_gmQ8EC":  {
-                                                                                    "type":  "feature",
-                                                                                    "settings":  {
-                                                                                                     "heading":  "Product Specifications",
-                                                                                                     "content":  "\u003cp\u003e\u003cstrong\u003eModern C-Shaped Design:\u003c/strong\u003e Sleek and minimalist, the C-shaped profile allows the table to slide under sofas, beds, or chairs for convenient use as a laptop desk, coffee table, or side accent\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eWalnut-Finish Top:\u003c/strong\u003e The tabletop is crafted from high-quality blister density board (MDF) with a rich walnut finish, giving it a smooth, stylish look that complements any interior.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eStable Metal Base:\u003c/strong\u003e Supported by a thick black steel frame and reinforced oval base for maximum stability, durability, and a touch of contemporary flair.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eSpace-Saving Side Table For Couches\u003c/strong\u003e : If you\u0027re looking for space-saving furniture for a small room, this compact sofa table is perfect for you. It doesn\u0027t require much space but is incredibly useful as a versatile side table, coffee table, or snack holder. Its Space-saving and C shape design easily slides under sofas or beds. Perfect for small apartments, dorms, and compact rooms.\u003c/p\u003e"
-                                                                                                 }
-                                                                                },
-                                                     "collapsible-row-1":  {
-                                                                               "type":  "feature",
-                                                                               "settings":  {
-                                                                                                "heading":  "Product features",
-                                                                                                "content":  "\u003cp\u003e\u003cstrong\u003eSmooth \u0026 Easy to Clean:\u003c/strong\u003e The surface is water stain-resistant, friction-resistant, and wipes clean easily—ideal for hassle-free daily use and entertaining.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCompact \u0026 Versatile:\u003c/strong\u003e At 58 cm high with a 38 x 28 cm tabletop, it fits perfectly in small spaces for use as a bedside or sofa table, plant stand, or reading nook companion.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMultipurpose Functionality:\u003c/strong\u003e Perfect for serving snacks, drinks, reading material, and even as a workspace for laptops or tablets—great for living rooms, bedrooms, balconies, or offices.\u003c/p\u003e",
-                                                                                                "page":  "product-features"
-                                                                                            }
-                                                                           }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible_tab_gmQ8EC",
-                                                          "collapsible-row-1"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003ch4\u003e\u003cstrong\u003eMaterials:\u003c/strong\u003e \u003c/h4\u003e\u003cp\u003eTabletop made from premium blister density board (engineered MDF) finished in walnut; base constructed of robust steel with a powder-coated black finish for long-lasting strength.\u003c/p\u003e\u003ch4\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e\u003c/h4\u003e\u003cul\u003e\u003cli\u003eWipe surface regularly with a soft, damp cloth to remove dust and spills.\u003c/li\u003e\u003cli\u003eDo not use harsh chemicals or abrasive cleaners on the tabletop or metal base.\u003c/li\u003e\u003cli\u003eClean up liquid spills promptly to maintain the finish.\u003c/li\u003e\u003cli\u003eAvoid placing hot pans or sharp objects directly on the tabletop to prevent marks or scratches.\u003c/li\u003e\u003cli\u003eFor best results, use coasters or mats under cups and decor.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "28 cm",
-                                                        "package_dimensions":  "42 x 32 x 10 cm",
-                                                        "assembly_note":  "No assembly required - fully pre-built and ready to slide into place.",
-                                                        "height_label":  "58 cm",
-                                                        "width_label":  "38 cm",
-                                                        "overall_dimensions":  "38 x 28 x 58 cm (W x D x H)",
-                                                        "max_load":  "20 kg",
-                                                        "net_weight":  "3.8 kg",
-                                                        "clearance_below":  "32 cm sofa-arm clearance",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible_tab_gmQ8EC": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product Specifications",
+            "content": "<p><strong>Modern C-Shaped Design:</strong>&nbsp;Sleek and minimalist, the C-shaped profile allows the table to slide under sofas, beds, or chairs for convenient use as a laptop desk, coffee table, or side accent</p><p><strong>Walnut-Finish Top:</strong>&nbsp;The tabletop is crafted from high-quality blister density board (MDF) with a rich walnut finish, giving it a smooth, stylish look that complements any interior.</p><p><strong>Stable Metal Base:</strong>&nbsp;Supported by a thick black steel frame and reinforced oval base for maximum stability, durability, and a touch of contemporary flair.</p><p><strong>Space-Saving Side Table For Couches</strong> : If you're looking for space-saving furniture for a small room, this doesn't require much space but is incredibly useful as a versatile side table, coffee table, or snack holder.&nbsp;</p>",
+            "page": ""
+          }
+        },
+        "collapsible-row-1": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product features",
+            "content": "<p><strong>Smooth & Easy to Clean:</strong> The surface is water stain-resistant, friction-resistant, and wipes clean easily—ideal for hassle-free daily use and entertaining.</p><p><strong>Compact & Versatile:</strong> At 58 cm high with a 38 x 28 cm tabletop, it fits perfectly in small spaces for use as a bedside or sofa table, plant stand, or reading nook companion.</p><p><strong>Multipurpose Functionality:</strong> Perfect for serving snacks, drinks, reading material, and even as a workspace for laptops or tablets—great for living rooms, bedrooms, balconies, or offices.</p>",
+            "page": "product-features"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_gmQ8EC",
+        "collapsible-row-1"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<h4><strong>Materials:</strong> </h4><p>Tabletop made from premium blister density board (engineered MDF) finished in walnut; base constructed of robust steel with a powder-coated black finish for long-lasting strength.</p><h4><strong>Care Instructions:</strong></h4><ul><li>Wipe surface regularly with a soft, damp cloth to remove dust and spills.</li><li>Do not use harsh chemicals or abrasive cleaners on the tabletop or metal base.</li><li>Clean up liquid spills promptly to maintain the finish.</li><li>Avoid placing hot pans or sharp objects directly on the tabletop to prevent marks or scratches.</li><li>For best results, use coasters or mats under cups and decor.</li></ul>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "58 cm",
+        "width_label": "38 cm",
+        "depth_label": "28 cm",
+        "overall_dimensions": "38 x 28 x 58 cm (W x D x H)",
+        "clearance_below": "32 cm sofa-arm clearance",
+        "net_weight": "2 kg",
+        "max_load": "15 kg",
+        "package_dimensions": "58 x 31 x 4 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
