@@ -1,72 +1,162 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible-row-1":  {
-                                                                               "type":  "feature",
-                                                                               "settings":  {
-                                                                                                "heading":  "Product features",
-                                                                                                "content":  "\u003cp\u003e\u003cstrong\u003eCompact C-Shaped Design\u003c/strong\u003e: Slides easily under sofas or beds for space-saving use as a snack, laptop, or reading table.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eIntegrated Magazine Pocket\u003c/strong\u003e: Tan leather-like pouch holds magazines, books, remotes, or pens, with V-shaped rack for organized storage.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eSmooth Mobility\u003c/strong\u003e: Four caster wheels (two often lockable) allow effortless repositioning without floor scratches.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMulti-Tier Storage\u003c/strong\u003e: Top shelf for drinks/books, lower shelf for magazines, and pocket for small items; load capacity up to 44 lbs on top.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eStylish Office/Waiting Area Fit\u003c/strong\u003e: Pairs with brochures, plants, or decor for lobbies, as seen in hospitality settings.\u003c/p\u003e",
-                                                                                                "page":  "product-features"
-                                                                                            }
-                                                                           }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible-row-1"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003cp\u003eCrafted from powder-coated metal frame for rust resistance, engineered wood top (often cherry or beech), and faux leather pocket for durability.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eDaily Cleaning\u003c/strong\u003e: Dust with a soft, lint-free microfiber cloth; wipe spills with slightly damp cloth and mild soap, then dry immediately.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003ePolishing\u003c/strong\u003e: Apply wood-safe polish quarterly in circular motions for shine; avoid excess moisture to prevent warping.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMaintenance Tips\u003c/strong\u003e: Keep away from direct sun/heat; lock wheels when stationary; no harsh chemicals or abrasives.\u003c/p\u003e\u003cp\u003e\u003c/p\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "40 cm",
-                                                        "package_dimensions":  "45 x 45 x 10 cm",
-                                                        "assembly_note":  "Castors click-fit in place - approx. 5 minutes.",
-                                                        "height_label":  "55 cm",
-                                                        "width_label":  "40 cm",
-                                                        "overall_dimensions":  "40 x 40 x 55 cm (W x D x H)",
-                                                        "max_load":  "20 kg",
-                                                        "net_weight":  "4 kg",
-                                                        "clearance_below":  "48 cm",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 3,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible-row-1": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product features",
+            "content": "<p><strong>Compact C-Shaped Design</strong>: Slides easily under sofas or beds for space-saving use as a snack, laptop, or reading table.</p><p><strong>Integrated Magazine Pocket</strong>: Tan leather-like pouch holds magazines, books, remotes, or pens, with V-shaped rack for organized storage.</p><p><strong>Smooth Mobility</strong>: Four caster wheels (two often lockable) allow effortless repositioning without floor scratches.</p><p><strong>Multi-Tier Storage</strong>: Top shelf for drinks/books, lower shelf for magazines, and pocket for small items; load capacity up to 44 lbs on top.</p><p><strong>Stylish Office/Waiting Area Fit</strong>: Pairs with brochures, plants, or decor for lobbies, as seen in hospitality settings.</p>",
+            "page": "product-features"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-1"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<p>Crafted from powder-coated metal frame for rust resistance, engineered wood top (often cherry or beech), and faux leather pocket for durability.</p><p><strong>Daily Cleaning</strong>: Dust with a soft, lint-free microfiber cloth; wipe spills with slightly damp cloth and mild soap, then dry immediately.</p><p><strong>Polishing</strong>: Apply wood-safe polish quarterly in circular motions for shine; avoid excess moisture to prevent warping.</p><p><strong>Maintenance Tips</strong>: Keep away from direct sun/heat; lock wheels when stationary; no harsh chemicals or abrasives.</p><p></p>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "62 cm",
+        "width_label": "28 cm",
+        "depth_label": "40 cm",
+        "overall_dimensions": "40 x 28 x 62 cm (D x W x H)",
+        "clearance_below": "55 cm",
+        "net_weight": "4 kg",
+        "max_load": "15 kg",
+        "package_dimensions": "60 x 36 x 5 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
