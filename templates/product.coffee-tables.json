@@ -1,46 +1,193 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features"
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care"
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "45 cm dia.",
-                                                        "package_dimensions":  "50 x 50 x 8 cm",
-                                                        "assembly_note":  "No assembly required - arrives fully assembled.",
-                                                        "height_label":  "47 cm",
-                                                        "width_label":  "45 cm dia.",
-                                                        "overall_dimensions":  "45 cm diameter x 47 cm height",
-                                                        "max_load":  "15 kg",
-                                                        "net_weight":  "2.5 kg",
-                                                        "clearance_below":  "38 cm stem clearance",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_features_nyaJ6F": {
+      "type": "product-features",
+      "blocks": {
+        "feature_HnicY9": {
+          "type": "feature",
+          "settings": {
+            "heading": "",
+            "content": "<ul><li><strong>Oval Faux Marble Shelves</strong>: Three tiers with realistic white marble print for high-end look at affordable price; oval shape softens room edges.</li><li><strong>Slim Metal Frame</strong>: Elegant finish on sturdy legs adds luxury without bulk; narrow profile (under 40 cm wide typically) fits tight spots.</li><li><strong>Lightweight Portability</strong>: Easy to move (under 5 kg usually); no tools needed for setup.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_HnicY9"
+      ],
+      "name": "Product features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211C18",
+        "card_color": "#2E2723",
+        "heading_color": "#F5EEE4",
+        "text_color": "#C9BDAF",
+        "accent_color": "#C29B6A",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_materials_care_AnnpQj": {
+      "type": "product-materials-care",
+      "blocks": {
+        "panel_baHURw": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials & Care",
+            "content": "<p><strong>High-Quality Build</strong>: Powder-coated gold metal frame resists scratches; high-density faux marble tops (MDF/PVC laminate) for durability and easy clean.<br/></p><ul><li>Dust shelves/legs weekly with soft microfiber cloth; spot-clean spills with damp cloth and mild soap.</li><li>Avoid direct sunlight to prevent fading on marble print.</li><li>Indoor use only; max load per shelf to avoid warping.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_baHURw"
+      ],
+      "name": "Materials & care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#E4E6DC",
+        "panel_color": "#FFFFFF",
+        "heading_color": "#2B2420",
+        "text_color": "#6F655C",
+        "accent_color": "#5C6B53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "62 cm",
+        "width_label": "60 cm",
+        "depth_label": "30 cm",
+        "overall_dimensions": "60 x 30 x 62 cm (L x W x H)",
+        "clearance_below": "30 cm stem clearance",
+        "net_weight": "4.5 kg",
+        "max_load": "20 kg",
+        "package_dimensions": "66 x 35 x 7 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "product_features_nyaJ6F",
+    "product_materials_care_AnnpQj",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
