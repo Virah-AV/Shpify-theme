@@ -1,79 +1,162 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase",
-                                  "blocks":  {
-                                                 "judge_me_reviews_preview_badge_49Ez37":  {
-                                                                                               "type":  "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-                                                                                               "settings":  {
-
-                                                                                                            }
-                                                                                           }
-                                             }
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible_tab_gT7rMY":  {
-                                                                                    "type":  "feature",
-                                                                                    "settings":  {
-                                                                                                     "heading":  "Product Specifications",
-                                                                                                     "content":  "\u003cp\u003e\u003cstrong\u003eCustomizable Modular Shelving :\u003c/strong\u003e Innovative cube design allows for a staggered, step-style or straight configuration; Includes 6 open cubes stack, arrange to fit your space and for storing books, clothes, shoes, toys, décor, and more. A perfect space-saving solution for any room.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eDurable Construction:\u003c/strong\u003e Made with strong galvanized steel pipes and high-quality non-woven fabric panels to hold your items securely and reinforced double tube brackets for reliable support last long.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eQuality Connectors:\u003c/strong\u003e High-quality plastic connectors provide strong joins and make assembly/disassembly easy and tool-free.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eLightweight \u0026 Portable:\u003c/strong\u003e Easy to move and reconfigure. The lightweight frame makes it simple to adapt or relocate as storage needs change.\u003c/p\u003e"
-                                                                                                 }
-                                                                                }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible_tab_gT7rMY"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003ch4\u003e\u003cstrong\u003eMaterials:\u003c/strong\u003e \u003c/h4\u003e\u003cp\u003eShelves made from coated, water-resistant non-woven fabric for easy cleaning; frame crafted from galvanized steel tubes for sturdiness; durable plastic connectors for stability.\u003c/p\u003e\u003ch4\u003e\u003cstrong\u003eCare Instructions:\u003c/strong\u003e\u003c/h4\u003e\u003cul\u003e\u003cli\u003eWipe clean with a damp cloth as needed to remove dust or spills.\u003c/li\u003e\u003cli\u003eAvoid overloading shelves or storing heavy objects that exceed individual cube weight limits.\u003c/li\u003e\u003cli\u003eKeep away from direct moisture and prolonged sunlight to maintain strength and color.\u003c/li\u003e\u003cli\u003eDisassemble and reassemble as necessary for relocation—parts are reusable and portable.\u003c/li\u003e\u003c/ul\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "30 cm",
-                                                        "package_dimensions":  "112 x 32 x 36 cm",
-                                                        "assembly_note":  "Flat-pack assembly - approx. 25 minutes with included hardware.",
-                                                        "height_label":  "108 cm",
-                                                        "width_label":  "108 cm",
-                                                        "overall_dimensions":  "108 x 30 x 108 cm (W x D x H)",
-                                                        "max_load":  "10 kg per cube",
-                                                        "net_weight":  "18 kg",
-                                                        "clearance_below":  "N/A",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible_tab_gT7rMY": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product Specifications",
+            "content": "<p><strong>Customizable Modular Shelving :</strong> Innovative cube design allows for a staggered, step-style or straight configuration; Includes 6 open cubes stack, arrange to fit your space and for storing books, clothes, shoes, toys, décor, and more. A perfect space-saving solution for any room.</p><p><strong>Durable Construction:</strong> Made with strong galvanized steel pipes and high-quality non-woven fabric panels to hold your items securely and reinforced double tube brackets for reliable support last long.</p><p><strong>Quality Connectors:</strong> High-quality plastic connectors provide strong joins and make assembly/disassembly easy and tool-free.</p><p><strong>Lightweight & Portable:</strong> Easy to move and reconfigure. The lightweight frame makes it simple to adapt or relocate as storage needs change.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_gT7rMY"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<h4><strong>Materials:</strong> </h4><p>Shelves made from coated, water-resistant non-woven fabric for easy cleaning; frame crafted from galvanized steel tubes for sturdiness; durable plastic connectors for stability.</p><h4><strong>Care Instructions:</strong></h4><ul><li>Wipe clean with a damp cloth as needed to remove dust or spills.</li><li>Avoid overloading shelves or storing heavy objects that exceed individual cube weight limits.</li><li>Keep away from direct moisture and prolonged sunlight to maintain strength and color.</li><li>Disassemble and reassemble as necessary for relocation—parts are reusable and portable.</li></ul>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "110 cm",
+        "width_label": "106 cm",
+        "depth_label": "30 cm",
+        "overall_dimensions": "106 x 30 x 110 cm (W x D x H)",
+        "clearance_below": "35",
+        "net_weight": "3 kg",
+        "max_load": "7 kg per cube",
+        "package_dimensions": "30 x 16 x 15 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
