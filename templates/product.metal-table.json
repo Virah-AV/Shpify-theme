@@ -1,72 +1,162 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features",
-                                      "blocks":  {
-                                                     "collapsible-row-1":  {
-                                                                               "type":  "feature",
-                                                                               "settings":  {
-                                                                                                "heading":  "Product features",
-                                                                                                "content":  "\u003cp\u003e\u003cstrong\u003eCompact Round Shape\u003c/strong\u003e: 45 cm diameter tray top provides ample surface for drinks, books, or decor without crowding small spaces.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eIdeal Height\u003c/strong\u003e: 47 cm tall, perfect as a sofa or bedside table for easy reach.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCross-Leg Frame\u003c/strong\u003e: Sturdy X-shaped steel legs ensure stability on uneven floors.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eHigh Load Capacity\u003c/strong\u003e: Weighs only 2.5 kg for effortless portability but Supports up to 15 kg, suitable for lamps, vases, or snacks.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eAnti-Rust Protection\u003c/strong\u003e: Powder-coated finish resists corrosion, ideal for indoor/outdoor use.\u003c/p\u003e",
-                                                                                                "page":  "product-features"
-                                                                                            }
-                                                                           }
-                                                 },
-                                      "block_order":  [
-                                                          "collapsible-row-1"
-                                                      ]
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care",
-                                            "blocks":  {
-                                                           "collapsible-row-0":  {
-                                                                                     "type":  "panel",
-                                                                                     "settings":  {
-                                                                                                      "heading":  "Materials and care",
-                                                                                                      "content":  "\u003cp\u003e\u003cstrong\u003ePremium Construction\u003c/strong\u003e: Made from high-grade powder-coated steel for rust resistance, scratch-proof surface, and long-lasting shine.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eCleaning\u003c/strong\u003e: Wipe with a soft, damp cloth and mild soap; dry immediately to maintain finish.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eMaintenance\u003c/strong\u003e: Avoid harsh abrasives or acids; polish with metal-safe cleaner quarterly.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eTips\u003c/strong\u003e: Keep indoors during heavy rain; do not overload beyond 20 kg.\u003c/p\u003e",
-                                                                                                      "page":  "materials-and-care"
-                                                                                                  }
-                                                                                 }
-                                                       },
-                                            "block_order":  [
-                                                                "collapsible-row-0"
-                                                            ]
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "50 cm",
-                                                        "package_dimensions":  "105 x 55 x 10 cm",
-                                                        "assembly_note":  "Minimal assembly - approx. 15 minutes with included tools.",
-                                                        "height_label":  "75 cm",
-                                                        "width_label":  "100 cm",
-                                                        "overall_dimensions":  "100 x 50 x 75 cm (W x D x H)",
-                                                        "max_load":  "40 kg",
-                                                        "net_weight":  "12 kg",
-                                                        "clearance_below":  "65 cm",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "blocks": {
+        "collapsible-row-1": {
+          "type": "feature",
+          "settings": {
+            "heading": "Product features",
+            "content": "<p><strong>Compact Round Shape</strong>: 45 cm diameter tray top provides ample surface for drinks, books, or decor without crowding small spaces.</p><p><strong>Ideal Height</strong>: 47 cm tall, perfect as a sofa or bedside table for easy reach.</p><p><strong>Cross-Leg Frame</strong>: Sturdy X-shaped steel legs ensure stability on uneven floors.</p><p><strong>High Load Capacity</strong>: Weighs only 2.5 kg for effortless portability but Supports up to 15 kg, suitable for lamps, vases, or snacks.</p><p><strong>Anti-Rust Protection</strong>: Powder-coated finish resists corrosion, ideal for indoor/outdoor use.</p>",
+            "page": "product-features"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-1"
+      ],
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "blocks": {
+        "collapsible-row-0": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials and care",
+            "content": "<p><strong>Premium Construction</strong>: Made from high-grade powder-coated steel for rust resistance, scratch-proof surface, and long-lasting shine.</p><p><strong>Cleaning</strong>: Wipe with a soft, damp cloth and mild soap; dry immediately to maintain finish.</p><p><strong>Maintenance</strong>: Avoid harsh abrasives or acids; polish with metal-safe cleaner quarterly.</p><p><strong>Tips</strong>: Keep indoors during heavy rain; do not overload beyond 20 kg.</p>",
+            "page": "materials-and-care"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible-row-0"
+      ],
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "47 cm",
+        "width_label": "45 cm",
+        "depth_label": "Diameters",
+        "overall_dimensions": "45 x 47 cm (D x H)",
+        "clearance_below": "65 cm",
+        "net_weight": "2.5 kg",
+        "max_load": "40 kg",
+        "package_dimensions": "53 x 48 x 7 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual. - approx. 15 minutes with included tools.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
