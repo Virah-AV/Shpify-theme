@@ -1,46 +1,202 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features"
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care"
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "40 cm",
-                                                        "package_dimensions":  "62 x 42 x 15 cm",
-                                                        "assembly_note":  "Quick-click wheel assembly - approx. 10 minutes.",
-                                                        "height_label":  "85 cm",
-                                                        "width_label":  "60 cm",
-                                                        "overall_dimensions":  "60 x 40 x 85 cm (W x D x H)",
-                                                        "max_load":  "100 kg",
-                                                        "net_weight":  "6 kg",
-                                                        "clearance_below":  "N/A",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_features_pNwh6g": {
+      "type": "product-features",
+      "blocks": {
+        "feature_iwH38T": {
+          "type": "feature",
+          "settings": {
+            "heading": "Specifications",
+            "content": "<ul><li><strong>Smooth Caster Wheels</strong>: Four 360° swivel wheels allow effortless movement across different floor surfaces.member.</li><li><strong>Easy Positioning</strong>: Move the table wherever you need it, whether beside a sofa, bed, or armchair.</li><li><strong>Convenient Mobility</strong>: Ideal for homes that need flexible furniture for cleaning or rearranging.</li><li><strong>Space-Saving Layout</strong>: Vertical storage keeps the footprint compact while increasing usefulness.</li><li><strong>Modern Appeal</strong>: Blends easily with light, neutral, and Scandinavian-style interiors.</li></ul>",
+            "page": ""
+          }
+        },
+        "feature_ntE6aT": {
+          "type": "feature",
+          "settings": {
+            "heading": "Material",
+            "content": "<ul><li><strong>Natural Look</strong>: Real Wooden legs add warmth and a premium furniture feel.</li><li><strong>Stable Structure</strong>: The legs provide solid support and balance for everyday use.</li></ul><p><strong>Tray material</strong>: High-density polypropylene (PP) or ABS plastic for the tray top, shelves, and frame—lightweight, durable, and waterproof.</p><p><strong>Finish</strong>: Smooth matte white plastic finish—scratch-resistant, easy-clean surface.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_iwH38T",
+        "feature_ntE6aT"
+      ],
+      "name": "Product features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211C18",
+        "card_color": "#2E2723",
+        "heading_color": "#F5EEE4",
+        "text_color": "#C9BDAF",
+        "accent_color": "#C29B6A",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_materials_care_G694Cp": {
+      "type": "product-materials-care",
+      "blocks": {
+        "panel_QNzwzz": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials & Care",
+            "content": "<ul><li>Wipe the tabletop and frame with a soft, dry or slightly damp microfiber cloth.</li><li>Avoid harsh chemicals, abrasive pads, and excess water, especially on wooden parts.</li><li>Clean the caster wheels regularly to remove dust, hair, or debris so they roll smoothly.</li><li>If wheels become stiff, use a small amount of silicone spray on the axle or moving parts.</li><li>Tighten screws and fittings periodically to keep the table stable and wobble-free.</li><li>Keep the table away from prolonged moisture and direct sunlight to preserve the wood finish</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_QNzwzz"
+      ],
+      "name": "Materials & care",
+      "settings": {
+        "heading": "Care Instructions",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#E4E6DC",
+        "panel_color": "#FFFFFF",
+        "heading_color": "#2B2420",
+        "text_color": "#6F655C",
+        "accent_color": "#5C6B53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "50 cm",
+        "width_label": "46 cm",
+        "depth_label": "38 cm",
+        "overall_dimensions": "46 x 38 x 50 cm (W x D x H)",
+        "clearance_below": "35",
+        "net_weight": "5 kg",
+        "max_load": "25 kg",
+        "package_dimensions": "48 x 35 x 7 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.- approx. 10 minutes.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "product_features_pNwh6g",
+    "product_materials_care_G694Cp",
+    "blueprint",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
