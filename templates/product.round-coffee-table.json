@@ -1,46 +1,214 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections":  {
-                     "main":  {
-                                  "type":  "product-main-showcase"
-                              },
-                     "description":  {
-                                         "type":  "product-description"
-                                     },
-                     "features":  {
-                                      "type":  "product-features"
-                                  },
-                     "materials_care":  {
-                                            "type":  "product-materials-care"
-                                        },
-                     "blueprint":  {
-                                       "type":  "product-dimensions-blueprint",
-                                       "settings":  {
-                                                        "depth_label":  "70 cm dia.",
-                                                        "package_dimensions":  "72 x 72 x 10 cm",
-                                                        "assembly_note":  "Minimal assembly - attach legs in approx. 10 minutes.",
-                                                        "height_label":  "40 cm",
-                                                        "width_label":  "70 cm dia.",
-                                                        "overall_dimensions":  "70 cm diameter x 40 cm height",
-                                                        "max_load":  "35 kg",
-                                                        "net_weight":  "9 kg",
-                                                        "clearance_below":  "N/A",
-                                                        "delivery_note":  "Ships in one compact box that fits easily through standard doorways and lifts."
-                                                    }
-                                   },
-                     "recommendations":  {
-                                             "type":  "product-recommendations"
-                                         },
-                     "sticky_dock":  {
-                                         "type":  "product-sticky-buy-bar"
-                                     }
-                 },
-    "order":  [
-                  "main",
-                  "description",
-                  "features",
-                  "materials_care",
-                  "blueprint",
-                  "recommendations",
-                  "sticky_dock"
-              ]
+  "sections": {
+    "main": {
+      "type": "product-main-showcase",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_label": "Estimated Delivery Time:",
+        "delivery_estimate": "5 - 7 Days",
+        "trust_1": "Cash on Delivery",
+        "trust_2": "Secure Payment",
+        "show_quantity": true,
+        "show_share": true,
+        "background_color": "#f1eae0",
+        "surface_color": "#ffffff",
+        "image_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff",
+        "star_color": "#c29b6a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "description": {
+      "type": "product-description",
+      "settings": {
+        "eyebrow": "The Story",
+        "heading": "Crafted With Intention",
+        "background_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#5a5048",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "materials_care": {
+      "type": "product-materials-care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_features_Dx8rrT": {
+      "type": "product-features",
+      "blocks": {
+        "feature_HBybeB": {
+          "type": "feature",
+          "settings": {
+            "heading": "",
+            "content": "<ul><li><strong>Dual-Shelf Storage</strong>: The top and bottom shelves give you two useful surfaces for display and storage, helping keep your space organized.</li><li><strong>Shape</strong>: The form softens the look of the room and makes it ideal beside sofas, armchairs, or beds.</li><li><strong>Decor-Friendly Layout</strong>: Perfect for styling with books, candles, vases, trays, or small plants.</li><li><strong>Compact Footprint</strong>: Designed to fit in smaller living spaces while still offering practical surface area.</li><li><strong>Versatile Use</strong>: Can be used as a coffee table, sofa side table, nightstand, or accent table.</li></ul>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_HBybeB"
+      ],
+      "name": "Product features",
+      "settings": {
+        "heading": "Features & Specifications",
+        "background_color": "#211C18",
+        "card_color": "#2E2723",
+        "heading_color": "#F5EEE4",
+        "text_color": "#C9BDAF",
+        "accent_color": "#C29B6A",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "product_materials_care_KxpQ7n": {
+      "type": "product-materials-care",
+      "blocks": {
+        "panel_WGmBXC": {
+          "type": "panel",
+          "settings": {
+            "heading": "Materials & Care",
+            "content": "<ul><li><strong>Gold Metal Frame</strong>: The slim metallic frame gives the table a refined luxury finish and modern appeal.</li><li><strong>Marble-Look Surfaces</strong>: The top and lower shelf create a polished, high-end look while remaining easy to maintain.</li></ul><h3>Care Instructions</h3><ul><li>Wipe the surface regularly with a soft, dry or slightly damp microfiber cloth.</li><li>Use mild soap if needed, then dry immediately to maintain the finish.</li><li>Avoid harsh chemicals, bleach, abrasive pads, or rough scrubbing on the marble-look surface.</li><li>Keep hot items on coasters or mats to protect the finish from marks.</li><li>Clean the metal frame with a soft cloth to prevent dust buildup and preserve shine.</li></ul><p></p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "panel_WGmBXC"
+      ],
+      "name": "Materials & care",
+      "settings": {
+        "heading": "Materials & Care",
+        "subheading": "How to keep your piece looking its best for years to come.",
+        "background_color": "#E4E6DC",
+        "panel_color": "#FFFFFF",
+        "heading_color": "#2B2420",
+        "text_color": "#6F655C",
+        "accent_color": "#5C6B53",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "blueprint": {
+      "type": "product-dimensions-blueprint",
+      "settings": {
+        "heading": "Dimensions & Fit",
+        "subheading": "Plan your space with confidence — every measurement you need, before it arrives.",
+        "height_label": "42 and 50 cm",
+        "width_label": "60 cm dia.",
+        "depth_label": "42 cm dia.",
+        "overall_dimensions": "60 x 50 cm (D x H) & 42 x 42 cm  (D x H)",
+        "clearance_below": "45 cm and 30 cm",
+        "net_weight": "3 kg & 2Kg",
+        "max_load": "25 kg & 15 kg",
+        "package_dimensions": "62 x 62 x 5 cm & 42 x 42 x 6 cm",
+        "assembly_note": "Do It Yourself (DIY) Product - Assembly Instructions are mentioned Step by Step in the User Manual.",
+        "delivery_note": "Ships in one compact box that fits easily through standard doorways and lifts.",
+        "background_color": "#f7f3ed",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "1792041849c2063624": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_8dRRqh": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_8dRRqh"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "You May Also Like",
+        "products_to_show": 4,
+        "background_color": "#ebe2d6",
+        "image_background": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#9a6b43",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "sticky_dock": {
+      "type": "product-sticky-buy-bar",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "button_color": "#2b2420",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "description",
+    "features",
+    "materials_care",
+    "product_features_Dx8rrT",
+    "product_materials_care_KxpQ7n",
+    "blueprint",
+    "1792041849c2063624",
+    "recommendations",
+    "sticky_dock"
+  ]
 }
