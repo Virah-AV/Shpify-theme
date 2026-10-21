@@ -185,6 +185,7 @@
         "show_arrows": false,
         "show_dots": true,
         "image_size": "large",
+        "color_scheme": "",
         "padding_top": 4,
         "padding_bottom": 4
       }
@@ -269,8 +270,12 @@
         "column13"
       ],
       "settings": {
+        "eyebrow": "What we do",
         "heading": "Services We Provide",
+        "subheading": "",
         "background_color": "#ebe2d6",
+        "card_background": "#ffffff",
+        "text_color": "#2b2420",
         "accent_color": "#9a6b43",
         "padding_top": 44,
         "padding_bottom": 48
@@ -329,6 +334,7 @@
     },
     "custom_liquid_F8MGyd": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "Fixed Button",
       "settings": {
         "custom_liquid": "<!-- Permanent Floating Button -->\n<!-- Permanent Floating Buttons -->\n<a href=\"/pages/collab\" class=\"fixed-button\" id=\"sell-with-us-button\" title=\"Sell With Us\">\n  Sell With Us\n</a>\n\n<a href=\"/pages/collab\" class=\"fixed-button\" id=\"browse-all-button\" title=\"Bulk\">\n  Bulk Orders\n</a>\n\n<style>\n  /* Shared styles for all fixed buttons */\n.fixed-button {\n  position: fixed;\n  right: 25px;\n  z-index: 1000;\n  padding: 10px 10px;\n  background-color: #797068;\n  color: #ffffff;\n  text-decoration: none;\n  border-radius: 8px;\n  font-family: sans-serif;\n  font-size: 12px;\n  font-weight: brighter;\n  box-shadow: 0 4px 10px rgba(0,0,0,0.25);\n  /* --- New additions for fade effect --- */\n  opacity: 0;\n  pointer-events: none;\n  transition: opacity 0.4s ease, transform 0.3s ease;\n}\n\n/* Individual position for the first button */\n#sell-with-us-button {\n  bottom: 220px;\n}\n\n/* Individual position for the second button */\n#browse-all-button {\n  bottom: 150px;\n}\n\n/* --- New class to show the buttons --- */\n.fixed-button.show {\n  opacity: 1;\n  pointer-events: auto;\n}\n\n/* Shared hover effect */\n.fixed-button:hover {\n  background-color: #333333;\n  transform: translateY(-3px);\n}\n\n</style>\n\n<script>\n  document.addEventListener('DOMContentLoaded', function() {\n    // Select both buttons\n    const scrollButtons = document.querySelectorAll('.fixed-button');\n\n    // Set the scroll distance (in pixels) to trigger the buttons\n    // Adjust this value to match the height of your banner\n    const scrollTrigger = 400;\n\n    // Function to check scroll position and toggle button visibility\n    function toggleButtons() {\n      if (window.scrollY > scrollTrigger) {\n        scrollButtons.forEach(button => button.classList.add('show'));\n      } else {\n        scrollButtons.forEach(button => button.classList.remove('show'));\n      }\n    }\n\n    // Listen for scroll events\n    window.addEventListener('scroll', toggleButtons);\n  });\n</script>",
