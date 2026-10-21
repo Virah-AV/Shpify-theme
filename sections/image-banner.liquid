@@ -4,11 +4,14 @@
   assign ib_autoplay_speed = section.settings.autoplay_speed
   assign ib_click_to_slide = section.settings.enable_click_to_slide
 
-  # Banner height is 70% of the first image's natural height; every slide shares it.
+  # Desktop banner height is 70% of the first image's natural height; mobile uses the full natural height.
+  # Every slide shares it.
   assign ib_ratio = blank
+  assign ib_natural_ratio = blank
   for block in section.blocks
     if block.settings.image and ib_ratio == blank
-      assign ib_ratio = block.settings.image.aspect_ratio | divided_by: 0.7
+      assign ib_natural_ratio = block.settings.image.aspect_ratio
+      assign ib_ratio = ib_natural_ratio | divided_by: 0.7
     endif
   endfor
 -%}
@@ -24,7 +27,7 @@
     data-autoplay-speed="{{ ib_autoplay_speed }}"
     data-click-to-slide="{{ ib_click_to_slide }}"
     {% if ib_ratio != blank %}
-      style="--ib-ratio: {{ ib_ratio }};"
+      style="--ib-ratio: {{ ib_ratio }}; --ib-natural-ratio: {{ ib_natural_ratio }};"
     {% endif %}
   >
     <div class="ib-viewport">
@@ -315,6 +318,12 @@
 
 .ib-size--large .ib-slide__media {
   --ib-height: clamp(320px, 54vh, 620px);
+}
+
+@media screen and (max-width: 749px) {
+  .ib-slide__media--natural {
+    aspect-ratio: var(--ib-natural-ratio);
+  }
 }
 
 @media screen and (min-width: 750px) {
