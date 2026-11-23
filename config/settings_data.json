@@ -148,6 +148,11 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "11674196072004505311": {
+        "type": "shopify://apps/myshop-social-chat-button/blocks/widget/a5ad5d7c-50b7-4654-8fba-63fd50479f7d",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
