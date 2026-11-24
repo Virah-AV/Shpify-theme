@@ -19,7 +19,7 @@
         "delivery_label": "Estimated Delivery Time:",
         "delivery_estimate": "5 - 7 Days",
         "trust_1": "Cash on Delivery",
-        "trust_2": "Secure Payment",
+        "trust_2": "Secured Payment",
         "show_quantity": true,
         "show_share": true,
         "background_color": "#f1eae0",
@@ -93,11 +93,11 @@
       "name": "Product features",
       "settings": {
         "heading": "Features & Specifications",
-        "background_color": "#211C18",
-        "card_color": "#2E2723",
-        "heading_color": "#F5EEE4",
-        "text_color": "#C9BDAF",
-        "accent_color": "#C29B6A",
+        "background_color": "#211c18",
+        "card_color": "#2e2723",
+        "heading_color": "#f5eee4",
+        "text_color": "#c9bdaf",
+        "accent_color": "#c29b6a",
         "padding_top": 72,
         "padding_bottom": 72
       }
@@ -121,11 +121,11 @@
       "settings": {
         "heading": "Materials & Care",
         "subheading": "How to keep your piece looking its best for years to come.",
-        "background_color": "#E4E6DC",
-        "panel_color": "#FFFFFF",
-        "heading_color": "#2B2420",
-        "text_color": "#6F655C",
-        "accent_color": "#5C6B53",
+        "background_color": "#e4e6dc",
+        "panel_color": "#ffffff",
+        "heading_color": "#2b2420",
+        "text_color": "#6f655c",
+        "accent_color": "#5c6b53",
         "padding_top": 72,
         "padding_bottom": 72
       }
