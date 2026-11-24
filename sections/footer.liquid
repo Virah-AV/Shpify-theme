@@ -38,11 +38,17 @@
       assign brand_empty = true
     endif
 
-    if section.blocks.size == 1 and section.blocks[0].type == 'brand_information' and brand_empty and has_social_icons == false and section.settings.newsletter_enable == false and section.settings.enable_follow_on_shop == false
+    assign show_payment_icons = false
+    if section.settings.payment_enable or section.settings.payment_show_upi or section.settings.payment_show_cards or section.settings.payment_show_cod or section.settings.payment_show_paypal or section.settings.payment_show_emi
+      assign show_payment_icons = true
+    endif
+
+    if section.blocks.size == 1 and section.blocks[0].type == 'brand_information' and brand_empty and has_social_icons == false and section.settings.newsletter_enable == false and section.settings.enable_follow_on_shop == false and show_payment_icons == false
       assign only_empty_brand = true
     endif
   -%}
   {%- if section.blocks.size > 0
+    or show_payment_icons
     or section.settings.newsletter_enable
     or section.settings.show_social
     and has_social_icons == true
@@ -242,8 +248,14 @@
             </div>
           {%- endif -%}
 
-          {%- if section.settings.show_social and has_social_icons -%}
-            {%- render 'social-icons', class: 'footer__list-social' -%}
+          {%- if show_payment_icons or section.settings.show_social and has_social_icons -%}
+            <div class="footer__payment-social">
+              {%- render 'footer-payment-icons', settings: section.settings -%}
+
+              {%- if section.settings.show_social and has_social_icons -%}
+                {%- render 'social-icons', class: 'footer__list-social' -%}
+              {%- endif -%}
+            </div>
           {%- endif -%}
         </div>
       </div>
@@ -282,20 +294,7 @@
           </localization-form>
         {%- endif -%}
       </div>
-      <div class="footer__column footer__column--info">
-        {%- if section.settings.payment_enable -%}
-          <div class="footer__payment">
-            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-      </div>
+      <div class="footer__column footer__column--info"></div>
     </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
@@ -480,10 +479,52 @@
       "info": "t:sections.footer.settings.enable_language_selector.info"
     },
     {
+      "type": "header",
+      "content": "Payment icons",
+      "info": "Shown on the right side of the footer, above the social media icons."
+    },
+    {
+      "type": "text",
+      "id": "payment_heading",
+      "label": "Heading",
+      "default": "We accept"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_show_upi",
+      "default": true,
+      "label": "Show UPI"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_show_cards",
+      "default": true,
+      "label": "Show debit/credit cards (Visa, Mastercard, RuPay)"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_show_cod",
+      "default": true,
+      "label": "Show Cash on Delivery (COD)"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_show_paypal",
+      "default": true,
+      "label": "Show PayPal"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_show_emi",
+      "default": true,
+      "label": "Show EMI"
+    },
+    {
       "type": "checkbox",
       "id": "payment_enable",
       "default": true,
-      "label": "t:sections.footer.settings.payment_enable.label"
+      "label": "t:sections.footer.settings.payment_enable.label",
+      "info": "Also shows the payment methods enabled in your Shopify checkout."
     },
     {
       "type": "checkbox",

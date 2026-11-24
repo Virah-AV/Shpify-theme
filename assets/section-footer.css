@@ -280,9 +280,49 @@
   }
 }
 
+/* Payment icons stacked above the social icons on the right */
+.footer__payment-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer__payment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.footer__payment-heading {
+  margin: 0;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.footer__payment .list-payment {
+  margin: -0.4rem;
+  padding-top: 0;
+  justify-content: center;
+}
+
+.footer__payment .list-payment__item {
+  padding: 0.4rem;
+}
+
 @media screen and (min-width: 750px) {
+  .footer__payment-social,
   .footer__payment {
-    margin-top: 1.5rem;
+    align-items: flex-end;
+  }
+
+  .footer__payment .list-payment,
+  .footer__payment-social .footer__list-social.list-social {
+    justify-content: flex-end;
+  }
+
+  .footer__payment-social .footer__list-social.list-social {
+    margin-right: -1.1rem;
   }
 }
 
