@@ -14,6 +14,13 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "text_y3zpmJ": {
+          "type": "text",
+          "settings": {
+            "heading": "ABHIVIRA Ventures",
+            "subtext": "<p><strong>Email ID: </strong>helpdesk@virah.co.in<br/><strong>GSTIN</strong>: 36ACJFA1111B1Z8<br/><strong>Address:</strong> Plot no: 156, Surya sai nagar colony, Turkayamjal, Abdullapurmet Mandal, Ranga Reddy District, Telangana, India - 501510<br/></p>"
+          }
+        },
         "link_list_3Eia4q": {
           "type": "link_list",
           "settings": {
@@ -23,6 +30,7 @@
         }
       },
       "block_order": [
+        "text_y3zpmJ",
         "link_list_3Eia4q"
       ],
       "settings": {
