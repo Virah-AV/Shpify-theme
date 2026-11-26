@@ -51,11 +51,29 @@
         "button_2_link": "/pages/collaboration#programs",
         "image": "shopify://shop_images/cbk.webp",
         "show_image_placeholder": true,
+        "image_caption": "",
         "image_position": "right",
         "image_shape": "arch",
         "image_ratio": "4 / 5",
+        "image_radius": 28,
+        "show_image_mobile": true,
+        "mobile_image_first": false,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 58,
+        "text_alignment": "left",
+        "min_height": 520,
+        "enable_animation": true,
+        "show_texture": true,
+        "background_color": "#f7f4ee",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "button_color": "#1f1d1a",
+        "button_text_color": "#f7f4ee",
         "padding_top": 88,
-        "padding_bottom": 88
+        "padding_bottom": 88,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "stats": {
@@ -66,7 +84,7 @@
           "settings": {
             "prefix": "<",
             "number": "4",
-            "suffix": " hrs",
+            "suffix": "hrs",
             "label": "Average response time",
             "animate": true
           }
@@ -76,7 +94,7 @@
           "settings": {
             "prefix": "",
             "number": "48",
-            "suffix": " hrs",
+            "suffix": "hrs",
             "label": "Curated quote turnaround",
             "animate": true
           }
@@ -109,42 +127,37 @@
         "stat_4"
       ],
       "settings": {
-        "heading": "Built for designers, businesses & makers across India"
+        "heading": "Built for designers, businesses & makers across India",
+        "style": "divided",
+        "heading_font": "playfair_display_n4",
+        "number_size": 52,
+        "enable_animation": true,
+        "background_color": "#1f1d1a",
+        "text_color": "#f5f1ea",
+        "muted_text_color": "#bdb3a6",
+        "accent_color": "#d9b48f",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 44,
+        "padding_bottom_mobile": 44
       }
     },
     "programs": {
       "type": "vc-contact-routing",
       "blocks": {
-        "prog_1": {
-          "type": "card",
-          "settings": {
-            "icon": "sofa",
-            "tag": "Most popular",
-            "title": "Trade & Interior Designers",
-            "featured": true,
-            "text": "<p>Exclusive pricing, sampling and a dedicated project manager for residential and commercial projects.</p>",
-            "action_1_type": "link",
-            "action_1_value": "/pages/collaboration?topic=trade#apply",
-            "action_1_label": "Apply for trade pricing",
-            "action_2_type": "none",
-            "action_2_value": "",
-            "action_2_label": "",
-            "message": ""
-          }
-        },
         "prog_2": {
           "type": "card",
           "settings": {
             "icon": "briefcase",
             "tag": "",
             "title": "Bulk & Corporate Orders",
-            "featured": false,
             "text": "<p>Offices, cafés, hostels, co-living and gifting — volume pricing with scheduled pan-India dispatch.</p>",
+            "featured": false,
             "action_1_type": "link",
             "action_1_value": "/pages/collaboration?topic=bulk#apply",
             "action_1_label": "Request a bulk quote",
             "action_2_type": "whatsapp",
-            "action_2_value": "+91 00000 00000",
+            "action_2_value": "+91",
             "action_2_label": "Discuss on WhatsApp",
             "message": "Hi Virah team, I’d like a bulk order quote."
           }
@@ -155,8 +168,8 @@
             "icon": "box",
             "tag": "",
             "title": "Sell With Us",
-            "featured": false,
             "text": "<p>Makers and brands with high-quality, innovative products — showcase them to thousands of eager buyers. We handle visibility; you focus on creating.</p>",
+            "featured": false,
             "action_1_type": "link",
             "action_1_value": "/pages/collaboration?topic=sell#apply",
             "action_1_label": "Become a seller",
@@ -172,11 +185,11 @@
             "icon": "camera",
             "tag": "",
             "title": "Creators & Press",
-            "featured": false,
             "text": "<p>Creator partnerships, media kits, and brand storytelling for home, décor and lifestyle voices.</p>",
+            "featured": false,
             "action_1_type": "email",
-            "action_1_value": "collab@virah.co.in",
-            "action_1_label": "collab@virah.co.in",
+            "action_1_value": "Helpdesk@virah.co.in",
+            "action_1_label": "",
             "action_2_type": "link",
             "action_2_value": "/pages/collaboration?topic=creator#apply",
             "action_2_label": "Pitch a collaboration",
@@ -185,7 +198,6 @@
         }
       },
       "block_order": [
-        "prog_1",
         "prog_2",
         "prog_3",
         "prog_4"
@@ -194,11 +206,21 @@
         "eyebrow": "PARTNERSHIP PROGRAMS",
         "heading": "Find the <em>right</em> way to work with us.",
         "subheading": "<p>Four ways to partner — each with its own pricing, perks and a real person to talk to.</p>",
-        "anchor_id": "programs",
         "heading_alignment": "center",
-        "columns": "4",
+        "anchor_id": "programs",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "columns": "3",
         "mobile_layout": "slider",
-        "background_color": "#F7F4EE",
+        "card_radius": 16,
+        "hover_lift": 4,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "card_background": "#ffffff",
+        "icon_background": "#f3ede4",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
         "padding_top": 96,
         "padding_bottom": 96,
         "padding_top_mobile": 56,
@@ -247,14 +269,34 @@
         "ben_3",
         "ben_4"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "WHY PARTNER WITH VIRAH",
         "heading": "Designed for homes. <em>Built for business.</em>",
         "text": "<p>From a single studio apartment to a 40-desk office, we bring the same warmth, finish and reliability — with pricing and service built around your project.</p>",
         "button_label": "Apply to partner",
         "button_link": "/pages/collaboration#apply",
+        "anchor_id": "",
+        "list_style": "icons",
+        "show_secondary_placeholder": true,
+        "image_position": "left",
+        "image_ratio": "4 / 5",
+        "image_radius": 24,
         "badge_title": "Trade-only",
-        "badge_text": "pricing & priority dispatch"
+        "badge_text": "pricing & priority dispatch",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 42,
+        "enable_animation": true,
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "button_color": "#1f1d1a",
+        "button_text_color": "#f7f4ee",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "steps": {
@@ -306,8 +348,21 @@
       "settings": {
         "eyebrow": "HOW IT WORKS",
         "heading": "From brief to <em>beautifully delivered.</em>",
+        "subheading": "",
         "button_label": "Start your application",
-        "button_link": "/pages/collaboration#apply"
+        "button_link": "/pages/collaboration#apply",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "card_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "projects": {
@@ -320,7 +375,8 @@
             "meta": "City · Number of pieces",
             "title": "Your first partner project",
             "quote": "<p>Add a short quote from your client here.</p>",
-            "author": "Client name, Company"
+            "author": "Client name, Company",
+            "link": ""
           }
         },
         "proj_2": {
@@ -328,7 +384,10 @@
           "settings": {
             "tag": "Café",
             "meta": "City · Number of pieces",
-            "title": "Café seating & side tables"
+            "title": "Café seating & side tables",
+            "quote": "",
+            "author": "",
+            "link": ""
           }
         },
         "proj_3": {
@@ -336,7 +395,10 @@
           "settings": {
             "tag": "Home",
             "meta": "City · Number of pieces",
-            "title": "Compact apartment styling"
+            "title": "Compact apartment styling",
+            "quote": "",
+            "author": "",
+            "link": ""
           }
         }
       },
@@ -345,12 +407,28 @@
         "proj_2",
         "proj_3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "PARTNER PROJECTS",
         "heading": "Spaces we’ve <em>helped shape</em>",
+        "subheading": "",
         "link_label": "Discuss your project",
         "link_url": "/pages/collaboration#apply",
-        "layout": "feature"
+        "layout": "feature",
+        "columns": "3",
+        "image_ratio": "4 / 3",
+        "radius": 18,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "enable_animation": true,
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "apply": {
@@ -499,7 +577,51 @@
         "perk_3"
       ],
       "settings": {
-        "card_whatsapp": "+91 00000 00000"
+        "eyebrow": "APPLY TO PARTNER",
+        "heading": "Tell us what you’re <em>building.</em>",
+        "intro": "<p>Share a few details — we’ll reply within 1 working day with next steps, pricing or a call slot.</p>",
+        "anchor_id": "apply",
+        "form_tag": "Collab / Partnership application",
+        "name_label": "Full Name",
+        "email_label": "Work Email",
+        "consent_text": "<p>We’ll only use these details to respond to your application.</p>",
+        "submit_label": "Submit Application",
+        "sending_label": "Sending…",
+        "success_heading": "Application received!",
+        "success_message": "<p>Thank you — our partnerships team will get back to you within 1 working day.</p>",
+        "reset_label": "Submit another request",
+        "error_message": "Something went wrong. Please check your details and try again.",
+        "show_card": true,
+        "card_eyebrow": "WHAT HAPPENS NEXT",
+        "card_heading": "A real person, <em>not a ticket.</em>",
+        "card_text": "<p>Every application is reviewed by our partnerships team.</p>",
+        "card_direct_label": "Prefer to talk directly?",
+        "card_email": "Helpdesk@virah.co.in",
+        "card_whatsapp": "+91 9989588060",
+        "card_whatsapp_label": "Chat with partnerships",
+        "card_whatsapp_message": "Hi Virah team, I’d like to discuss a partnership.",
+        "form_width": 60,
+        "card_position": "left",
+        "mobile_card_first": false,
+        "input_radius": 14,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "panel_background": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "input_background": "#fbf9f5",
+        "button_color": "#1f1d1a",
+        "button_text_color": "#f7f4ee",
+        "card_background": "#1f1d1a",
+        "card_text_color": "#f5f1ea",
+        "card_accent_color": "#d9b48f",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "faq": {
@@ -509,42 +631,54 @@
           "type": "question",
           "settings": {
             "question": "Who can apply for trade pricing?",
-            "answer": "<p>Interior designers, architects, stylists, contractors and businesses furnishing offices, cafés, rentals or retail spaces. Just tell us about your practice or project in the form above.</p>"
+            "answer": "<p>Interior designers, architects, stylists, contractors and businesses furnishing offices, cafés, rentals or retail spaces. Just tell us about your practice or project in the form above.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q2": {
           "type": "question",
           "settings": {
             "question": "Is there a minimum order quantity for bulk pricing?",
-            "answer": "<p>No strict minimum — pricing is tiered by quantity and order value. Share your requirement and we’ll send the best possible quote.</p>"
+            "answer": "<p>No strict minimum — pricing is tiered by quantity and order value. Share your requirement and we’ll send the best possible quote.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q3": {
           "type": "question",
           "settings": {
             "question": "Can you customise sizes, colours or finishes?",
-            "answer": "<p>For larger orders we can often adjust dimensions, finishes and colours. Mention your requirements in the application and we’ll confirm what’s possible.</p>"
+            "answer": "<p>For larger orders we can often adjust dimensions, finishes and colours. Mention your requirements in the application and we’ll confirm what’s possible.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q4": {
           "type": "question",
           "settings": {
             "question": "I make furniture or home products — how do I sell with Virah?",
-            "answer": "<p>Choose “Sell With Us” in the form and share your brand, product range and website or Instagram. If it’s a fit, we’ll walk you through onboarding, pricing and logistics.</p>"
+            "answer": "<p>Choose “Sell With Us” in the form and share your brand, product range and website or Instagram. If it’s a fit, we’ll walk you through onboarding, pricing and logistics.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q5": {
           "type": "question",
           "settings": {
             "question": "Do you provide GST invoices?",
-            "answer": "<p>Yes. Every business order comes with a proper GST invoice — just share your company name and GSTIN when we confirm your order.</p>"
+            "answer": "<p>Yes. Every business order comes with a proper GST invoice — just share your company name and GSTIN when we confirm your order.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q6": {
           "type": "question",
           "settings": {
             "question": "How do creator collaborations work?",
-            "answer": "<p>We partner with home, décor and lifestyle creators on product features, styling stories and giveaways. Email collab@virah.co.in with your profile and media kit, or apply through the form.</p>"
+            "answer": "<p>We partner with home, décor and lifestyle creators on product features, styling stories and giveaways. Email collab@virah.co.in with your profile and media kit, or apply through the form.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         }
       },
@@ -560,19 +694,62 @@
         "eyebrow": "PARTNER FAQS",
         "heading": "Good to <em>know.</em>",
         "subheading": "<p>Answers to the questions we hear most from designers, businesses and makers.</p>",
+        "anchor_id": "faq",
+        "show_search": true,
         "search_placeholder": "Search trade, bulk, selling…",
+        "empty_text": "No matching questions — send us a message above and we’ll help.",
+        "open_first": true,
+        "allow_multiple": false,
+        "icon_style": "plus",
+        "question_size": 20,
+        "enable_schema": true,
         "footer_text": "Still have a question?",
         "footer_link_label": "Apply or ask us anything",
         "footer_link_url": "/pages/collaboration#apply",
-        "background_color": "#FFFFFF"
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "max_width": 800,
+        "enable_animation": true,
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "divider_color": "#e3dcd1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "cta": {
       "type": "vc-cta-banner",
       "settings": {
+        "eyebrow": "LET’S COLLABORATE",
+        "heading": "Have a space in mind? <em>Let’s make it yours.</em>",
+        "text": "<p>Tell us about your project and get a curated proposal within 48 hours.</p>",
+        "alignment": "center",
+        "button_label": "",
         "button_link": "/pages/collaboration#apply",
-        "button_2_value": "+91 00000 00000",
-        "section_background": "#FFFFFF"
+        "button_2_type": "whatsapp",
+        "button_2_label": "Chat on WhatsApp",
+        "button_2_value": "",
+        "button_2_message": "Hi Virah team, I’d like to discuss a partnership.",
+        "overlay_opacity": 55,
+        "full_width": false,
+        "radius": 28,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 48,
+        "enable_animation": true,
+        "section_background": "#ffffff",
+        "panel_background": "#1f1d1a",
+        "text_color": "#f5f1ea",
+        "accent_color": "#d9b48f",
+        "button_color": "#f5f1ea",
+        "button_text_color": "#1f1d1a",
+        "padding_top": 40,
+        "padding_bottom": 96,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 56
       }
     }
   },
