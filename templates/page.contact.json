@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -40,10 +49,31 @@
         "button_link": "/pages/contact#contact-form",
         "button_2_label": "Read the FAQs",
         "button_2_link": "/pages/contact#faq",
+        "image": "shopify://shop_images/contact_2.png",
         "show_image_placeholder": true,
+        "image_caption": "",
         "image_position": "right",
         "image_shape": "soft",
-        "image_ratio": "4 / 5"
+        "image_ratio": "4 / 5",
+        "image_radius": 28,
+        "show_image_mobile": true,
+        "mobile_image_first": false,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 58,
+        "text_alignment": "left",
+        "min_height": 520,
+        "enable_animation": true,
+        "show_texture": true,
+        "background_color": "#f7f4ee",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "button_color": "#1f1d1a",
+        "button_text_color": "#f7f4ee",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "routing": {
@@ -53,13 +83,15 @@
           "type": "card",
           "settings": {
             "icon": "chat",
+            "tag": "",
             "title": "Customer Care & Orders",
             "text": "<p>Questions about shipping, assembly, returns, or an existing order.</p>",
+            "featured": false,
             "action_1_type": "email",
-            "action_1_value": "care@virah.co.in",
-            "action_1_label": "care@virah.co.in",
+            "action_1_value": "Helpdesk@virah.co.in",
+            "action_1_label": "",
             "action_2_type": "whatsapp",
-            "action_2_value": "+91 00000 00000",
+            "action_2_value": "+91 9989588060",
             "action_2_label": "Chat on WhatsApp",
             "message": "Hi Virah team, I have a question about my order"
           }
@@ -69,8 +101,9 @@
           "settings": {
             "icon": "sofa",
             "tag": "Trade pricing",
-            "title": "Interior Styling & Trade",
-            "text": "<p>Sourcing for a full home, office, or commercial project? Get exclusive trade pricing.</p>",
+            "title": "Collaboration & Trade",
+            "text": "<p>Sourcing for a home, office, or commercial project? Creator partnerships, media kits, and brand storytelling.</p>",
+            "featured": false,
             "action_1_type": "link",
             "action_1_value": "/pages/collaboration",
             "action_1_label": "Start a trade inquiry",
@@ -79,34 +112,35 @@
             "action_2_label": "Or send us your brief",
             "message": ""
           }
-        },
-        "press": {
-          "type": "card",
-          "settings": {
-            "icon": "megaphone",
-            "title": "Press & Collaborations",
-            "text": "<p>Creator partnerships, media kits, and brand storytelling.</p>",
-            "action_1_type": "email",
-            "action_1_value": "collab@virah.co.in",
-            "action_1_label": "collab@virah.co.in",
-            "action_2_type": "none",
-            "action_2_value": "",
-            "action_2_label": "",
-            "message": "Collaboration inquiry"
-          }
         }
       },
       "block_order": [
         "care",
-        "trade",
-        "press"
+        "trade"
       ],
       "settings": {
         "eyebrow": "QUICK CONNECT",
         "heading": "Reach the <em>right</em> team, faster.",
         "subheading": "<p>Pick the desk that fits your question — we’ll route you straight to the people who can help.</p>",
         "heading_alignment": "center",
-        "columns": "3"
+        "anchor_id": "",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "columns": "2",
+        "mobile_layout": "stack",
+        "card_radius": 16,
+        "hover_lift": 4,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "card_background": "#ffffff",
+        "icon_background": "#f3ede4",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "padding_top": 24,
+        "padding_bottom": 96,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 56
       }
     },
     "inquiry": {
@@ -116,24 +150,16 @@
           "type": "whatsapp",
           "settings": {
             "label": "Chat on WhatsApp",
-            "number": "+91 00000 00000",
+            "number": "+91 9989588060",
             "message": "Hi Virah team! I’d like some help choosing furniture for my space.",
             "caption": "Quick photo & video checks before you buy"
-          }
-        },
-        "phone": {
-          "type": "phone",
-          "settings": {
-            "label": "Phone Support",
-            "number": "+91 00000 00000",
-            "hours": "Mon–Sat, 10:00 AM – 7:00 PM IST"
           }
         },
         "email": {
           "type": "email",
           "settings": {
             "label": "Email Us",
-            "email": "care@virah.co.in",
+            "email": "Helpdesk@virah.co.in",
             "meta": "We reply within 4 working hours"
           }
         },
@@ -141,18 +167,72 @@
           "type": "address",
           "settings": {
             "label": "Studio & Warehouse",
-            "address": "Your studio address\nCity, State – PIN\nIndia",
-            "map_label": "View on map"
+            "address": "Plot no: 156, Surya sai nagar colony, Turkayamjal, Ranga Reddy District, Telangana, India - 501510",
+            "map_label": "",
+            "map_url": ""
           }
         }
       },
       "block_order": [
         "wa",
-        "phone",
         "email",
         "address"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "WRITE TO US",
+        "heading": "Tell us about your <em>space.</em>",
+        "intro": "<p>Share a few details and a stylist or care specialist will get back to you — usually within 4 hours.</p>",
+        "anchor_id": "contact-form",
+        "show_topic": true,
+        "topic_label": "What can we help you with?",
+        "topic_options": "Product & Sizing Advice\nOrder & Delivery Status\nReturns & Warranty\nBulk / Trade Inquiry\nOther",
+        "topic_required": true,
+        "name_label": "Full Name",
+        "email_label": "Email Address",
+        "show_phone": true,
+        "phone_label": "Phone / WhatsApp Number",
+        "phone_hint": "So we can share photos & videos quickly",
+        "phone_required": false,
+        "show_order": true,
+        "order_label": "Order Number (Optional)",
+        "order_hint": "Found in your confirmation email, e.g. #1024",
+        "message_label": "Your Message",
+        "message_rows": 5,
+        "message_required": true,
+        "consent_text": "<p>By sending this form you agree to be contacted about your inquiry. We never share your details.</p>",
+        "submit_label": "Send Inquiry",
+        "sending_label": "Sending…",
+        "success_heading": "Thank you — message received.",
+        "success_message": "<p>Our concierge team will reply within 4 working hours. For anything urgent, ping us on WhatsApp.</p>",
+        "reset_label": "Send another message",
+        "error_message": "Something went wrong. Please check your details and try again.",
+        "show_card": true,
+        "card_eyebrow": "DIRECT CONCIERGE",
+        "card_heading": "Prefer to <em>talk?</em>",
+        "card_text": "<p>Send us a photo of your room and we’ll suggest the perfect fit — on video, if you like.</p>",
+        "form_width": 60,
+        "form_position": "left",
+        "mobile_card_first": false,
+        "input_radius": 14,
+        "card_radius": 24,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "enable_animation": true,
+        "background_color": "#ffffff",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "input_background": "#fbf9f5",
+        "button_color": "#1f1d1a",
+        "button_text_color": "#f7f4ee",
+        "card_background": "#1f1d1a",
+        "card_text_color": "#f5f1ea",
+        "card_accent_color": "#d9b48f",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "faq": {
       "type": "vc-contact-faq",
@@ -161,21 +241,27 @@
           "type": "question",
           "settings": {
             "question": "How long does delivery take across India?",
-            "answer": "<p>Orders to metro cities typically arrive in <strong>3–5 business days</strong>, and <strong>5–8 business days</strong> pan-India. You’ll get a tracking link on WhatsApp and email as soon as your piece ships.</p>"
+            "answer": "<p>Orders to metro cities typically arrive in <strong>3–5 business days</strong>, and <strong>5–8 business days</strong> pan-India. You’ll get a tracking link on WhatsApp and email as soon as your piece ships.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q2": {
           "type": "question",
           "settings": {
             "question": "Do your furniture pieces require assembly?",
-            "answer": "<p>It depends on the piece. Most side tables, carts and organizers arrive <strong>pre-assembled</strong> or need under 15 minutes of set-up. Larger <strong>flat-pack</strong> items come with a complete toolkit, all hardware and an illustrated step-by-step guide — no extra tools required.</p>"
+            "answer": "<p>It depends on the piece. Most side tables, carts and organizers arrive <strong>pre-assembled</strong> or need under 15 minutes of set-up. Larger <strong>flat-pack</strong> items come with a complete toolkit, all hardware and an illustrated step-by-step guide — no extra tools required.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q3": {
           "type": "question",
           "settings": {
             "question": "What is your return and damaged-in-transit policy?",
-            "answer": "<p>We offer a <strong>7-day easy replacement</strong>. If anything arrives damaged, share your <strong>unboxing video</strong> with us — it lets us approve your claim instantly and ship a replacement at no cost.</p>"
+            "answer": "<p>We offer a <strong>7-day easy replacement</strong>. If anything arrives damaged, share your <strong>unboxing video</strong> with us — it lets us approve your claim instantly and ship a replacement at no cost.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q4": {
@@ -191,14 +277,18 @@
           "type": "question",
           "settings": {
             "question": "How do I care for solid wood and powder-coated metal finishes?",
-            "answer": "<p><strong>Solid wood:</strong> dust with a soft dry cloth, wipe spills immediately and keep away from direct sunlight and damp walls. Use coasters for hot or wet items.</p><p><strong>Powder-coated metal:</strong> wipe with a damp cloth and mild soap, then dry. Avoid abrasive scrubbers or harsh chemicals to keep the finish looking new.</p>"
+            "answer": "<p><strong>Solid wood:</strong> dust with a soft dry cloth, wipe spills immediately and keep away from direct sunlight and damp walls. Use coasters for hot or wet items.</p><p><strong>Powder-coated metal:</strong> wipe with a damp cloth and mild soap, then dry. Avoid abrasive scrubbers or harsh chemicals to keep the finish looking new.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         },
         "q6": {
           "type": "question",
           "settings": {
             "question": "Can I see a product on video before I buy?",
-            "answer": "<p>Absolutely. Message us on WhatsApp and our team will share real photos, a quick video walk-through, or measurements against your space so you can buy with confidence.</p>"
+            "answer": "<p>Absolutely. Message us on WhatsApp and our team will share real photos, a quick video walk-through, or measurements against your space so you can buy with confidence.</p>",
+            "link_label": "",
+            "link_url": ""
           }
         }
       },
@@ -211,7 +301,34 @@
         "q6"
       ],
       "settings": {
-        "footer_link_url": "/pages/contact#contact-form"
+        "eyebrow": "QUICK ANSWERS",
+        "heading": "Before you <em>ask…</em>",
+        "subheading": "<p>Most questions are answered right here — delivery, assembly, returns and care.</p>",
+        "anchor_id": "faq",
+        "show_search": true,
+        "search_placeholder": "Search delivery, returns, assembly…",
+        "empty_text": "No matching questions — send us a message above and we’ll help.",
+        "open_first": true,
+        "allow_multiple": false,
+        "icon_style": "plus",
+        "question_size": 20,
+        "enable_schema": true,
+        "footer_text": "Still have a question?",
+        "footer_link_label": "Write to our concierge",
+        "footer_link_url": "/pages/contact#contact-form",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 40,
+        "max_width": 800,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "divider_color": "#e3dcd1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       }
     },
     "shop": {
@@ -221,29 +338,44 @@
           "type": "item",
           "settings": {
             "collection": "side-tables",
-            "title": "Side Tables"
+            "title": "Side Tables",
+            "link": "",
+            "subtitle": "",
+            "badge": "",
+            "pill_color": ""
           }
         },
         "s2": {
           "type": "item",
           "settings": {
             "collection": "foldable-tables",
-            "title": "Folding Tables"
+            "title": "Folding Tables",
+            "link": "",
+            "subtitle": "",
+            "badge": "",
+            "pill_color": ""
           }
         },
         "s3": {
           "type": "item",
           "settings": {
+            "collection": "",
             "title": "Organizers",
-            "link": "/search?q=organizer&type=product"
+            "link": "/search?q=organizer&type=product",
+            "subtitle": "",
+            "badge": "",
+            "pill_color": ""
           }
         },
         "s4": {
           "type": "item",
           "settings": {
+            "collection": "",
             "title": "Bestsellers",
             "link": "/collections/all?sort_by=best-selling",
-            "badge": "Most loved"
+            "subtitle": "",
+            "badge": "Most loved",
+            "pill_color": ""
           }
         }
       },
@@ -253,13 +385,32 @@
         "s3",
         "s4"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "NEED HELP CHOOSING?",
         "heading": "Explore our <em>most-loved</em> spaces",
+        "subheading": "",
         "heading_alignment": "split",
-        "layout": "pills",
         "cta_label": "Shop all furniture",
-        "cta_link": "/collections/all"
+        "cta_link": "/collections/all",
+        "layout": "pills",
+        "columns": "4",
+        "card_ratio": "4 / 5",
+        "pill_radius": 24,
+        "show_count": false,
+        "count_suffix": "pieces",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 36,
+        "enable_animation": true,
+        "background_color": "#ffffff",
+        "pill_background": "#f4ebe1",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 52
       }
     },
     "instagram": {
@@ -267,23 +418,38 @@
       "blocks": {
         "p1": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "p2": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "p3": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "p4": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "p5": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
@@ -293,10 +459,31 @@
         "p4",
         "p5"
       ],
+      "disabled": true,
       "settings": {
-        "handle": "@virah",
+        "handle": "@virah.co.in",
+        "profile_url": "https://www.instagram.com/virah.co.in?igsi=b2d0d2p1aDcwbzVu",
+        "show_badge": true,
         "heading": "Tag <em>@virah</em> to be featured in our lookbook",
-        "cta_label": "Follow on Instagram"
+        "subheading": "<p>Real homes, real corners — styled by our community across India.</p>",
+        "cta_label": "Follow on Instagram",
+        "columns": "5",
+        "gap": 14,
+        "radius": 14,
+        "hover_zoom": true,
+        "show_captions": true,
+        "full_width": false,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 36,
+        "enable_animation": true,
+        "background_color": "#f7f4ee",
+        "text_color": "#2b2420",
+        "muted_text_color": "#6e655c",
+        "accent_color": "#a0704c",
+        "padding_top": 88,
+        "padding_bottom": 96,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 56
       }
     }
   },
