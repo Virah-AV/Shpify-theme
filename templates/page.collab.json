@@ -1,1 +1,581 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":28,"padding_bottom":28}},"image_banner_AjYPHz":{"type":"image-banner","blocks":{"slide_collab":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/cbk.webp","overlay_opacity":10}}},"block_order":["slide_collab"],"name":"t:sections.image-banner.presets.name","settings":{"image":"shopify:\/\/shop_images\/cbk.webp","image_overlay_opacity":10,"image_height":"small","image_behavior":"none","desktop_content_position":"middle-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"scheme-3","stack_images_on_mobile":true,"mobile_content_alignment":"center","show_text_below":true}},"rich_text_Nh7ckx":{"type":"rich-text","blocks":{"heading_gfEBzM":{"type":"heading","settings":{"heading":"Sell With Us","heading_size":"h1"}},"text_LKXUJX":{"type":"text","settings":{"text":"<p>We've built a platform dedicated to showcasing high-quality, innovative products, and we want you to be a part of it. Why wait for customers to find you? Join our platform and Showcase your products in front of thousands of eager buyers. We handle the visibility, you focus on what you do best: creating amazing products.<br\/><\/p>"}}},"block_order":["heading_gfEBzM","text_LKXUJX"],"name":"t:sections.rich-text.presets.name","settings":{"desktop_content_position":"center","content_alignment":"center","color_scheme":"scheme-2","full_width":true,"padding_top":40,"padding_bottom":52}},"17597738032da148e9":{"type":"_blocks","blocks":{"ai_gen_block_9cdfbc6_9z7VAN":{"type":"ai_gen_block_9cdfbc6","settings":{"form_title":"Request a Product","form_description":"Can't find what you're looking for? Let us know what product you need and we'll help you find it.\nFill the Credentials if you want to Sell With Us\/for Bulk Order\/for Procurement of any Product.","submit_button_text":"Submit","success_message":"Thank you! We'll review your request and get back to you within 24 hours.","side_spacing":40,"form_width":300,"form_padding":16,"border_radius":10,"title_size":24,"description_size":14,"background_color":"#ffffff","text_color":"#262626","input_background_color":"#ffffff","input_border_color":"#cccccc","focus_color":"#797068","button_color":"#797068","button_text_color":"#ffffff","button_hover_color":"#54483c","success_color":"#008060","error_color":"#d82c0d"},"blocks":{}}},"block_order":["ai_gen_block_9cdfbc6_9z7VAN"],"settings":{}}},"order":["main","image_banner_AjYPHz","rich_text_Nh7ckx","17597738032da148e9"]}
+{
+  "sections": {
+    "hero": {
+      "type": "vc-contact-hero",
+      "blocks": {
+        "chip_1": {
+          "type": "chip",
+          "settings": {
+            "icon": "briefcase",
+            "text": "Exclusive trade pricing"
+          }
+        },
+        "chip_2": {
+          "type": "chip",
+          "settings": {
+            "icon": "truck",
+            "text": "Pan-India bulk delivery"
+          }
+        },
+        "chip_3": {
+          "type": "chip",
+          "settings": {
+            "icon": "shield",
+            "text": "GST invoicing"
+          }
+        }
+      },
+      "block_order": [
+        "chip_1",
+        "chip_2",
+        "chip_3"
+      ],
+      "settings": {
+        "eyebrow": "PARTNERSHIPS & TRADE",
+        "heading": "Let’s build something <em>beautiful</em> together.",
+        "text": "<p>Whether you’re an interior designer sourcing for a client, a business furnishing a space, a maker looking to sell, or a creator with a story to tell — Virah is built to partner with you.</p>",
+        "show_badge": true,
+        "badge_text": "Partnerships team replies within 1 working day",
+        "button_label": "Apply to partner",
+        "button_link": "/pages/collaboration#apply",
+        "button_2_label": "Explore programs",
+        "button_2_link": "/pages/collaboration#programs",
+        "image": "shopify://shop_images/cbk.webp",
+        "show_image_placeholder": true,
+        "image_position": "right",
+        "image_shape": "arch",
+        "image_ratio": "4 / 5",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
+    },
+    "stats": {
+      "type": "vc-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "prefix": "<",
+            "number": "4",
+            "suffix": " hrs",
+            "label": "Average response time",
+            "animate": true
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": "48",
+            "suffix": " hrs",
+            "label": "Curated quote turnaround",
+            "animate": true
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": "Pan-India",
+            "suffix": "",
+            "label": "Delivery network",
+            "animate": false
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": "100",
+            "suffix": "%",
+            "label": "GST invoicing for businesses",
+            "animate": true
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
+      "settings": {
+        "heading": "Built for designers, businesses & makers across India"
+      }
+    },
+    "programs": {
+      "type": "vc-contact-routing",
+      "blocks": {
+        "prog_1": {
+          "type": "card",
+          "settings": {
+            "icon": "sofa",
+            "tag": "Most popular",
+            "title": "Trade & Interior Designers",
+            "featured": true,
+            "text": "<p>Exclusive pricing, sampling and a dedicated project manager for residential and commercial projects.</p>",
+            "action_1_type": "link",
+            "action_1_value": "/pages/collaboration?topic=trade#apply",
+            "action_1_label": "Apply for trade pricing",
+            "action_2_type": "none",
+            "action_2_value": "",
+            "action_2_label": "",
+            "message": ""
+          }
+        },
+        "prog_2": {
+          "type": "card",
+          "settings": {
+            "icon": "briefcase",
+            "tag": "",
+            "title": "Bulk & Corporate Orders",
+            "featured": false,
+            "text": "<p>Offices, cafés, hostels, co-living and gifting — volume pricing with scheduled pan-India dispatch.</p>",
+            "action_1_type": "link",
+            "action_1_value": "/pages/collaboration?topic=bulk#apply",
+            "action_1_label": "Request a bulk quote",
+            "action_2_type": "whatsapp",
+            "action_2_value": "+91 00000 00000",
+            "action_2_label": "Discuss on WhatsApp",
+            "message": "Hi Virah team, I’d like a bulk order quote."
+          }
+        },
+        "prog_3": {
+          "type": "card",
+          "settings": {
+            "icon": "box",
+            "tag": "",
+            "title": "Sell With Us",
+            "featured": false,
+            "text": "<p>Makers and brands with high-quality, innovative products — showcase them to thousands of eager buyers. We handle visibility; you focus on creating.</p>",
+            "action_1_type": "link",
+            "action_1_value": "/pages/collaboration?topic=sell#apply",
+            "action_1_label": "Become a seller",
+            "action_2_type": "none",
+            "action_2_value": "",
+            "action_2_label": "",
+            "message": ""
+          }
+        },
+        "prog_4": {
+          "type": "card",
+          "settings": {
+            "icon": "camera",
+            "tag": "",
+            "title": "Creators & Press",
+            "featured": false,
+            "text": "<p>Creator partnerships, media kits, and brand storytelling for home, décor and lifestyle voices.</p>",
+            "action_1_type": "email",
+            "action_1_value": "collab@virah.co.in",
+            "action_1_label": "collab@virah.co.in",
+            "action_2_type": "link",
+            "action_2_value": "/pages/collaboration?topic=creator#apply",
+            "action_2_label": "Pitch a collaboration",
+            "message": "Collaboration inquiry"
+          }
+        }
+      },
+      "block_order": [
+        "prog_1",
+        "prog_2",
+        "prog_3",
+        "prog_4"
+      ],
+      "settings": {
+        "eyebrow": "PARTNERSHIP PROGRAMS",
+        "heading": "Find the <em>right</em> way to work with us.",
+        "subheading": "<p>Four ways to partner — each with its own pricing, perks and a real person to talk to.</p>",
+        "anchor_id": "programs",
+        "heading_alignment": "center",
+        "columns": "4",
+        "mobile_layout": "slider",
+        "background_color": "#F7F4EE",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
+    },
+    "benefits": {
+      "type": "vc-feature-split",
+      "blocks": {
+        "ben_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "spark",
+            "title": "Exclusive trade pricing",
+            "text": "<p>Tiered discounts across every collection for registered partners and repeat buyers.</p>"
+          }
+        },
+        "ben_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "chat",
+            "title": "A dedicated project manager",
+            "text": "<p>One point of contact from shortlist and quote through to dispatch and delivery.</p>"
+          }
+        },
+        "ben_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "camera",
+            "title": "See it before you commit",
+            "text": "<p>Real photos, video walk-throughs and sizing checks against your floor plan.</p>"
+          }
+        },
+        "ben_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Priority dispatch & GST invoicing",
+            "text": "<p>Bulk orders packed with care and shipped pan-India, with proper GST invoices for your business.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ben_1",
+        "ben_2",
+        "ben_3",
+        "ben_4"
+      ],
+      "settings": {
+        "eyebrow": "WHY PARTNER WITH VIRAH",
+        "heading": "Designed for homes. <em>Built for business.</em>",
+        "text": "<p>From a single studio apartment to a 40-desk office, we bring the same warmth, finish and reliability — with pricing and service built around your project.</p>",
+        "button_label": "Apply to partner",
+        "button_link": "/pages/collaboration#apply",
+        "badge_title": "Trade-only",
+        "badge_text": "pricing & priority dispatch"
+      }
+    },
+    "steps": {
+      "type": "vc-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "chat",
+            "title": "Share your brief",
+            "text": "<p>Tell us about your space, quantities, budget and timeline using the form below.</p>",
+            "time": "Day 1"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "ruler",
+            "title": "Get a curated quote",
+            "text": "<p>We shortlist the right pieces and send trade pricing with dimensions and finishes.</p>",
+            "time": "Within 48 hrs"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "camera",
+            "title": "Sample & approve",
+            "text": "<p>Check photos, videos or samples — tweak quantities and finishes until it’s right.</p>",
+            "time": "Flexible"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "title": "Deliver & set up",
+            "text": "<p>Scheduled pan-India dispatch with tracking and GST invoicing.</p>",
+            "time": "Pan-India"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "heading": "From brief to <em>beautifully delivered.</em>",
+        "button_label": "Start your application",
+        "button_link": "/pages/collaboration#apply"
+      }
+    },
+    "projects": {
+      "type": "vc-projects",
+      "blocks": {
+        "proj_1": {
+          "type": "project",
+          "settings": {
+            "tag": "Office",
+            "meta": "City · Number of pieces",
+            "title": "Your first partner project",
+            "quote": "<p>Add a short quote from your client here.</p>",
+            "author": "Client name, Company"
+          }
+        },
+        "proj_2": {
+          "type": "project",
+          "settings": {
+            "tag": "Café",
+            "meta": "City · Number of pieces",
+            "title": "Café seating & side tables"
+          }
+        },
+        "proj_3": {
+          "type": "project",
+          "settings": {
+            "tag": "Home",
+            "meta": "City · Number of pieces",
+            "title": "Compact apartment styling"
+          }
+        }
+      },
+      "block_order": [
+        "proj_1",
+        "proj_2",
+        "proj_3"
+      ],
+      "settings": {
+        "eyebrow": "PARTNER PROJECTS",
+        "heading": "Spaces we’ve <em>helped shape</em>",
+        "link_label": "Discuss your project",
+        "link_url": "/pages/collaboration#apply",
+        "layout": "feature"
+      }
+    },
+    "apply": {
+      "type": "vc-collab-form",
+      "blocks": {
+        "field_1": {
+          "type": "field",
+          "settings": {
+            "label": "I’m interested in",
+            "type": "pills",
+            "options": "Trade / Interior Designer\nBulk & Corporate Order\nSell With Us\nCreator Collab\nProduct Request / Procurement",
+            "width": "full",
+            "required": true,
+            "hint": "",
+            "autocomplete": "none",
+            "url_preselect": true
+          }
+        },
+        "field_2": {
+          "type": "field",
+          "settings": {
+            "label": "Phone / WhatsApp",
+            "type": "tel",
+            "options": "",
+            "width": "half",
+            "required": true,
+            "hint": "",
+            "autocomplete": "tel",
+            "url_preselect": false
+          }
+        },
+        "field_3": {
+          "type": "field",
+          "settings": {
+            "label": "Company / Studio / Brand",
+            "type": "text",
+            "options": "",
+            "width": "half",
+            "required": false,
+            "hint": "",
+            "autocomplete": "organization",
+            "url_preselect": false
+          }
+        },
+        "field_4": {
+          "type": "field",
+          "settings": {
+            "label": "City",
+            "type": "text",
+            "options": "",
+            "width": "half",
+            "required": false,
+            "hint": "",
+            "autocomplete": "address-level2",
+            "url_preselect": false
+          }
+        },
+        "field_5": {
+          "type": "field",
+          "settings": {
+            "label": "Website or Instagram",
+            "type": "text",
+            "options": "",
+            "width": "half",
+            "required": false,
+            "hint": "",
+            "autocomplete": "none",
+            "url_preselect": false
+          }
+        },
+        "field_6": {
+          "type": "field",
+          "settings": {
+            "label": "Estimated quantity",
+            "type": "select",
+            "options": "1–10 pieces\n11–50 pieces\n51–200 pieces\n200+ pieces\nNot sure yet",
+            "width": "half",
+            "required": false,
+            "hint": "",
+            "autocomplete": "none",
+            "url_preselect": false
+          }
+        },
+        "field_7": {
+          "type": "field",
+          "settings": {
+            "label": "Timeline",
+            "type": "select",
+            "options": "Immediately\nWithin 1 month\n1–3 months\nJust exploring",
+            "width": "half",
+            "required": false,
+            "hint": "",
+            "autocomplete": "none",
+            "url_preselect": false
+          }
+        },
+        "field_8": {
+          "type": "field",
+          "settings": {
+            "label": "Tell us about your project or product",
+            "type": "textarea",
+            "options": "",
+            "width": "full",
+            "required": true,
+            "hint": "Products you need (or sell), sizes, finishes, budget — anything that helps. You can also send photos on WhatsApp.",
+            "autocomplete": "none",
+            "url_preselect": false
+          }
+        },
+        "perk_1": {
+          "type": "perk",
+          "settings": {
+            "icon": "check",
+            "title": "We review your application",
+            "text": "Within 1 working day"
+          }
+        },
+        "perk_2": {
+          "type": "perk",
+          "settings": {
+            "icon": "chat",
+            "title": "A partnerships specialist reaches out",
+            "text": "Call, WhatsApp or email — your choice"
+          }
+        },
+        "perk_3": {
+          "type": "perk",
+          "settings": {
+            "icon": "briefcase",
+            "title": "You get a tailored proposal",
+            "text": "Pricing, samples and timelines for your project"
+          }
+        }
+      },
+      "block_order": [
+        "field_1",
+        "field_2",
+        "field_3",
+        "field_4",
+        "field_5",
+        "field_6",
+        "field_7",
+        "field_8",
+        "perk_1",
+        "perk_2",
+        "perk_3"
+      ],
+      "settings": {
+        "card_whatsapp": "+91 00000 00000"
+      }
+    },
+    "faq": {
+      "type": "vc-contact-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Who can apply for trade pricing?",
+            "answer": "<p>Interior designers, architects, stylists, contractors and businesses furnishing offices, cafés, rentals or retail spaces. Just tell us about your practice or project in the form above.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Is there a minimum order quantity for bulk pricing?",
+            "answer": "<p>No strict minimum — pricing is tiered by quantity and order value. Share your requirement and we’ll send the best possible quote.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Can you customise sizes, colours or finishes?",
+            "answer": "<p>For larger orders we can often adjust dimensions, finishes and colours. Mention your requirements in the application and we’ll confirm what’s possible.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "I make furniture or home products — how do I sell with Virah?",
+            "answer": "<p>Choose “Sell With Us” in the form and share your brand, product range and website or Instagram. If it’s a fit, we’ll walk you through onboarding, pricing and logistics.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Do you provide GST invoices?",
+            "answer": "<p>Yes. Every business order comes with a proper GST invoice — just share your company name and GSTIN when we confirm your order.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "How do creator collaborations work?",
+            "answer": "<p>We partner with home, décor and lifestyle creators on product features, styling stories and giveaways. Email collab@virah.co.in with your profile and media kit, or apply through the form.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "eyebrow": "PARTNER FAQS",
+        "heading": "Good to <em>know.</em>",
+        "subheading": "<p>Answers to the questions we hear most from designers, businesses and makers.</p>",
+        "search_placeholder": "Search trade, bulk, selling…",
+        "footer_text": "Still have a question?",
+        "footer_link_label": "Apply or ask us anything",
+        "footer_link_url": "/pages/collaboration#apply",
+        "background_color": "#FFFFFF"
+      }
+    },
+    "cta": {
+      "type": "vc-cta-banner",
+      "settings": {
+        "button_link": "/pages/collaboration#apply",
+        "button_2_value": "+91 00000 00000",
+        "section_background": "#FFFFFF"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "programs",
+    "benefits",
+    "steps",
+    "projects",
+    "apply",
+    "faq",
+    "cta"
+  ]
+}

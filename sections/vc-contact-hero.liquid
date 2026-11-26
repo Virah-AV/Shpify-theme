@@ -1,0 +1,397 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign has_image = false
+  if section.settings.image != blank or section.settings.show_image_placeholder
+    assign has_image = true
+  endif
+-%}
+
+<section
+  id="vc-hero-{{ section.id }}"
+  class="vc vc-hero vc-hero--align-{{ section.settings.text_alignment }}{% if has_image %} vc-hero--has-image vc-hero--image-{{ section.settings.image_position }}{% endif %}"
+  data-vc-animate="{{ section.settings.enable_animation }}"
+  style="
+    --vc-bg: {{ section.settings.background_color }};
+    --vc-ink: {{ section.settings.text_color }};
+    --vc-muted: {{ section.settings.muted_text_color }};
+    --vc-accent: {{ section.settings.accent_color }};
+    --vc-btn-bg: {{ section.settings.button_color }};
+    --vc-btn-text: {{ section.settings.button_text_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ section.settings.heading_size }}px;
+    --vc-pt: {{ section.settings.padding_top }}px;
+    --vc-pb: {{ section.settings.padding_bottom }}px;
+    --vc-pt-m: {{ section.settings.padding_top_mobile }}px;
+    --vc-pb-m: {{ section.settings.padding_bottom_mobile }}px;
+    --vc-hero-min: {{ section.settings.min_height }}px;
+    --vc-hero-radius: {{ section.settings.image_radius }}px;
+  "
+>
+  {%- if section.settings.show_texture -%}<span class="vc-hero__grain" aria-hidden="true"></span>{%- endif -%}
+
+  <div class="vc-container vc-hero__grid">
+    <div class="vc-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="vc-eyebrow vc-reveal" style="--vc-d: 0;">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="vc-heading vc-hero__heading vc-reveal" style="--vc-d: 1;">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="vc-sub vc-hero__text vc-reveal" style="--vc-d: 2;">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.show_badge and section.settings.badge_text != blank -%}
+        <p class="vc-hero__badge vc-reveal" style="--vc-d: 3;">
+          <span class="vc-hero__pulse" aria-hidden="true"></span>
+          {{ section.settings.badge_text | escape }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="vc-hero__chips vc-reveal" style="--vc-d: 4;" role="list">
+          {%- for block in section.blocks -%}
+            <li class="vc-hero__chip" {{ block.shopify_attributes }}>
+              {%- render 'vc-icon', icon: block.settings.icon, size: 18 -%}
+              <span>{{ block.settings.text | escape }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank or section.settings.button_2_label != blank -%}
+        <div class="vc-hero__actions vc-reveal" style="--vc-d: 5;">
+          {%- if section.settings.button_label != blank -%}
+            <a class="vc-btn" href="{{ section.settings.button_link | default: '#' }}">
+              {{ section.settings.button_label | escape }}
+              {%- render 'vc-icon', icon: 'arrow', size: 18 -%}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_2_label != blank -%}
+            <a class="vc-btn vc-btn--ghost" href="{{ section.settings.button_2_link | default: '#' }}">
+              {{ section.settings.button_2_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if has_image -%}
+      <div class="vc-hero__media vc-hero__media--{{ section.settings.image_shape }} vc-reveal" style="--vc-d: 2;">
+        <div class="vc-hero__frame" style="aspect-ratio: {{ section.settings.image_ratio }};">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 1400 | image_tag:
+              class: 'vc-hero__img',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '480, 720, 960, 1200, 1400',
+              sizes: '(min-width: 990px) 45vw, 100vw'
+            }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'vc-placeholder vc-hero__img' }}
+          {%- endif -%}
+        </div>
+        {%- if section.settings.image_caption != blank -%}
+          <p class="vc-hero__caption">{{ section.settings.image_caption | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #vc-hero-{{ section.id }} {
+    overflow: hidden;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background:
+      radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.7), transparent 60%),
+      radial-gradient(90% 70% at 0% 100%, rgba(201, 162, 126, 0.12), transparent 60%);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__grid {
+    position: relative;
+    display: grid;
+    gap: 40px;
+    align-items: center;
+    min-height: var(--vc-hero-min);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__content {
+    max-width: 640px;
+  }
+
+  #vc-hero-{{ section.id }}.vc-hero--align-center .vc-hero__content {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #vc-hero-{{ section.id }}.vc-hero--align-center .vc-eyebrow,
+  #vc-hero-{{ section.id }}.vc-hero--align-center .vc-hero__chips,
+  #vc-hero-{{ section.id }}.vc-hero--align-center .vc-hero__actions {
+    justify-content: center;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__text {
+    max-width: 560px;
+    font-size: 17px;
+  }
+
+  #vc-hero-{{ section.id }}.vc-hero--align-center .vc-hero__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 24px 0 0;
+    padding: 9px 16px 9px 14px;
+    border: 1px solid var(--vc-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--vc-ink);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__pulse {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3fae6a;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__pulse::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid #3fae6a;
+    animation: vc-pulse 2.2s ease-out infinite;
+  }
+
+  @keyframes vc-pulse {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--vc-muted);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__chip .vc-icon {
+    color: var(--vc-accent);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--vc-hero-radius);
+    box-shadow: 0 30px 60px -30px rgba(43, 36, 32, 0.35);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__media--arch .vc-hero__frame {
+    border-radius: 999px 999px var(--vc-hero-radius) var(--vc-hero-radius);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__media--organic .vc-hero__frame {
+    border-radius: 42% 58% 46% 54% / 38% 40% 60% 62%;
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.6s var(--vc-ease);
+  }
+
+  #vc-hero-{{ section.id }}.is-in .vc-hero__img {
+    transform: scale(1.0);
+  }
+
+  html.vc-js #vc-hero-{{ section.id }}[data-vc-animate='true']:not(.is-in) .vc-hero__img {
+    transform: scale(1.06);
+  }
+
+  #vc-hero-{{ section.id }} .vc-hero__caption {
+    margin: 12px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vc-muted);
+  }
+
+  @media screen and (min-width: 990px) {
+    #vc-hero-{{ section.id }}.vc-hero--has-image .vc-hero__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 72px;
+    }
+
+    #vc-hero-{{ section.id }}.vc-hero--image-left .vc-hero__media {
+      order: -1;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #vc-hero-{{ section.id }} .vc-hero__grid {
+      min-height: 0;
+    }
+
+    #vc-hero-{{ section.id }} .vc-hero__media {
+      max-width: 560px;
+      width: 100%;
+      {%- if section.settings.mobile_image_first -%}order: -1;{%- endif -%}
+    }
+
+    #vc-hero-{{ section.id }}.vc-hero--align-center .vc-hero__media {
+      margin: 0 auto;
+    }
+
+    {%- unless section.settings.show_image_mobile -%}
+      #vc-hero-{{ section.id }} .vc-hero__media { display: none; }
+    {%- endunless -%}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Editorial hero",
+  "tag": "div",
+  "class": "section-vc-contact-hero",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow tag", "default": "CONCIERGE & SUPPORT" },
+    { "type": "inline_richtext", "id": "heading", "label": "Headline", "info": "Use italics to highlight a word in the accent colour.", "default": "Let’s shape your space <em>together.</em>" },
+    { "type": "richtext", "id": "text", "label": "Subtext", "default": "<p>Whether you need styling advice, dimensions for a specific corner, or an update on your delivery, our team is here to help.</p>" },
+    { "type": "checkbox", "id": "show_badge", "label": "Show response-time badge", "default": true },
+    { "type": "text", "id": "badge_text", "label": "Response-time badge text", "default": "Average response time: under 4 hours" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Send an inquiry", "info": "Leave empty to hide." },
+    { "type": "url", "id": "button_link", "label": "Primary button link", "info": "Tip: use #contact-form to scroll to the inquiry form." },
+    { "type": "text", "id": "button_2_label", "label": "Secondary button label", "default": "Read the FAQs" },
+    { "type": "url", "id": "button_2_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Lifestyle image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "show_image_placeholder", "label": "Show placeholder when no image is selected", "default": true },
+    { "type": "text", "id": "image_caption", "label": "Image caption", "info": "Optional small caption under the image." },
+    {
+      "type": "select", "id": "image_position", "label": "Image position (desktop)",
+      "options": [ { "value": "right", "label": "Right" }, { "value": "left", "label": "Left" } ],
+      "default": "right"
+    },
+    {
+      "type": "select", "id": "image_shape", "label": "Image shape",
+      "options": [
+        { "value": "soft", "label": "Soft rounded" },
+        { "value": "arch", "label": "Arch" },
+        { "value": "organic", "label": "Organic blob" }
+      ],
+      "default": "soft"
+    },
+    {
+      "type": "select", "id": "image_ratio", "label": "Image ratio",
+      "options": [
+        { "value": "4 / 5", "label": "Portrait (4:5)" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "5 / 4", "label": "Landscape (5:4)" },
+        { "value": "3 / 4", "label": "Tall (3:4)" }
+      ],
+      "default": "4 / 5"
+    },
+    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 28 },
+    { "type": "checkbox", "id": "show_image_mobile", "label": "Show image on mobile", "default": true },
+    { "type": "checkbox", "id": "mobile_image_first", "label": "Show image above text on mobile", "default": false },
+    { "type": "header", "content": "Layout & typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Headline font (serif recommended)", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Headline size (desktop)", "min": 32, "max": 80, "step": 2, "unit": "px", "default": 58 },
+    {
+      "type": "select", "id": "text_alignment", "label": "Text alignment",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ],
+      "default": "left"
+    },
+    { "type": "range", "id": "min_height", "label": "Minimum height (desktop)", "min": 0, "max": 800, "step": 20, "unit": "px", "default": 520 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal text on scroll", "default": true },
+    { "type": "checkbox", "id": "show_texture", "label": "Show soft light gradient", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Background (travertine sand)", "default": "#F7F4EE" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent (eyebrow, italics, icons)", "default": "#A0704C" },
+    { "type": "color", "id": "button_color", "label": "Button background", "default": "#1F1D1A" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#F7F4EE" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Highlight chip",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "video", "label": "Video call" },
+            { "value": "whatsapp", "label": "WhatsApp" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "sofa", "label": "Sofa" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "check"
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free styling advice" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Editorial hero",
+      "blocks": [
+        { "type": "chip", "settings": { "icon": "clock", "text": "Mon–Sat, 10 AM – 7 PM IST" } },
+        { "type": "chip", "settings": { "icon": "video", "text": "Photo & video checks on WhatsApp" } },
+        { "type": "chip", "settings": { "icon": "ruler", "text": "Free sizing advice" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,192 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+-%}
+
+<section
+  id="vc-cta-{{ section.id }}"
+  class="vc vc-cta{% if s.image != blank %} vc-cta--image{% endif %}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.section_background }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-panel: {{ s.panel_background }};
+    --vc-overlay: {{ s.overlay_opacity | divided_by: 100.0 }};
+    --vc-radius: {{ s.radius }}px;
+    --vc-btn-bg: {{ s.button_color }};
+    --vc-btn-text: {{ s.button_text_color }};
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="{% if s.full_width %}vc-cta__full{% else %}vc-container{% endif %}">
+    <div class="vc-cta__panel">
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 2000 | image_tag: class: 'vc-cta__bg', loading: 'lazy', widths: '750, 1100, 1500, 2000', sizes: '100vw', alt: '' }}
+        <span class="vc-cta__overlay" aria-hidden="true"></span>
+      {%- endif -%}
+      <div class="vc-cta__content vc-cta__content--{{ s.alignment }}">
+        {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.text != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.text }}</div>{%- endif -%}
+        <div class="vc-cta__actions vc-reveal" style="--vc-d: 3;">
+          {%- if s.button_label != blank -%}
+            <a class="vc-btn" href="{{ s.button_link | default: '#' }}">
+              {{ s.button_label | escape }}
+              {%- render 'vc-icon', icon: 'arrow', size: 18 -%}
+            </a>
+          {%- endif -%}
+          {%- if s.button_2_label != blank and s.button_2_value != blank -%}
+            {%- capture b2 -%}{%- render 'vc-action-href', type: s.button_2_type, value: s.button_2_value, message: s.button_2_message -%}{%- endcapture -%}
+            <a class="vc-btn vc-cta__btn-2{% if s.button_2_type == 'whatsapp' %} vc-btn--whatsapp{% endif %}" href="{{ b2 | strip }}"{% if s.button_2_type == 'whatsapp' %} target="_blank" rel="noopener"{% endif %}>
+              {%- case s.button_2_type -%}
+                {%- when 'whatsapp' -%}{%- render 'vc-icon', icon: 'whatsapp', size: 18 -%}
+                {%- when 'email' -%}{%- render 'vc-icon', icon: 'mail', size: 18 -%}
+                {%- when 'phone' -%}{%- render 'vc-icon', icon: 'phone', size: 18 -%}
+              {%- endcase -%}
+              {{ s.button_2_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #vc-cta-{{ section.id }} .vc-cta__panel {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 80px);
+    border-radius: var(--vc-radius);
+    background: var(--vc-panel);
+    isolation: isolate;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__full .vc-cta__panel {
+    border-radius: 0;
+  }
+
+  #vc-cta-{{ section.id }}:not(.vc-cta--image) .vc-cta__panel::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--vc-accent) 30%, transparent), transparent 70%);
+    z-index: -1;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__overlay {
+    position: absolute;
+    inset: 0;
+    background: #1f1d1a;
+    opacity: var(--vc-overlay);
+    z-index: -1;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__content {
+    max-width: 680px;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__content--center {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__content--center .vc-eyebrow,
+  #vc-cta-{{ section.id }} .vc-cta__content--center .vc-cta__actions {
+    justify-content: center;
+  }
+
+  #vc-cta-{{ section.id }} .vc-sub {
+    opacity: 0.8;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  #vc-cta-{{ section.id }} .vc-cta__btn-2:not(.vc-btn--whatsapp) {
+    background: transparent;
+    color: var(--vc-ink);
+    border-color: color-mix(in srgb, var(--vc-ink) 35%, transparent);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: CTA banner",
+  "tag": "div",
+  "class": "section-vc-cta",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "LET’S COLLABORATE" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Have a space in mind? <em>Let’s make it yours.</em>" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell us about your project and get a curated proposal within 48 hours.</p>" },
+    {
+      "type": "select", "id": "alignment", "label": "Alignment",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ],
+      "default": "center"
+    },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Start your application" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    {
+      "type": "select", "id": "button_2_type", "label": "Second button type",
+      "options": [
+        { "value": "whatsapp", "label": "WhatsApp chat" },
+        { "value": "email", "label": "Email" },
+        { "value": "phone", "label": "Phone call" },
+        { "value": "link", "label": "Page / URL" }
+      ],
+      "default": "whatsapp"
+    },
+    { "type": "text", "id": "button_2_label", "label": "Second button label", "default": "Chat on WhatsApp", "info": "Leave empty to hide." },
+    { "type": "text", "id": "button_2_value", "label": "Number / email / URL", "default": "+91 00000 00000" },
+    { "type": "text", "id": "button_2_message", "label": "Prefilled message / subject", "default": "Hi Virah team, I’d like to discuss a partnership." },
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "image", "label": "Background image", "info": "Optional." },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55 },
+    { "type": "checkbox", "id": "full_width", "label": "Full width", "default": false },
+    { "type": "range", "id": "radius", "label": "Corner radius", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 28 },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 72, "step": 2, "unit": "px", "default": 48 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "section_background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "panel_background", "label": "Panel background", "default": "#1F1D1A" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#F5F1EA" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#D9B48F" },
+    { "type": "color", "id": "button_color", "label": "Primary button background", "default": "#F5F1EA" },
+    { "type": "color", "id": "button_text_color", "label": "Primary button text", "default": "#1F1D1A" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "presets": [ { "name": "Virah: CTA banner" } ]
+}
+{% endschema %}

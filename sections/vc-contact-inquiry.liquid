@@ -1,0 +1,662 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+  assign form_id = 'VCContactForm-' | append: section.id
+  assign topics = s.topic_options | newline_to_br | split: '<br />'
+  assign anchor = s.anchor_id | default: 'contact-form' | handleize
+-%}
+
+<section
+  id="vc-inquiry-{{ section.id }}"
+  class="vc vc-inquiry vc-inquiry--form-{{ s.form_position }}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-btn-bg: {{ s.button_color }};
+    --vc-btn-text: {{ s.button_text_color }};
+    --vc-input-bg: {{ s.input_background }};
+    --vc-input-radius: {{ s.input_radius }}px;
+    --vc-form-w: {{ s.form_width }}fr;
+    --vc-card-w: {{ 100 | minus: s.form_width }}fr;
+    --vc-card-bg: {{ s.card_background }};
+    --vc-card-ink: {{ s.card_text_color }};
+    --vc-card-accent: {{ s.card_accent_color }};
+    --vc-card-radius: {{ s.card_radius }}px;
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <span id="{{ anchor }}" class="vc-inquiry__anchor" aria-hidden="true"></span>
+  <div class="vc-container vc-inquiry__grid">
+    {%- comment -%} ---------- LEFT: Smart form ---------- {%- endcomment -%}
+    <div class="vc-inquiry__form-col" data-vc-form>
+      <div class="vc-inquiry__intro">
+        {%- if s.eyebrow != blank -%}
+          <p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.intro != blank -%}
+          <div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.intro }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="vc-inquiry__form-wrap vc-reveal" style="--vc-d: 3;">
+        {%- form 'contact', id: form_id, class: 'vc-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="vc-form__notice vc-form__notice--success" role="status" tabindex="-1" autofocus>
+              {%- render 'vc-icon', icon: 'check', size: 20 -%}
+              <span>{{ s.success_message | strip_html }}</span>
+            </div>
+          {%- elsif form.errors -%}
+            <div class="vc-form__notice vc-form__notice--error" role="alert" tabindex="-1" autofocus>
+              <span>{{ s.error_message | escape }}</span>
+              {%- if form.errors contains 'email' -%}
+                <span> — {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <div class="vc-form__grid">
+            {%- if s.show_topic and topics.size > 0 -%}
+              <div class="vc-field vc-field--full vc-field--select">
+                <select
+                  id="{{ form_id }}-topic"
+                  class="vc-field__input"
+                  name="contact[{{ s.topic_label | strip_html | escape }}]"
+                  data-vc-topic
+                  {% if s.topic_required %}required{% endif %}
+                >
+                  <option value="" disabled selected hidden></option>
+                  {%- for topic in topics -%}
+                    {%- assign t = topic | strip -%}
+                    {%- if t != blank -%}
+                      <option value="{{ t | escape }}">{{ t | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+                <label class="vc-field__label" for="{{ form_id }}-topic">
+                  {{- s.topic_label | escape -}}{%- if s.topic_required -%}<span aria-hidden="true"> *</span>{%- endif -%}
+                </label>
+                <svg class="vc-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            {%- endif -%}
+
+            <div class="vc-field">
+              <input
+                id="{{ form_id }}-name"
+                class="vc-field__input"
+                type="text"
+                name="contact[name]"
+                autocomplete="name"
+                placeholder=" "
+                required
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              >
+              <label class="vc-field__label" for="{{ form_id }}-name">{{ s.name_label | escape }}<span aria-hidden="true"> *</span></label>
+            </div>
+
+            <div class="vc-field">
+              <input
+                id="{{ form_id }}-email"
+                class="vc-field__input"
+                type="email"
+                name="contact[email]"
+                autocomplete="email"
+                spellcheck="false"
+                autocapitalize="off"
+                placeholder=" "
+                required
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              >
+              <label class="vc-field__label" for="{{ form_id }}-email">{{ s.email_label | escape }}<span aria-hidden="true"> *</span></label>
+            </div>
+
+            {%- if s.show_phone -%}
+              <div class="vc-field{% unless s.show_order %} vc-field--full{% endunless %}">
+                <input
+                  id="{{ form_id }}-phone"
+                  class="vc-field__input"
+                  type="tel"
+                  name="contact[{{ s.phone_label | escape }}]"
+                  autocomplete="tel"
+                  pattern="[0-9\-\+\s\(\)]*"
+                  placeholder=" "
+                  {% if s.phone_required %}required{% endif %}
+                  value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                >
+                <label class="vc-field__label" for="{{ form_id }}-phone">
+                  {{- s.phone_label | escape -}}{%- if s.phone_required -%}<span aria-hidden="true"> *</span>{%- endif -%}
+                </label>
+                {%- if s.phone_hint != blank -%}<span class="vc-field__hint">{{ s.phone_hint | escape }}</span>{%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if s.show_order -%}
+              <div class="vc-field{% unless s.show_phone %} vc-field--full{% endunless %}">
+                <input
+                  id="{{ form_id }}-order"
+                  class="vc-field__input"
+                  type="text"
+                  name="contact[{{ s.order_label | escape }}]"
+                  placeholder=" "
+                >
+                <label class="vc-field__label" for="{{ form_id }}-order">{{ s.order_label | escape }}</label>
+                {%- if s.order_hint != blank -%}<span class="vc-field__hint">{{ s.order_hint | escape }}</span>{%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <div class="vc-field vc-field--full vc-field--textarea">
+              <textarea
+                id="{{ form_id }}-body"
+                class="vc-field__input"
+                name="contact[body]"
+                rows="{{ s.message_rows }}"
+                placeholder=" "
+                {% if s.message_required %}required{% endif %}
+              >{{ form.body }}</textarea>
+              <label class="vc-field__label" for="{{ form_id }}-body">
+                {{- s.message_label | escape -}}{%- if s.message_required -%}<span aria-hidden="true"> *</span>{%- endif -%}
+              </label>
+            </div>
+          </div>
+
+          {%- if s.consent_text != blank -%}
+            <div class="vc-form__consent">{{ s.consent_text }}</div>
+          {%- endif -%}
+
+          <div class="vc-form__error" data-vc-form-error role="alert" hidden>
+            {{ s.error_message | escape }}
+          </div>
+
+          <button type="submit" class="vc-btn vc-form__submit" data-vc-submit>
+            <span class="vc-form__submit-label">{{ s.submit_label | escape }}</span>
+            <span class="vc-form__submit-arrow">{%- render 'vc-icon', icon: 'arrow', size: 18 -%}</span>
+            <span class="vc-form__spinner" aria-hidden="true"></span>
+            <span class="vc-form__sending">{{ s.sending_label | escape }}</span>
+          </button>
+        {%- endform -%}
+
+        <div class="vc-form__success" data-vc-form-success tabindex="-1" role="status" aria-live="polite" hidden>
+          <span class="vc-form__success-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="vc-form__tick" d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+          </span>
+          {%- if s.success_heading != blank -%}
+            <h3 class="vc-form__success-title">{{ s.success_heading | escape }}</h3>
+          {%- endif -%}
+          <div class="vc-form__success-text">{{ s.success_message }}</div>
+          {%- if s.reset_label != blank -%}
+            <button type="button" class="vc-btn vc-btn--ghost" data-vc-form-reset>{{ s.reset_label | escape }}</button>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ---------- RIGHT: Concierge card ---------- {%- endcomment -%}
+    {%- if s.show_card -%}
+      <aside class="vc-concierge vc-reveal" style="--vc-d: 3;" aria-label="{{ s.card_heading | strip_html | escape }}">
+        {%- if s.card_eyebrow != blank -%}
+          <p class="vc-concierge__eyebrow">{{ s.card_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.card_heading != blank -%}
+          <h3 class="vc-concierge__heading">{{ s.card_heading }}</h3>
+        {%- endif -%}
+        {%- if s.card_text != blank -%}
+          <div class="vc-concierge__text">{{ s.card_text }}</div>
+        {%- endif -%}
+
+        <div class="vc-concierge__list">
+          {%- for block in section.blocks -%}
+            {%- assign b = block.settings -%}
+            {%- case block.type -%}
+              {%- when 'whatsapp' -%}
+                {%- capture wa_href -%}{%- render 'vc-action-href', type: 'whatsapp', value: b.number, message: b.message -%}{%- endcapture -%}
+                <div class="vc-concierge__item vc-concierge__item--cta" {{ block.shopify_attributes }}>
+                  <a class="vc-btn vc-btn--whatsapp vc-concierge__wa" href="{{ wa_href | strip }}" target="_blank" rel="noopener">
+                    {%- render 'vc-icon', icon: 'whatsapp', size: 20 -%}
+                    <span>{{ b.label | escape }}</span>
+                  </a>
+                  {%- if b.caption != blank -%}<p class="vc-concierge__caption">{{ b.caption | escape }}</p>{%- endif -%}
+                </div>
+
+              {%- when 'phone' -%}
+                {%- capture tel_href -%}{%- render 'vc-action-href', type: 'phone', value: b.number -%}{%- endcapture -%}
+                <div class="vc-concierge__item" {{ block.shopify_attributes }}>
+                  <span class="vc-concierge__icon">{%- render 'vc-icon', icon: 'phone', size: 20 -%}</span>
+                  <div>
+                    <p class="vc-concierge__label">{{ b.label | escape }}</p>
+                    <a class="vc-concierge__value" href="{{ tel_href | strip }}">{{ b.number | escape }}</a>
+                    {%- if b.hours != blank -%}<p class="vc-concierge__meta">{{ b.hours | escape }}</p>{%- endif -%}
+                  </div>
+                </div>
+
+              {%- when 'email' -%}
+                <div class="vc-concierge__item" {{ block.shopify_attributes }}>
+                  <span class="vc-concierge__icon">{%- render 'vc-icon', icon: 'mail', size: 20 -%}</span>
+                  <div>
+                    <p class="vc-concierge__label">{{ b.label | escape }}</p>
+                    <a class="vc-concierge__value" href="mailto:{{ b.email | strip }}">{{ b.email | escape }}</a>
+                    {%- if b.meta != blank -%}<p class="vc-concierge__meta">{{ b.meta | escape }}</p>{%- endif -%}
+                  </div>
+                </div>
+
+              {%- when 'address' -%}
+                {%- liquid
+                  assign map_url = b.map_url
+                  if map_url == blank
+                    assign map_query = b.address | strip_html | url_encode
+                    assign map_url = 'https://www.google.com/maps/search/?api=1&query=' | append: map_query
+                  endif
+                -%}
+                <div class="vc-concierge__item" {{ block.shopify_attributes }}>
+                  <span class="vc-concierge__icon">{%- render 'vc-icon', icon: 'pin', size: 20 -%}</span>
+                  <div>
+                    <p class="vc-concierge__label">{{ b.label | escape }}</p>
+                    <address class="vc-concierge__address">{{ b.address | escape | newline_to_br }}</address>
+                    {%- if b.map_label != blank -%}
+                      <a class="vc-concierge__map" href="{{ map_url }}" target="_blank" rel="noopener">
+                        {{ b.map_label | escape }}
+                        {%- render 'vc-icon', icon: 'arrow-up-right', size: 14 -%}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+              {%- when 'hours' -%}
+                <div class="vc-concierge__item" {{ block.shopify_attributes }}>
+                  <span class="vc-concierge__icon">{%- render 'vc-icon', icon: 'clock', size: 20 -%}</span>
+                  <div>
+                    <p class="vc-concierge__label">{{ b.label | escape }}</p>
+                    <div class="vc-concierge__rich">{{ b.text }}</div>
+                  </div>
+                </div>
+
+              {%- when 'text' -%}
+                <div class="vc-concierge__item" {{ block.shopify_attributes }}>
+                  {%- if b.icon != 'none' -%}
+                    <span class="vc-concierge__icon">{%- render 'vc-icon', icon: b.icon, size: 20 -%}</span>
+                  {%- endif -%}
+                  <div>
+                    {%- if b.label != blank -%}<p class="vc-concierge__label">{{ b.label | escape }}</p>{%- endif -%}
+                    <div class="vc-concierge__rich">{{ b.text }}</div>
+                  </div>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </aside>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #vc-inquiry-{{ section.id }} .vc-inquiry__anchor {
+    position: absolute;
+    top: -80px;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-inquiry__grid {
+    display: grid;
+    gap: 40px;
+    align-items: start;
+  }
+
+  @media screen and (min-width: 990px) {
+    #vc-inquiry-{{ section.id }} .vc-inquiry__grid {
+      grid-template-columns: var(--vc-form-w) var(--vc-card-w);
+      gap: 64px;
+    }
+
+    #vc-inquiry-{{ section.id }}.vc-inquiry--form-right .vc-inquiry__grid {
+      grid-template-columns: var(--vc-card-w) var(--vc-form-w);
+    }
+
+    #vc-inquiry-{{ section.id }}.vc-inquiry--form-right .vc-concierge {
+      order: -1;
+    }
+
+    #vc-inquiry-{{ section.id }} .vc-concierge {
+      position: sticky;
+      top: 110px;
+    }
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-inquiry__intro {
+    margin-bottom: 32px;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-inquiry__form-wrap {
+    position: relative;
+  }
+
+  /* ---------- Concierge card ---------- */
+  #vc-inquiry-{{ section.id }} .vc-concierge {
+    padding: 40px 34px;
+    border-radius: var(--vc-card-radius);
+    background: var(--vc-card-bg);
+    color: var(--vc-card-ink);
+    box-shadow: 0 40px 70px -40px rgba(31, 29, 26, 0.55);
+    --vc-focus: var(--vc-card-accent);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__eyebrow {
+    margin: 0 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--vc-card-accent);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__heading {
+    margin: 0;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--vc-card-ink);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__heading em {
+    color: var(--vc-card-accent);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__text {
+    margin-top: 12px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    opacity: 0.75;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__text p {
+    margin: 0;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__list {
+    margin-top: 28px;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__item {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid color-mix(in srgb, var(--vc-card-ink) 14%, transparent);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__item--cta {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__wa {
+    width: 100%;
+    min-height: 54px;
+    border-color: transparent;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__caption {
+    margin: 0;
+    font-size: 12.5px;
+    text-align: center;
+    opacity: 0.65;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__icon {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--vc-card-ink) 18%, transparent);
+    color: var(--vc-card-accent);
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__label {
+    margin: 0 0 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__value {
+    color: var(--vc-card-ink);
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    word-break: break-word;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__value:hover {
+    border-color: currentColor;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__meta,
+  #vc-inquiry-{{ section.id }} .vc-concierge__rich {
+    margin: 4px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.75;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__rich p {
+    margin: 0;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__rich a {
+    color: inherit;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__address {
+    font-style: normal;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__map {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: var(--vc-card-accent);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  #vc-inquiry-{{ section.id }} .vc-concierge__map:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-inquiry-{{ section.id }} .vc-form__grid {
+      grid-template-columns: 1fr;
+    }
+
+    #vc-inquiry-{{ section.id }} .vc-concierge {
+      padding: 32px 24px;
+    }
+
+    {%- if s.mobile_card_first -%}
+      #vc-inquiry-{{ section.id }} .vc-concierge { order: -1; }
+    {%- endif -%}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Inquiry form",
+  "tag": "div",
+  "class": "section-vc-contact-inquiry",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "header", "content": "Form heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "WRITE TO US" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Tell us about your <em>space.</em>" },
+    { "type": "richtext", "id": "intro", "label": "Intro text", "default": "<p>Share a few details and a stylist or care specialist will get back to you — usually within 4 hours.</p>" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "contact-form", "info": "Link to this form from anywhere with #contact-form" },
+    { "type": "header", "content": "Topic dropdown" },
+    { "type": "checkbox", "id": "show_topic", "label": "Show topic dropdown", "default": true },
+    { "type": "text", "id": "topic_label", "label": "Dropdown label", "default": "What can we help you with?" },
+    { "type": "textarea", "id": "topic_options", "label": "Topic options", "info": "One option per line. Add ?topic=Trade to the page URL to pre-select a matching option.", "default": "Product & Sizing Advice\nOrder & Delivery Status\nReturns & Warranty\nBulk / Trade Inquiry\nOther" },
+    { "type": "checkbox", "id": "topic_required", "label": "Topic is required", "default": true },
+    { "type": "header", "content": "Fields" },
+    { "type": "text", "id": "name_label", "label": "Name label", "default": "Full Name" },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "Email Address" },
+    { "type": "checkbox", "id": "show_phone", "label": "Show phone field", "default": true },
+    { "type": "text", "id": "phone_label", "label": "Phone label", "default": "Phone / WhatsApp Number" },
+    { "type": "text", "id": "phone_hint", "label": "Phone hint", "default": "So we can share photos & videos quickly" },
+    { "type": "checkbox", "id": "phone_required", "label": "Phone is required", "default": false },
+    { "type": "checkbox", "id": "show_order", "label": "Show order number field", "default": true },
+    { "type": "text", "id": "order_label", "label": "Order number label", "default": "Order Number (Optional)" },
+    { "type": "text", "id": "order_hint", "label": "Order number hint", "default": "Found in your confirmation email, e.g. #1024" },
+    { "type": "text", "id": "message_label", "label": "Message label", "default": "Your Message" },
+    { "type": "range", "id": "message_rows", "label": "Message box height (rows)", "min": 3, "max": 10, "step": 1, "default": 5 },
+    { "type": "checkbox", "id": "message_required", "label": "Message is required", "default": true },
+    { "type": "richtext", "id": "consent_text", "label": "Small print under the form", "default": "<p>By sending this form you agree to be contacted about your inquiry. We never share your details.</p>" },
+    { "type": "header", "content": "Submit & confirmation" },
+    { "type": "text", "id": "submit_label", "label": "Button label", "default": "Send Inquiry" },
+    { "type": "text", "id": "sending_label", "label": "Loading label", "default": "Sending…" },
+    { "type": "text", "id": "success_heading", "label": "Success heading", "default": "Thank you — message received." },
+    { "type": "richtext", "id": "success_message", "label": "Success message", "default": "<p>Our concierge team will reply within 4 working hours. For anything urgent, ping us on WhatsApp.</p>" },
+    { "type": "text", "id": "reset_label", "label": "“Send another” button label", "default": "Send another message" },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Something went wrong. Please check your details and try again." },
+    { "type": "header", "content": "Concierge card" },
+    { "type": "checkbox", "id": "show_card", "label": "Show concierge card", "default": true },
+    { "type": "text", "id": "card_eyebrow", "label": "Card eyebrow", "default": "DIRECT CONCIERGE" },
+    { "type": "inline_richtext", "id": "card_heading", "label": "Card heading", "default": "Prefer to <em>talk?</em>" },
+    { "type": "richtext", "id": "card_text", "label": "Card text", "default": "<p>Send us a photo of your room and we’ll suggest the perfect fit — on video, if you like.</p>" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "form_width", "label": "Form column width", "min": 50, "max": 70, "step": 5, "unit": "%", "default": 60 },
+    {
+      "type": "select", "id": "form_position", "label": "Form position (desktop)",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ],
+      "default": "left"
+    },
+    { "type": "checkbox", "id": "mobile_card_first", "label": "Show concierge card first on mobile", "default": false },
+    { "type": "range", "id": "input_radius", "label": "Input corner radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent / focus colour", "default": "#A0704C" },
+    { "type": "color", "id": "input_background", "label": "Input background", "default": "#FBF9F5" },
+    { "type": "color", "id": "button_color", "label": "Button background (onyx)", "default": "#1F1D1A" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#F7F4EE" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#1F1D1A", "info": "Try #8C5A3C for a warm clay card." },
+    { "type": "color", "id": "card_text_color", "label": "Card text", "default": "#F5F1EA" },
+    { "type": "color", "id": "card_accent_color", "label": "Card accent", "default": "#D9B48F" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "whatsapp",
+      "name": "WhatsApp button",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Button label", "default": "Chat on WhatsApp" },
+        { "type": "text", "id": "number", "label": "WhatsApp number", "info": "Include country code, e.g. +91 98xxx xxxxx", "default": "+91 00000 00000" },
+        { "type": "text", "id": "message", "label": "Prefilled message", "default": "Hi Virah team! I’d like some help choosing furniture for my space." },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Quick photo & video checks before you buy" }
+      ]
+    },
+    {
+      "type": "phone",
+      "name": "Phone support",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Phone Support" },
+        { "type": "text", "id": "number", "label": "Phone number", "default": "+91 00000 00000" },
+        { "type": "text", "id": "hours", "label": "Hours", "default": "Mon–Sat, 10:00 AM – 7:00 PM IST" }
+      ]
+    },
+    {
+      "type": "email",
+      "name": "Email",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Email Us" },
+        { "type": "text", "id": "email", "label": "Email address", "default": "care@virah.co.in" },
+        { "type": "text", "id": "meta", "label": "Small note", "default": "We reply within one working day" }
+      ]
+    },
+    {
+      "type": "address",
+      "name": "Studio address",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Studio & Warehouse" },
+        { "type": "textarea", "id": "address", "label": "Address", "default": "Your studio address\nCity, State – PIN\nIndia" },
+        { "type": "text", "id": "map_label", "label": "Map link label", "default": "View on map", "info": "Leave empty to hide the map link." },
+        { "type": "url", "id": "map_url", "label": "Map link", "info": "Optional. If empty, a Google Maps search for the address is used." }
+      ]
+    },
+    {
+      "type": "hours",
+      "name": "Opening hours",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Studio Hours" },
+        { "type": "richtext", "id": "text", "label": "Hours", "default": "<p>Mon–Sat: 10:00 AM – 7:00 PM<br>Sunday: Closed</p>" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Custom info",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "spark", "label": "Sparkle" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "video", "label": "Video call" },
+            { "value": "briefcase", "label": "Briefcase" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "spark"
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Good to know" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Add any extra detail here.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Inquiry form",
+      "blocks": [
+        { "type": "whatsapp" },
+        { "type": "phone" },
+        { "type": "address" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,195 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+-%}
+
+<section
+  id="vc-stats-{{ section.id }}"
+  class="vc vc-stats vc-stats--{{ s.style }}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-num-size: {{ s.number_size }}px;
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="vc-container">
+    {%- if s.heading != blank -%}
+      <p class="vc-stats__intro vc-reveal">{{ s.heading }}</p>
+    {%- endif -%}
+    <ul class="vc-stats__row" role="list" style="--vc-cols: {{ section.blocks.size | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+          assign raw = b.number | strip
+          assign numeric = raw | remove: ',' | remove: '.' | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
+        -%}
+        <li class="vc-stats__item vc-reveal" style="--vc-d: {{ forloop.index }};" {{ block.shopify_attributes }}>
+          <p class="vc-stats__num">
+            {%- if b.prefix != blank -%}<span class="vc-stats__affix">{{ b.prefix | escape }}</span>{%- endif -%}
+            {%- if numeric == blank and raw != blank and b.animate -%}
+              <span data-vc-count="{{ raw | remove: ',' }}">{{ raw }}</span>
+            {%- else -%}
+              <span>{{ raw | escape }}</span>
+            {%- endif -%}
+            {%- if b.suffix != blank -%}<span class="vc-stats__affix">{{ b.suffix | escape }}</span>{%- endif -%}
+          </p>
+          <p class="vc-stats__label">{{ b.label | escape }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% style %}
+  #vc-stats-{{ section.id }} .vc-stats__intro {
+    margin: 0 auto 36px;
+    max-width: 640px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--vc-accent);
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__intro p {
+    margin: 0;
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__row {
+    display: grid;
+    grid-template-columns: repeat(var(--vc-cols), minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__item {
+    padding: 8px 24px;
+    text-align: center;
+  }
+
+  #vc-stats-{{ section.id }}.vc-stats--divided .vc-stats__item + .vc-stats__item {
+    border-left: 1px solid color-mix(in srgb, var(--vc-ink) 16%, transparent);
+  }
+
+  #vc-stats-{{ section.id }}.vc-stats--cards .vc-stats__row {
+    gap: 16px;
+  }
+
+  #vc-stats-{{ section.id }}.vc-stats--cards .vc-stats__item {
+    padding: 28px 20px;
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--vc-ink) 5%, transparent);
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__num {
+    margin: 0;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: clamp(30px, 4.4vw, var(--vc-num-size));
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--vc-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__affix {
+    color: var(--vc-accent);
+  }
+
+  #vc-stats-{{ section.id }} .vc-stats__label {
+    margin: 12px 0 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--vc-muted);
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-stats-{{ section.id }} .vc-stats__row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 28px;
+    }
+
+    #vc-stats-{{ section.id }}.vc-stats--divided .vc-stats__item + .vc-stats__item {
+      border-left: 0;
+    }
+
+    #vc-stats-{{ section.id }}.vc-stats--divided .vc-stats__item:nth-child(even) {
+      border-left: 1px solid color-mix(in srgb, var(--vc-ink) 16%, transparent);
+    }
+
+    #vc-stats-{{ section.id }} .vc-stats__item {
+      padding: 4px 12px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Stats band",
+  "tag": "div",
+  "class": "section-vc-stats",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Small intro line", "default": "Trusted by homes, studios & businesses across India" },
+    {
+      "type": "select", "id": "style", "label": "Style",
+      "options": [
+        { "value": "divided", "label": "Hairline dividers" },
+        { "value": "cards", "label": "Soft cards" },
+        { "value": "plain", "label": "Plain" }
+      ],
+      "default": "divided"
+    },
+    { "type": "font_picker", "id": "heading_font", "label": "Number font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "number_size", "label": "Number size (desktop)", "min": 28, "max": 80, "step": 2, "unit": "px", "default": 52 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#1F1D1A" },
+    { "type": "color", "id": "text_color", "label": "Numbers", "default": "#F5F1EA" },
+    { "type": "color", "id": "muted_text_color", "label": "Labels", "default": "#BDB3A6" },
+    { "type": "color", "id": "accent_color", "label": "Accent (prefix / suffix)", "default": "#D9B48F" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 44 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 44 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "prefix", "label": "Prefix", "info": "e.g. ₹ or <" },
+        { "type": "text", "id": "number", "label": "Number or short text", "default": "4", "info": "Plain numbers (e.g. 2500) count up on scroll." },
+        { "type": "text", "id": "suffix", "label": "Suffix", "default": " hrs", "info": "e.g. +, %, hrs, days" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Average response time" },
+        { "type": "checkbox", "id": "animate", "label": "Count up on scroll", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Stats band",
+      "blocks": [
+        { "type": "stat", "settings": { "prefix": "<", "number": "4", "suffix": " hrs", "label": "Average response time" } },
+        { "type": "stat", "settings": { "number": "7", "suffix": "-day", "label": "Easy replacement" } },
+        { "type": "stat", "settings": { "number": "Pan-India", "suffix": "", "label": "Delivery network", "animate": false } },
+        { "type": "stat", "settings": { "number": "100", "suffix": "%", "label": "GST invoicing for businesses" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

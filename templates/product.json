@@ -25,13 +25,6 @@
         "show_rating": true,
         "show_low_stock": true,
         "low_stock_threshold": 5,
-<<<<<<< HEAD
-=======
-        "delivery_label": "Estimated Delivery Time:",
-        "delivery_estimate": "5 - 7 Days",
-        "trust_1": "Cash on Delivery",
-        "trust_2": "Secured Payment",
->>>>>>> 4785bad848b0032d0219918a67e47c5061e5857a
         "show_quantity": true,
         "show_share": true,
         "background_color": "#f1eae0",

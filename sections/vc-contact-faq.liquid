@@ -1,0 +1,408 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+  assign anchor = s.anchor_id | default: 'faq' | handleize
+-%}
+
+<section
+  id="vc-faq-{{ section.id }}"
+  class="vc vc-faq vc-faq--icon-{{ s.icon_style }}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-line: {{ s.divider_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-max: {{ s.max_width }}px;
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <span id="{{ anchor }}" class="vc-faq__anchor" aria-hidden="true"></span>
+  <div class="vc-container" data-vc-faq data-allow-multiple="{{ s.allow_multiple }}">
+    {%- if s.eyebrow != blank or s.heading != blank or s.subheading != blank -%}
+      <div class="vc-head vc-head--center">
+        {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.subheading != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.subheading }}</div>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.show_search -%}
+      <div class="vc-faq__search vc-reveal" style="--vc-d: 3;">
+        {%- render 'vc-icon', icon: 'search', size: 18 -%}
+        <label class="visually-hidden" for="vc-faq-search-{{ section.id }}">{{ s.search_placeholder | escape }}</label>
+        <input
+          id="vc-faq-search-{{ section.id }}"
+          type="search"
+          placeholder="{{ s.search_placeholder | escape }}"
+          autocomplete="off"
+          data-vc-faq-search
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="vc-faq__list vc-reveal" style="--vc-d: 4;">
+      {%- for block in section.blocks -%}
+        {%- assign open = false -%}
+        {%- if forloop.first and s.open_first -%}{%- assign open = true -%}{%- endif -%}
+        <div class="vc-faq__item{% if open %} is-open{% endif %}" {{ block.shopify_attributes }}>
+          <h3 class="vc-faq__heading">
+            <button
+              type="button"
+              class="vc-faq__q"
+              id="vc-faq-q-{{ block.id }}"
+              aria-expanded="{{ open }}"
+              aria-controls="vc-faq-a-{{ block.id }}"
+            >
+              <span class="vc-faq__q-text">{{ block.settings.question | escape }}</span>
+              <span class="vc-faq__toggle" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div
+            class="vc-faq__a"
+            id="vc-faq-a-{{ block.id }}"
+            role="region"
+            aria-labelledby="vc-faq-q-{{ block.id }}"
+            style="grid-template-rows: {% if open %}1fr{% else %}0fr{% endif %};"
+          >
+            <div class="vc-faq__a-inner">
+              <div class="vc-faq__a-body">
+                {{ block.settings.answer }}
+                {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                  <a class="vc-link vc-faq__more" href="{{ block.settings.link_url }}">
+                    {{ block.settings.link_label | escape }}
+                    {%- render 'vc-icon', icon: 'arrow', size: 16 -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+      {%- if s.show_search -%}
+        <p class="vc-faq__empty" data-vc-faq-empty hidden>{{ s.empty_text | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if s.footer_text != blank or s.footer_link_label != blank -%}
+      <div class="vc-faq__footer vc-reveal" style="--vc-d: 5;">
+        {%- if s.footer_text != blank -%}<span>{{ s.footer_text | escape }}</span>{%- endif -%}
+        {%- if s.footer_link_label != blank -%}
+          <a class="vc-link" href="{{ s.footer_link_url | default: '#contact-form' }}">
+            {{ s.footer_link_label | escape }}
+            {%- render 'vc-icon', icon: 'arrow', size: 16 -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if s.enable_schema and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% style %}
+  #vc-faq-{{ section.id }} .vc-faq__anchor {
+    position: absolute;
+    top: -80px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-head {
+    margin-bottom: 36px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 28px;
+    color: var(--vc-muted);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__search .vc-icon {
+    position: absolute;
+    left: 20px;
+    pointer-events: none;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__search input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 20px 0 50px;
+    border: 1px solid var(--vc-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--vc-ink);
+    font: inherit;
+    font-size: 15px;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__search input:focus {
+    border-color: var(--vc-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--vc-accent) 14%, transparent);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__list {
+    border-top: 1px solid var(--vc-line);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__item {
+    border-bottom: 1px solid var(--vc-line);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__heading {
+    margin: 0;
+    font: inherit;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    padding: 26px 4px;
+    border: 0;
+    background: none;
+    color: var(--vc-ink);
+    font: inherit;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: {{ s.question_size }}px;
+    line-height: 1.35;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__q:hover {
+    color: var(--vc-accent);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__toggle {
+    position: relative;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--vc-line);
+    border-radius: 50%;
+    transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.45s var(--vc-ease);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__toggle::before,
+  #vc-faq-{{ section.id }} .vc-faq__toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 1.5px;
+    margin: -0.75px 0 0 -6px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.45s var(--vc-ease), opacity 0.3s ease;
+  }
+
+  #vc-faq-{{ section.id }}.vc-faq--icon-plus .vc-faq__toggle::after {
+    transform: rotate(90deg);
+  }
+
+  #vc-faq-{{ section.id }}.vc-faq--icon-plus .vc-faq__item.is-open .vc-faq__toggle::after {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+
+  #vc-faq-{{ section.id }}.vc-faq--icon-chevron .vc-faq__toggle::before {
+    width: 8px;
+    margin-left: -6.5px;
+    transform: rotate(45deg);
+  }
+
+  #vc-faq-{{ section.id }}.vc-faq--icon-chevron .vc-faq__toggle::after {
+    width: 8px;
+    margin-left: -1.5px;
+    transform: rotate(-45deg);
+  }
+
+  #vc-faq-{{ section.id }}.vc-faq--icon-chevron .vc-faq__item.is-open .vc-faq__toggle {
+    transform: rotate(180deg);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__item.is-open .vc-faq__toggle {
+    background: var(--vc-ink);
+    border-color: var(--vc-ink);
+    color: var(--vc-bg);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a {
+    display: grid;
+    transition: grid-template-rows 0.5s var(--vc-ease);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a-body {
+    padding: 0 60px 28px 4px;
+    color: var(--vc-muted);
+    font-size: 15.5px;
+    line-height: 1.75;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.4s ease, transform 0.5s var(--vc-ease);
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__item.is-open .vc-faq__a-body {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.08s;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a-body p {
+    margin: 0 0 10px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a-body ul {
+    margin: 0 0 10px;
+    padding-left: 18px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__a-body a:not(.vc-link) {
+    color: var(--vc-ink);
+    text-underline-offset: 3px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__more {
+    margin-top: 4px;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__empty {
+    padding: 28px 4px;
+    margin: 0;
+    color: var(--vc-muted);
+    text-align: center;
+  }
+
+  #vc-faq-{{ section.id }} .vc-faq__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 14px;
+    margin-top: 36px;
+    color: var(--vc-muted);
+    font-size: 15px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-faq-{{ section.id }} .vc-faq__q {
+      padding: 22px 0;
+      font-size: {{ s.question_size | minus: 2 }}px;
+    }
+
+    #vc-faq-{{ section.id }} .vc-faq__a-body {
+      padding-right: 0;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: FAQ accordion",
+  "tag": "div",
+  "class": "section-vc-contact-faq",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "QUICK ANSWERS" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Before you <em>ask…</em>" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Most questions are answered right here — delivery, assembly, returns and care.</p>" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "faq", "info": "Link to this section with #faq" },
+    { "type": "header", "content": "Search" },
+    { "type": "checkbox", "id": "show_search", "label": "Show FAQ search", "default": true },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search delivery, returns, assembly…" },
+    { "type": "text", "id": "empty_text", "label": "No results text", "default": "No matching questions — send us a message above and we’ll help." },
+    { "type": "header", "content": "Accordion" },
+    { "type": "checkbox", "id": "open_first", "label": "Open first question by default", "default": true },
+    { "type": "checkbox", "id": "allow_multiple", "label": "Allow multiple answers open", "default": false },
+    {
+      "type": "select", "id": "icon_style", "label": "Toggle icon",
+      "options": [ { "value": "plus", "label": "Plus / minus" }, { "value": "chevron", "label": "Chevron" } ],
+      "default": "plus"
+    },
+    { "type": "range", "id": "question_size", "label": "Question text size", "min": 15, "max": 26, "step": 1, "unit": "px", "default": 20 },
+    { "type": "checkbox", "id": "enable_schema", "label": "Add FAQ structured data (SEO)", "default": true, "info": "Helps Google show your FAQs in search results." },
+    { "type": "header", "content": "Footer line" },
+    { "type": "text", "id": "footer_text", "label": "Footer text", "default": "Still have a question?" },
+    { "type": "text", "id": "footer_link_label", "label": "Footer link label", "default": "Write to our concierge" },
+    { "type": "url", "id": "footer_link_url", "label": "Footer link", "info": "Defaults to #contact-form" },
+    { "type": "header", "content": "Style" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "max_width", "label": "Container max width", "min": 600, "max": 1100, "step": 20, "unit": "px", "default": 800 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F7F4EE" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Answer text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#A0704C" },
+    { "type": "color", "id": "divider_color", "label": "Hairline dividers", "default": "#E3DCD1" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How long does delivery take across India?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Metro cities receive orders in 3–5 business days; the rest of India in 5–8 business days.</p>" },
+        { "type": "text", "id": "link_label", "label": "Link label", "info": "Optional link shown under the answer." },
+        { "type": "url", "id": "link_url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: FAQ accordion",
+      "blocks": [
+        { "type": "question" },
+        { "type": "question", "settings": { "question": "Do your furniture pieces require assembly?", "answer": "<p>Most pieces arrive pre-assembled or need under 15 minutes of simple assembly. Flat-pack items include a toolkit and illustrated guide.</p>" } },
+        { "type": "question", "settings": { "question": "What is your return and damaged-in-transit policy?", "answer": "<p>7-day easy replacement. Please record an unboxing video — it lets us approve damage claims instantly.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

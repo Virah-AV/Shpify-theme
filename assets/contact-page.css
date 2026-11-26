@@ -1,0 +1,525 @@
+/* ==========================================================================
+   Virah contact page — shared styles for the vc-* sections
+   ========================================================================== */
+
+.vc {
+  --vc-ink: #2b2420;
+  --vc-muted: #6e655c;
+  --vc-line: rgba(31, 29, 26, 0.12);
+  --vc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  color: var(--vc-ink);
+  background: var(--vc-bg, transparent);
+  padding-top: var(--vc-pt-m, 48px);
+  padding-bottom: var(--vc-pb-m, 48px);
+}
+
+@media screen and (min-width: 750px) {
+  .vc {
+    padding-top: var(--vc-pt, 80px);
+    padding-bottom: var(--vc-pb, 80px);
+  }
+}
+
+.vc *,
+.vc *::before,
+.vc *::after {
+  box-sizing: border-box;
+}
+
+.vc-container {
+  width: 100%;
+  max-width: var(--vc-max, 1280px);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media screen and (min-width: 750px) {
+  .vc-container {
+    padding: 0 40px;
+  }
+}
+
+/* ---------- Typography ---------- */
+.vc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vc-accent, var(--vc-muted));
+}
+
+.vc-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.vc-eyebrow--plain::before {
+  display: none;
+}
+
+.vc-heading {
+  margin: 0;
+  font-family: var(--vc-heading-family, Georgia, 'Times New Roman', serif);
+  font-weight: var(--vc-heading-weight, 400);
+  font-style: var(--vc-heading-style, normal);
+  font-size: clamp(28px, 4.2vw, var(--vc-heading-size, 44px));
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--vc-heading-color, var(--vc-ink));
+}
+
+.vc-heading em,
+.vc-heading i {
+  font-style: italic;
+  color: var(--vc-accent, inherit);
+}
+
+.vc-sub {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--vc-muted);
+}
+
+.vc-sub p {
+  margin: 0;
+}
+
+.vc-sub p + p {
+  margin-top: 10px;
+}
+
+.vc-head {
+  margin-bottom: 44px;
+}
+
+.vc-head--center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 720px;
+}
+
+.vc-head--center .vc-eyebrow {
+  justify-content: center;
+}
+
+.vc-head--split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 40px;
+}
+
+/* ---------- Buttons & links ---------- */
+.vc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 28px;
+  border: 1px solid var(--vc-btn-bg, #1f1d1a);
+  border-radius: 999px;
+  background: var(--vc-btn-bg, #1f1d1a);
+  color: var(--vc-btn-text, #f7f4ee);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.35s var(--vc-ease), box-shadow 0.35s var(--vc-ease), background-color 0.3s ease, color 0.3s ease;
+}
+
+.vc-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -12px rgba(31, 29, 26, 0.45);
+}
+
+.vc-btn--ghost {
+  background: transparent;
+  color: var(--vc-ink);
+  border-color: var(--vc-line);
+}
+
+.vc-btn--ghost:hover {
+  border-color: var(--vc-ink);
+  box-shadow: none;
+}
+
+.vc-btn--whatsapp {
+  --vc-btn-bg: #25d366;
+  --vc-btn-text: #0b2e17;
+}
+
+.vc-btn .vc-icon--arrow {
+  transition: transform 0.35s var(--vc-ease);
+}
+
+.vc-btn:hover .vc-icon--arrow {
+  transform: translateX(4px);
+}
+
+.vc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vc-ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--vc-ease);
+  padding-bottom: 2px;
+}
+
+.vc-link:hover {
+  background-size: 100% 1px;
+}
+
+.vc-link .vc-icon {
+  flex: 0 0 auto;
+  transition: transform 0.35s var(--vc-ease);
+}
+
+.vc-link:hover .vc-icon--arrow,
+.vc-link:hover .vc-icon--arrow-up-right {
+  transform: translateX(3px);
+}
+
+.vc a:focus-visible,
+.vc button:focus-visible,
+.vc input:focus-visible,
+.vc select:focus-visible,
+.vc textarea:focus-visible {
+  outline: 2px solid var(--vc-focus, #b07a52);
+  outline-offset: 3px;
+}
+
+/* ---------- Reveal on scroll ---------- */
+html.vc-js .vc[data-vc-animate='true'] .vc-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--vc-ease), transform 0.9s var(--vc-ease);
+  transition-delay: calc(var(--vc-d, 0) * 90ms);
+}
+
+html.vc-js .vc[data-vc-animate='true'].is-in .vc-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.shopify-design-mode .vc .vc-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.vc-js .vc .vc-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .vc *,
+  .vc *::before,
+  .vc *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Image placeholders ---------- */
+.vc-placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(31, 29, 26, 0.05);
+}
+
+.vc-placeholder svg,
+svg.vc-placeholder {
+  fill: rgba(31, 29, 26, 0.18);
+}
+
+/* ==========================================================================
+   Shared form UI (inquiry + collab forms)
+   ========================================================================== */
+/* ---------- Form fields ---------- */
+.vc .vc-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.vc .vc-field {
+  position: relative;
+}
+
+.vc .vc-field--full {
+  grid-column: 1 / -1;
+}
+
+.vc .vc-field__input {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  margin: 0;
+  padding: 26px 18px 10px;
+  border: 1px solid rgba(31, 29, 26, 0.16);
+  border-radius: var(--vc-input-radius);
+  background: var(--vc-input-bg);
+  color: var(--vc-ink);
+  font: inherit;
+  font-size: 15.5px;
+  line-height: 1.4;
+  box-shadow: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.vc .vc-field__input:hover {
+  border-color: rgba(31, 29, 26, 0.32);
+}
+
+.vc .vc-field__input:focus,
+.vc .vc-field__input:focus-visible {
+  outline: none;
+  border-color: var(--vc-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vc-accent) 16%, transparent);
+}
+
+.vc .vc-field__input[aria-invalid='true'],
+.vc .vc-form.was-validated .vc-field__input:invalid {
+  border-color: #b3423a;
+}
+
+.vc textarea.vc-field__input {
+  min-height: 150px;
+  resize: vertical;
+  padding-top: 30px;
+}
+
+.vc .vc-field__label {
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  right: 19px;
+  margin: 0;
+  color: var(--vc-muted);
+  font-size: 15.5px;
+  line-height: 1.4;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left top;
+  transition: transform 0.25s var(--vc-ease), color 0.25s ease;
+}
+
+.vc .vc-field__input:focus + .vc-field__label,
+.vc .vc-field__input:not(:placeholder-shown) + .vc-field__label,
+.vc select.vc-field__input + .vc-field__label {
+  transform: translateY(-11px) scale(0.76);
+  letter-spacing: 0.02em;
+}
+
+.vc select.vc-field__input:not(.has-value):not(:focus) + .vc-field__label {
+  transform: none;
+  letter-spacing: 0;
+}
+
+.vc .vc-field__input:focus + .vc-field__label {
+  color: var(--vc-accent);
+}
+
+.vc select.vc-field__input {
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.vc .vc-field__chevron {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  color: var(--vc-muted);
+  pointer-events: none;
+}
+
+.vc .vc-field__hint {
+  display: block;
+  margin: 6px 4px 0;
+  font-size: 12px;
+  color: var(--vc-muted);
+}
+
+.vc .vc-form__consent {
+  margin-top: 18px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--vc-muted);
+}
+
+.vc .vc-form__consent p {
+  margin: 0;
+}
+
+.vc .vc-form__consent a {
+  color: inherit;
+}
+
+/* ---------- Submit ---------- */
+.vc .vc-form__submit {
+  position: relative;
+  width: 100%;
+  min-height: 58px;
+  margin-top: 22px;
+  font-size: 15px;
+}
+
+.vc .vc-form__submit:disabled {
+  cursor: progress;
+}
+
+.vc .vc-form__spinner,
+.vc .vc-form__sending {
+  display: none;
+}
+
+.vc .vc-form__submit.is-loading .vc-form__submit-label,
+.vc .vc-form__submit.is-loading .vc-form__submit-arrow {
+  display: none;
+}
+
+.vc .vc-form__submit.is-loading .vc-form__spinner,
+.vc .vc-form__submit.is-loading .vc-form__sending {
+  display: inline-block;
+}
+
+.vc .vc-form__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: vc-spin 0.7s linear infinite;
+}
+
+@keyframes vc-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Notices ---------- */
+.vc .vc-form__notice,
+.vc .vc-form__error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.vc .vc-form__error {
+  margin: 18px 0 0;
+}
+
+.vc .vc-form__error[hidden] {
+  display: none;
+}
+
+.vc .vc-form__notice--success {
+  background: #e9f4ec;
+  color: #1f5c35;
+}
+
+.vc .vc-form__notice--error,
+.vc .vc-form__error {
+  background: #fbeceb;
+  color: #8e2f28;
+}
+
+.vc [data-vc-form].is-sent .vc-form {
+  display: none;
+}
+
+.vc .vc-form__success {
+  padding: 48px 32px;
+  border: 1px solid var(--vc-line);
+  border-radius: calc(var(--vc-input-radius) + 8px);
+  background: var(--vc-input-bg);
+  text-align: center;
+  outline: none;
+  animation: vc-fade-up 0.6s var(--vc-ease) both;
+}
+
+.vc .vc-form__success[hidden] {
+  display: none;
+}
+
+.vc .vc-form__success-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #e9f4ec;
+  color: #2f7a4a;
+}
+
+.vc .vc-form__tick {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: vc-tick 0.6s 0.25s var(--vc-ease) forwards;
+}
+
+.vc .vc-form__success-title {
+  margin: 0 0 8px;
+  font-family: var(--vc-heading-family);
+  font-weight: var(--vc-heading-weight);
+  font-size: 28px;
+}
+
+.vc .vc-form__success-text {
+  margin: 0 auto 24px;
+  max-width: 420px;
+  color: var(--vc-muted);
+  line-height: 1.65;
+}
+
+.vc .vc-form__success-text p {
+  margin: 0;
+}
+
+@keyframes vc-tick {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes vc-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+
+@media screen and (max-width: 749px) {
+  .vc .vc-form__grid {
+    grid-template-columns: 1fr;
+  }
+}

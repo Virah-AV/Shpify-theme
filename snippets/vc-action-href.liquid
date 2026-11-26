@@ -1,0 +1,31 @@
+{%- comment -%}
+  Outputs an href for a contact action.
+  type: email | whatsapp | phone | link
+  value: email address, phone number, or URL
+  message: optional prefilled WhatsApp / email subject text
+{%- endcomment -%}
+{%- liquid
+  assign v = value | strip
+  case type
+    when 'email'
+      if message != blank
+        assign encoded = message | url_encode | replace: '+', '%20'
+        echo 'mailto:' | append: v | append: '?subject=' | append: encoded
+      else
+        echo 'mailto:' | append: v
+      endif
+    when 'phone'
+      assign digits = v | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.'
+      echo 'tel:' | append: digits
+    when 'whatsapp'
+      assign digits = v | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.' | remove: '+'
+      if message != blank
+        assign encoded = message | url_encode | replace: '+', '%20'
+        echo 'https://wa.me/' | append: digits | append: '?text=' | append: encoded
+      else
+        echo 'https://wa.me/' | append: digits
+      endif
+    else
+      echo v
+  endcase
+-%}

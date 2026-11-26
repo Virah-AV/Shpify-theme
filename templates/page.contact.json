@@ -1,1 +1,311 @@
-{"sections":{"17596010252b68dd3c":{"type":"_blocks","settings":{}},"175960051168c9c398":{"type":"_blocks","settings":{}},"main":{"type":"main-page","disabled":true,"settings":{"padding_top":36,"padding_bottom":36}},"image_banner":{"type":"image-banner","settings":{"image":"shopify:\/\/shop_images\/cbk_e14b2010-16fd-456f-89d8-5a11e80f54bc.webp","image_overlay_opacity":20,"image_height":"small","image_behavior":"none","desktop_content_position":"middle-left","desktop_content_alignment":"left","show_text_box":false,"color_scheme":"scheme-3","stack_images_on_mobile":true,"mobile_content_alignment":"center","show_text_below":true},"blocks":{"slide_contact":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/cbk_e14b2010-16fd-456f-89d8-5a11e80f54bc.webp","overlay_opacity":20}}},"block_order":["slide_contact"]},"form":{"type":"contact-form","settings":{"heading":"Questions or comments? Get in touch and we'll be happy to help.","heading_size":"h2","color_scheme":"scheme-2","padding_top":36,"padding_bottom":12}}},"order":["17596010252b68dd3c","175960051168c9c398","main","image_banner","form"]}
+{
+  "sections": {
+    "hero": {
+      "type": "vc-contact-hero",
+      "blocks": {
+        "chip_1": {
+          "type": "chip",
+          "settings": {
+            "icon": "clock",
+            "text": "Mon–Sat, 10 AM – 7 PM IST"
+          }
+        },
+        "chip_2": {
+          "type": "chip",
+          "settings": {
+            "icon": "video",
+            "text": "Photo & video checks on WhatsApp"
+          }
+        },
+        "chip_3": {
+          "type": "chip",
+          "settings": {
+            "icon": "ruler",
+            "text": "Free sizing & styling advice"
+          }
+        }
+      },
+      "block_order": [
+        "chip_1",
+        "chip_2",
+        "chip_3"
+      ],
+      "settings": {
+        "eyebrow": "CONCIERGE & SUPPORT",
+        "heading": "Let’s shape your space <em>together.</em>",
+        "text": "<p>Whether you need styling advice, dimensions for a specific corner, or an update on your delivery, our team is here to help.</p>",
+        "show_badge": true,
+        "badge_text": "Average response time: under 4 hours",
+        "button_label": "Send an inquiry",
+        "button_link": "/pages/contact#contact-form",
+        "button_2_label": "Read the FAQs",
+        "button_2_link": "/pages/contact#faq",
+        "show_image_placeholder": true,
+        "image_position": "right",
+        "image_shape": "soft",
+        "image_ratio": "4 / 5"
+      }
+    },
+    "routing": {
+      "type": "vc-contact-routing",
+      "blocks": {
+        "care": {
+          "type": "card",
+          "settings": {
+            "icon": "chat",
+            "title": "Customer Care & Orders",
+            "text": "<p>Questions about shipping, assembly, returns, or an existing order.</p>",
+            "action_1_type": "email",
+            "action_1_value": "care@virah.co.in",
+            "action_1_label": "care@virah.co.in",
+            "action_2_type": "whatsapp",
+            "action_2_value": "+91 00000 00000",
+            "action_2_label": "Chat on WhatsApp",
+            "message": "Hi Virah team, I have a question about my order"
+          }
+        },
+        "trade": {
+          "type": "card",
+          "settings": {
+            "icon": "sofa",
+            "tag": "Trade pricing",
+            "title": "Interior Styling & Trade",
+            "text": "<p>Sourcing for a full home, office, or commercial project? Get exclusive trade pricing.</p>",
+            "action_1_type": "link",
+            "action_1_value": "/pages/collaboration",
+            "action_1_label": "Start a trade inquiry",
+            "action_2_type": "link",
+            "action_2_value": "/pages/contact?topic=trade#contact-form",
+            "action_2_label": "Or send us your brief",
+            "message": ""
+          }
+        },
+        "press": {
+          "type": "card",
+          "settings": {
+            "icon": "megaphone",
+            "title": "Press & Collaborations",
+            "text": "<p>Creator partnerships, media kits, and brand storytelling.</p>",
+            "action_1_type": "email",
+            "action_1_value": "collab@virah.co.in",
+            "action_1_label": "collab@virah.co.in",
+            "action_2_type": "none",
+            "action_2_value": "",
+            "action_2_label": "",
+            "message": "Collaboration inquiry"
+          }
+        }
+      },
+      "block_order": [
+        "care",
+        "trade",
+        "press"
+      ],
+      "settings": {
+        "eyebrow": "QUICK CONNECT",
+        "heading": "Reach the <em>right</em> team, faster.",
+        "subheading": "<p>Pick the desk that fits your question — we’ll route you straight to the people who can help.</p>",
+        "heading_alignment": "center",
+        "columns": "3"
+      }
+    },
+    "inquiry": {
+      "type": "vc-contact-inquiry",
+      "blocks": {
+        "wa": {
+          "type": "whatsapp",
+          "settings": {
+            "label": "Chat on WhatsApp",
+            "number": "+91 00000 00000",
+            "message": "Hi Virah team! I’d like some help choosing furniture for my space.",
+            "caption": "Quick photo & video checks before you buy"
+          }
+        },
+        "phone": {
+          "type": "phone",
+          "settings": {
+            "label": "Phone Support",
+            "number": "+91 00000 00000",
+            "hours": "Mon–Sat, 10:00 AM – 7:00 PM IST"
+          }
+        },
+        "email": {
+          "type": "email",
+          "settings": {
+            "label": "Email Us",
+            "email": "care@virah.co.in",
+            "meta": "We reply within 4 working hours"
+          }
+        },
+        "address": {
+          "type": "address",
+          "settings": {
+            "label": "Studio & Warehouse",
+            "address": "Your studio address\nCity, State – PIN\nIndia",
+            "map_label": "View on map"
+          }
+        }
+      },
+      "block_order": [
+        "wa",
+        "phone",
+        "email",
+        "address"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "vc-contact-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take across India?",
+            "answer": "<p>Orders to metro cities typically arrive in <strong>3–5 business days</strong>, and <strong>5–8 business days</strong> pan-India. You’ll get a tracking link on WhatsApp and email as soon as your piece ships.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Do your furniture pieces require assembly?",
+            "answer": "<p>It depends on the piece. Most side tables, carts and organizers arrive <strong>pre-assembled</strong> or need under 15 minutes of set-up. Larger <strong>flat-pack</strong> items come with a complete toolkit, all hardware and an illustrated step-by-step guide — no extra tools required.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return and damaged-in-transit policy?",
+            "answer": "<p>We offer a <strong>7-day easy replacement</strong>. If anything arrives damaged, share your <strong>unboxing video</strong> with us — it lets us approve your claim instantly and ship a replacement at no cost.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I request custom dimensions or bulk pricing for an office or café?",
+            "answer": "<p>Yes. We work with interior designers, offices, cafés and studios on custom sizes, finishes and volume orders with exclusive trade pricing.</p>",
+            "link_label": "Start a trade inquiry",
+            "link_url": "/pages/collaboration"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for solid wood and powder-coated metal finishes?",
+            "answer": "<p><strong>Solid wood:</strong> dust with a soft dry cloth, wipe spills immediately and keep away from direct sunlight and damp walls. Use coasters for hot or wet items.</p><p><strong>Powder-coated metal:</strong> wipe with a damp cloth and mild soap, then dry. Avoid abrasive scrubbers or harsh chemicals to keep the finish looking new.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Can I see a product on video before I buy?",
+            "answer": "<p>Absolutely. Message us on WhatsApp and our team will share real photos, a quick video walk-through, or measurements against your space so you can buy with confidence.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "footer_link_url": "/pages/contact#contact-form"
+      }
+    },
+    "shop": {
+      "type": "vc-contact-shop-strip",
+      "blocks": {
+        "s1": {
+          "type": "item",
+          "settings": {
+            "collection": "side-tables",
+            "title": "Side Tables"
+          }
+        },
+        "s2": {
+          "type": "item",
+          "settings": {
+            "collection": "foldable-tables",
+            "title": "Folding Tables"
+          }
+        },
+        "s3": {
+          "type": "item",
+          "settings": {
+            "title": "Organizers",
+            "link": "/search?q=organizer&type=product"
+          }
+        },
+        "s4": {
+          "type": "item",
+          "settings": {
+            "title": "Bestsellers",
+            "link": "/collections/all?sort_by=best-selling",
+            "badge": "Most loved"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "eyebrow": "NEED HELP CHOOSING?",
+        "heading": "Explore our <em>most-loved</em> spaces",
+        "heading_alignment": "split",
+        "layout": "pills",
+        "cta_label": "Shop all furniture",
+        "cta_link": "/collections/all"
+      }
+    },
+    "instagram": {
+      "type": "vc-contact-instagram",
+      "blocks": {
+        "p1": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p4": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p5": {
+          "type": "photo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5"
+      ],
+      "settings": {
+        "handle": "@virah",
+        "heading": "Tag <em>@virah</em> to be featured in our lookbook",
+        "cta_label": "Follow on Instagram"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "routing",
+    "inquiry",
+    "faq",
+    "shop",
+    "instagram"
+  ]
+}

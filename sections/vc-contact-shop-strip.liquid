@@ -1,0 +1,423 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+-%}
+
+<section
+  id="vc-shop-{{ section.id }}"
+  class="vc vc-shop vc-shop--{{ s.layout }}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-pill-bg: {{ s.pill_background }};
+    --vc-pill-radius: {{ s.pill_radius }}px;
+    --vc-card-ratio: {{ s.card_ratio }};
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="vc-container">
+    <div class="vc-head vc-head--{{ s.heading_alignment }}">
+      <div>
+        {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.subheading != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.subheading }}</div>{%- endif -%}
+      </div>
+      {%- if s.cta_label != blank and s.heading_alignment == 'split' -%}
+        <a class="vc-link vc-reveal" style="--vc-d: 2;" href="{{ s.cta_link | default: routes.all_products_collection_url }}">
+          {{ s.cta_label | escape }}
+          {%- render 'vc-icon', icon: 'arrow', size: 16 -%}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-shop__viewport">
+      <ul class="vc-shop__row" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign c = b.collection
+            assign title = b.title
+            if title == blank and c != blank
+              assign title = c.title
+            endif
+            assign link = b.link
+            if link == blank and c != blank
+              assign link = c.url
+            endif
+            assign img = b.image
+            if img == blank and c != blank
+              if c.featured_image
+                assign img = c.featured_image
+              elsif c.products.first.featured_media
+                assign img = c.products.first.featured_media.preview_image
+              endif
+            endif
+            assign delay = forloop.index0 | plus: 3
+          -%}
+          <li class="vc-shop__item vc-reveal" style="--vc-d: {{ delay }};" {{ block.shopify_attributes }}>
+            <a class="vc-shop__link" href="{{ link | default: '#' }}">
+              <span class="vc-shop__media"{% if b.pill_color != blank %} style="--vc-item-bg: {{ b.pill_color }};"{% endif %}>
+                {%- if s.layout == 'pills' -%}<span class="vc-shop__pill" aria-hidden="true"></span>{%- endif -%}
+                {%- if img != blank -%}
+                  {%- if s.layout == 'pills' -%}
+                    {{ img | image_url: width: 600 | image_tag: class: 'vc-shop__img', loading: 'lazy', widths: '240, 360, 480, 600', sizes: '(min-width: 990px) 220px, 40vw', alt: title }}
+                  {%- else -%}
+                    {{ img | image_url: width: 900 | image_tag: class: 'vc-shop__img', loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 30vw, 80vw', alt: title }}
+                  {%- endif -%}
+                {%- else -%}
+                  {%- capture ph -%}{% cycle 'product-1', 'product-2', 'product-3', 'product-4', 'product-5', 'product-6' %}{%- endcapture -%}
+                  {{ ph | placeholder_svg_tag: 'vc-shop__img vc-placeholder' }}
+                {%- endif -%}
+                {%- if b.badge != blank -%}<span class="vc-shop__badge">{{ b.badge | escape }}</span>{%- endif -%}
+              </span>
+              <span class="vc-shop__meta">
+                <span class="vc-shop__title">{{ title | default: 'Collection' | escape }}</span>
+                {%- if s.show_count and c != blank and c.products_count > 0 -%}
+                  <span class="vc-shop__count">{{ c.products_count }} {{ s.count_suffix | escape }}</span>
+                {%- elsif b.subtitle != blank -%}
+                  <span class="vc-shop__count">{{ b.subtitle | escape }}</span>
+                {%- endif -%}
+              </span>
+              {%- if s.layout == 'cards' -%}
+                <span class="vc-shop__arrow" aria-hidden="true">{%- render 'vc-icon', icon: 'arrow-up-right', size: 18 -%}</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    {%- if s.cta_label != blank and s.heading_alignment != 'split' -%}
+      <div class="vc-shop__cta vc-reveal" style="--vc-d: 6;">
+        <a class="vc-btn vc-btn--ghost" href="{{ s.cta_link | default: routes.all_products_collection_url }}">
+          {{ s.cta_label | escape }}
+          {%- render 'vc-icon', icon: 'arrow', size: 16 -%}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #vc-shop-{{ section.id }} .vc-head {
+    margin-bottom: 36px;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin: -12px -20px 0;
+    padding: 12px 20px 8px;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__row {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__link {
+    position: relative;
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 3;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #1f1d1a;
+    color: #f7f4ee;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__title {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--vc-ink);
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__count {
+    display: block;
+    margin-top: 3px;
+    font-size: 12.5px;
+    color: var(--vc-muted);
+  }
+
+  /* ---------- Offset pill layout ---------- */
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__row {
+    justify-content: space-between;
+    align-items: flex-end;
+    min-width: max-content;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__item {
+    flex: 1 1 0;
+    min-width: 160px;
+    text-align: center;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__pill {
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 75%;
+    height: 85%;
+    z-index: 1;
+    border-radius: var(--vc-pill-radius);
+    background: var(--vc-item-bg, var(--vc-pill-bg));
+    transition: transform 0.45s var(--vc-ease), filter 0.45s ease;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform-origin: center bottom;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.06));
+    transition: transform 0.45s var(--vc-ease), filter 0.45s ease;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__img.vc-placeholder {
+    padding: 28px;
+    background: none;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__meta {
+    display: block;
+    margin-top: 14px;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__link:hover .vc-shop__img {
+    transform: translateY(-8px) scale(1.04);
+    filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.12));
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__link:hover .vc-shop__pill {
+    transform: scale(1.04);
+    filter: brightness(0.98);
+  }
+
+  /* ---------- Card layout ---------- */
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__row {
+    display: grid;
+    grid-template-columns: repeat({{ s.columns }}, minmax(0, 1fr));
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__link {
+    overflow: hidden;
+    border-radius: var(--vc-pill-radius);
+    background: var(--vc-item-bg, var(--vc-pill-bg));
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__media {
+    position: relative;
+    display: block;
+    aspect-ratio: var(--vc-card-ratio);
+    overflow: hidden;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--vc-ease);
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__link:hover .vc-shop__img {
+    transform: scale(1.05);
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__meta {
+    display: block;
+    padding: 18px 64px 20px 20px;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__title {
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 21px;
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__arrow {
+    position: absolute;
+    right: 18px;
+    bottom: 20px;
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--vc-line);
+    color: var(--vc-ink);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.45s var(--vc-ease);
+  }
+
+  #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__link:hover .vc-shop__arrow {
+    background: #1f1d1a;
+    border-color: #1f1d1a;
+    color: #f7f4ee;
+    transform: rotate(45deg);
+  }
+
+  #vc-shop-{{ section.id }} .vc-shop__cta {
+    margin-top: 36px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 989px) {
+    #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__row {
+      display: flex;
+    }
+
+    #vc-shop-{{ section.id }}.vc-shop--cards .vc-shop__item {
+      flex: 0 0 min(320px, 72vw);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-shop-{{ section.id }} .vc-shop__row {
+      gap: 14px;
+    }
+
+    #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__row {
+      justify-content: flex-start;
+    }
+
+    #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__item {
+      flex: 0 0 140px;
+      min-width: 140px;
+    }
+
+    #vc-shop-{{ section.id }}.vc-shop--pills .vc-shop__media {
+      height: 160px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Shop strip",
+  "tag": "div",
+  "class": "section-vc-contact-shop",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NEED HELP CHOOSING?" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Explore our <em>most-loved</em> spaces" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading" },
+    {
+      "type": "select", "id": "heading_alignment", "label": "Heading layout",
+      "options": [
+        { "value": "center", "label": "Centered" },
+        { "value": "left", "label": "Left" },
+        { "value": "split", "label": "Left with link on the right" }
+      ],
+      "default": "split"
+    },
+    { "type": "text", "id": "cta_label", "label": "View-all link label", "default": "Shop all furniture" },
+    { "type": "url", "id": "cta_link", "label": "View-all link" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "layout", "label": "Style",
+      "options": [
+        { "value": "pills", "label": "Offset pill strip" },
+        { "value": "cards", "label": "Image cards" }
+      ],
+      "default": "pills"
+    },
+    {
+      "type": "select", "id": "columns", "label": "Cards per row (image cards)",
+      "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ],
+      "default": "4"
+    },
+    {
+      "type": "select", "id": "card_ratio", "label": "Card image ratio (image cards)",
+      "options": [
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 3", "label": "Landscape" }
+      ],
+      "default": "4 / 5"
+    },
+    { "type": "range", "id": "pill_radius", "label": "Pill / card radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count (collections)", "default": false },
+    { "type": "text", "id": "count_suffix", "label": "Count suffix", "default": "pieces" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 36 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "pill_background", "label": "Default pill / card background", "default": "#F4EBE1" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#A0704C" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection", "info": "Title, link and image are taken from the collection unless set below." },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "url", "id": "link", "label": "Link override" },
+        { "type": "image_picker", "id": "image", "label": "Image override", "info": "For the pill style, use a cut-out product PNG." },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "info": "e.g. “From ₹1,999”" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "e.g. “Bestseller”" },
+        { "type": "color", "id": "pill_color", "label": "Custom background" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Shop strip",
+      "blocks": [
+        { "type": "item", "settings": { "title": "Side Tables" } },
+        { "type": "item", "settings": { "title": "Folding Tables" } },
+        { "type": "item", "settings": { "title": "Organizers" } },
+        { "type": "item", "settings": { "title": "Bestsellers", "badge": "Most loved" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

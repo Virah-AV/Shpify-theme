@@ -1,0 +1,628 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+  assign form_id = 'VCCollabForm-' | append: section.id
+  assign anchor = s.anchor_id | default: 'apply' | handleize
+  assign topic_marked = false
+-%}
+
+<section
+  id="vc-collab-{{ section.id }}"
+  class="vc vc-collab"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-btn-bg: {{ s.button_color }};
+    --vc-btn-text: {{ s.button_text_color }};
+    --vc-input-bg: {{ s.input_background }};
+    --vc-input-radius: {{ s.input_radius }}px;
+    --vc-panel-bg: {{ s.panel_background }};
+    --vc-card-bg: {{ s.card_background }};
+    --vc-card-ink: {{ s.card_text_color }};
+    --vc-card-accent: {{ s.card_accent_color }};
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <span id="{{ anchor }}" class="vc-collab__anchor" aria-hidden="true"></span>
+  <div class="vc-container">
+    <div class="vc-collab__panel">
+      {%- comment -%} ---------- Side card ---------- {%- endcomment -%}
+      {%- if s.show_card -%}
+        <aside class="vc-collab__card vc-reveal" aria-label="{{ s.card_heading | strip_html | escape }}">
+          {%- if s.card_eyebrow != blank -%}<p class="vc-collab__card-eyebrow">{{ s.card_eyebrow | escape }}</p>{%- endif -%}
+          {%- if s.card_heading != blank -%}<h3 class="vc-collab__card-heading">{{ s.card_heading }}</h3>{%- endif -%}
+          {%- if s.card_text != blank -%}<div class="vc-collab__card-text">{{ s.card_text }}</div>{%- endif -%}
+
+          {%- assign perk_count = 0 -%}
+          {%- for block in section.blocks -%}{%- if block.type == 'perk' -%}{%- assign perk_count = perk_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+          {%- if perk_count > 0 -%}
+            <ol class="vc-collab__perks" role="list">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'perk' -%}
+                  <li class="vc-collab__perk" {{ block.shopify_attributes }}>
+                    <span class="vc-collab__perk-icon">{%- render 'vc-icon', icon: block.settings.icon, size: 18 -%}</span>
+                    <div>
+                      <p class="vc-collab__perk-title">{{ block.settings.title | escape }}</p>
+                      {%- if block.settings.text != blank -%}<p class="vc-collab__perk-text">{{ block.settings.text | escape }}</p>{%- endif -%}
+                    </div>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ol>
+          {%- endif -%}
+
+          {%- if s.card_email != blank or s.card_whatsapp != blank -%}
+            <div class="vc-collab__direct">
+              {%- if s.card_direct_label != blank -%}<p class="vc-collab__direct-label">{{ s.card_direct_label | escape }}</p>{%- endif -%}
+              {%- if s.card_email != blank -%}
+                <a class="vc-collab__direct-link" href="mailto:{{ s.card_email | strip }}">
+                  {%- render 'vc-icon', icon: 'mail', size: 18 -%}<span>{{ s.card_email | escape }}</span>
+                </a>
+              {%- endif -%}
+              {%- if s.card_whatsapp != blank -%}
+                {%- capture wa -%}{%- render 'vc-action-href', type: 'whatsapp', value: s.card_whatsapp, message: s.card_whatsapp_message -%}{%- endcapture -%}
+                <a class="vc-collab__direct-link" href="{{ wa | strip }}" target="_blank" rel="noopener">
+                  {%- render 'vc-icon', icon: 'whatsapp', size: 18 -%}<span>{{ s.card_whatsapp_label | default: 'Chat on WhatsApp' | escape }}</span>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </aside>
+      {%- endif -%}
+
+      {%- comment -%} ---------- Form ---------- {%- endcomment -%}
+      <div class="vc-collab__form-col" data-vc-form>
+        <div class="vc-collab__intro">
+          {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+          {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+          {%- if s.intro != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.intro }}</div>{%- endif -%}
+        </div>
+
+        <div class="vc-reveal" style="--vc-d: 3;">
+          {%- form 'contact', id: form_id, class: 'vc-form' -%}
+            {%- if form.posted_successfully? -%}
+              <div class="vc-form__notice vc-form__notice--success" role="status" tabindex="-1" autofocus>
+                {%- render 'vc-icon', icon: 'check', size: 20 -%}
+                <span>{{ s.success_message | strip_html }}</span>
+              </div>
+            {%- elsif form.errors -%}
+              <div class="vc-form__notice vc-form__notice--error" role="alert" tabindex="-1" autofocus>
+                <span>{{ s.error_message | escape }}</span>
+              </div>
+            {%- endif -%}
+
+            {%- if s.form_tag != blank -%}
+              <input type="hidden" name="contact[Form]" value="{{ s.form_tag | escape }}">
+            {%- endif -%}
+
+            <div class="vc-form__grid">
+              <div class="vc-field">
+                <input id="{{ form_id }}-name" class="vc-field__input" type="text" name="contact[name]" autocomplete="name" placeholder=" " required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                <label class="vc-field__label" for="{{ form_id }}-name">{{ s.name_label | escape }}<span aria-hidden="true"> *</span></label>
+              </div>
+              <div class="vc-field">
+                <input id="{{ form_id }}-email" class="vc-field__input" type="email" name="contact[email]" autocomplete="email" spellcheck="false" autocapitalize="off" placeholder=" " required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                <label class="vc-field__label" for="{{ form_id }}-email">{{ s.email_label | escape }}<span aria-hidden="true"> *</span></label>
+              </div>
+
+              {%- for block in section.blocks -%}
+                {%- if block.type != 'field' -%}{%- continue -%}{%- endif -%}
+                {%- liquid
+                  assign b = block.settings
+                  assign label = b.label | strip
+                  assign fid = form_id | append: '-' | append: block.id
+                  assign fname = 'contact[' | append: label | append: ']'
+                  assign options = b.options | newline_to_br | split: '<br />'
+                  assign width_class = 'vc-field--full'
+                  if b.width == 'half'
+                    assign width_class = ''
+                  endif
+                  assign mark_topic = false
+                  if b.url_preselect and topic_marked == false
+                    if b.type == 'select' or b.type == 'pills'
+                      assign mark_topic = true
+                      assign topic_marked = true
+                    endif
+                  endif
+                  case b.autocomplete
+                    when 'none'
+                      assign ac = 'off'
+                    else
+                      assign ac = b.autocomplete
+                  endcase
+                -%}
+                {%- case b.type -%}
+                  {%- when 'pills' -%}
+                    <fieldset class="vc-choice {{ width_class }}" {{ block.shopify_attributes }}>
+                      <legend class="vc-choice__legend">{{ label | escape }}{%- if b.required -%}<span aria-hidden="true"> *</span>{%- endif -%}</legend>
+                      <div class="vc-choice__options">
+                        {%- for opt in options -%}
+                          {%- assign o = opt | strip -%}
+                          {%- if o == blank -%}{%- continue -%}{%- endif -%}
+                          <label class="vc-choice__pill">
+                            <input type="radio" name="{{ fname | escape }}" value="{{ o | escape }}" {% if b.required %}required{% endif %} {% if mark_topic %}data-vc-topic-radio{% endif %}>
+                            <span>{{ o | escape }}</span>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                      {%- if b.hint != blank -%}<span class="vc-field__hint">{{ b.hint | escape }}</span>{%- endif -%}
+                    </fieldset>
+
+                  {%- when 'select' -%}
+                    <div class="vc-field vc-field--select {{ width_class }}" {{ block.shopify_attributes }}>
+                      <select id="{{ fid }}" class="vc-field__input" name="{{ fname | escape }}" {% if b.required %}required{% endif %} {% if mark_topic %}data-vc-topic{% else %}data-vc-select{% endif %}>
+                        <option value="" disabled selected hidden></option>
+                        {%- for opt in options -%}
+                          {%- assign o = opt | strip -%}
+                          {%- if o != blank -%}<option value="{{ o | escape }}">{{ o | escape }}</option>{%- endif -%}
+                        {%- endfor -%}
+                      </select>
+                      <label class="vc-field__label" for="{{ fid }}">{{ label | escape }}{%- if b.required -%}<span aria-hidden="true"> *</span>{%- endif -%}</label>
+                      <svg class="vc-field__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                      {%- if b.hint != blank -%}<span class="vc-field__hint">{{ b.hint | escape }}</span>{%- endif -%}
+                    </div>
+
+                  {%- when 'textarea' -%}
+                    <div class="vc-field vc-field--textarea {{ width_class }}" {{ block.shopify_attributes }}>
+                      <textarea id="{{ fid }}" class="vc-field__input" name="{{ fname | escape }}" rows="5" placeholder=" " {% if b.required %}required{% endif %}></textarea>
+                      <label class="vc-field__label" for="{{ fid }}">{{ label | escape }}{%- if b.required -%}<span aria-hidden="true"> *</span>{%- endif -%}</label>
+                      {%- if b.hint != blank -%}<span class="vc-field__hint">{{ b.hint | escape }}</span>{%- endif -%}
+                    </div>
+
+                  {%- else -%}
+                    <div class="vc-field {{ width_class }}" {{ block.shopify_attributes }}>
+                      <input
+                        id="{{ fid }}"
+                        class="vc-field__input"
+                        type="{{ b.type }}"
+                        name="{{ fname | escape }}"
+                        placeholder=" "
+                        autocomplete="{{ ac }}"
+                        {% if b.type == 'tel' %}pattern="[0-9\-\+\s\(\)]*"{% endif %}
+                        {% if b.type == 'number' %}min="0"{% endif %}
+                        {% if b.required %}required{% endif %}
+                      >
+                      <label class="vc-field__label" for="{{ fid }}">{{ label | escape }}{%- if b.required -%}<span aria-hidden="true"> *</span>{%- endif -%}</label>
+                      {%- if b.hint != blank -%}<span class="vc-field__hint">{{ b.hint | escape }}</span>{%- endif -%}
+                    </div>
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+
+            {%- if s.consent_text != blank -%}
+              <div class="vc-form__consent">{{ s.consent_text }}</div>
+            {%- endif -%}
+
+            <div class="vc-form__error" data-vc-form-error role="alert" hidden>{{ s.error_message | escape }}</div>
+
+            <button type="submit" class="vc-btn vc-form__submit" data-vc-submit>
+              <span class="vc-form__submit-label">{{ s.submit_label | escape }}</span>
+              <span class="vc-form__submit-arrow">{%- render 'vc-icon', icon: 'arrow', size: 18 -%}</span>
+              <span class="vc-form__spinner" aria-hidden="true"></span>
+              <span class="vc-form__sending">{{ s.sending_label | escape }}</span>
+            </button>
+          {%- endform -%}
+
+          <div class="vc-form__success" data-vc-form-success tabindex="-1" role="status" aria-live="polite" hidden>
+            <span class="vc-form__success-icon">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="vc-form__tick" d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+            </span>
+            {%- if s.success_heading != blank -%}<h3 class="vc-form__success-title">{{ s.success_heading | escape }}</h3>{%- endif -%}
+            <div class="vc-form__success-text">{{ s.success_message }}</div>
+            {%- if s.reset_label != blank -%}
+              <button type="button" class="vc-btn vc-btn--ghost" data-vc-form-reset>{{ s.reset_label | escape }}</button>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #vc-collab-{{ section.id }} .vc-collab__anchor {
+    position: absolute;
+    top: -80px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__panel {
+    display: grid;
+    gap: 0;
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--vc-panel-bg);
+    box-shadow: 0 40px 80px -50px rgba(31, 29, 26, 0.45);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__form-col {
+    padding: 48px 40px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__intro {
+    margin-bottom: 30px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card {
+    position: relative;
+    padding: 48px 40px;
+    background: var(--vc-card-bg);
+    color: var(--vc-card-ink);
+    --vc-focus: var(--vc-card-accent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    bottom: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--vc-card-accent) 25%, transparent);
+    box-shadow: 0 0 0 40px color-mix(in srgb, var(--vc-card-accent) 5%, transparent);
+    pointer-events: none;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card-eyebrow {
+    margin: 0 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--vc-card-accent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card-heading {
+    margin: 0;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--vc-card-ink);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card-heading em {
+    color: var(--vc-card-accent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card-text {
+    margin-top: 12px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    opacity: 0.75;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__card-text p {
+    margin: 0;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__perks {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__perk {
+    display: flex;
+    gap: 14px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__perk-icon {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--vc-card-ink) 18%, transparent);
+    color: var(--vc-card-accent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__perk-title {
+    margin: 2px 0 2px;
+    font-size: 15.5px;
+    font-weight: 500;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__perk-text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    opacity: 0.7;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__direct {
+    position: relative;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid color-mix(in srgb, var(--vc-card-ink) 14%, transparent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__direct-label {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__direct-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    color: var(--vc-card-ink);
+    font-size: 15px;
+    text-decoration: none;
+    transition: color 0.25s ease, transform 0.35s var(--vc-ease);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__direct-link .vc-icon {
+    color: var(--vc-card-accent);
+  }
+
+  #vc-collab-{{ section.id }} .vc-collab__direct-link:hover {
+    transform: translateX(4px);
+    color: var(--vc-card-accent);
+  }
+
+  /* Pill radio group */
+  #vc-collab-{{ section.id }} .vc-choice {
+    margin: 0 0 4px;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__legend {
+    margin-bottom: 12px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vc-ink);
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill {
+    position: relative;
+    cursor: pointer;
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(31, 29, 26, 0.16);
+    border-radius: 999px;
+    background: var(--vc-input-bg);
+    font-size: 14px;
+    color: var(--vc-ink);
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.3s var(--vc-ease);
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill:hover span {
+    border-color: var(--vc-ink);
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill input:checked + span {
+    background: var(--vc-btn-bg);
+    border-color: var(--vc-btn-bg);
+    color: var(--vc-btn-text);
+  }
+
+  #vc-collab-{{ section.id }} .vc-choice__pill input:focus-visible + span {
+    outline: 2px solid var(--vc-accent);
+    outline-offset: 3px;
+  }
+
+  @media screen and (min-width: 990px) {
+    #vc-collab-{{ section.id }} .vc-collab__panel {
+      grid-template-columns: minmax(0, {{ 100 | minus: s.form_width }}fr) minmax(0, {{ s.form_width }}fr);
+    }
+
+    #vc-collab-{{ section.id }} .vc-collab__panel:not(:has(.vc-collab__card)) {
+      grid-template-columns: 1fr;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    {%- if s.card_position == 'right' -%}
+      #vc-collab-{{ section.id }} .vc-collab__card { order: 2; }
+    {%- endif -%}
+
+    #vc-collab-{{ section.id }} .vc-collab__form-col {
+      padding: 60px 56px;
+    }
+
+    #vc-collab-{{ section.id }} .vc-collab__card {
+      padding: 60px 48px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-collab-{{ section.id }} .vc-collab__panel {
+      margin: 0 -8px;
+      border-radius: 22px;
+    }
+
+    #vc-collab-{{ section.id }} .vc-collab__form-col,
+    #vc-collab-{{ section.id }} .vc-collab__card {
+      padding: 32px 22px;
+    }
+
+    {%- unless s.mobile_card_first -%}
+      #vc-collab-{{ section.id }} .vc-collab__card { order: 2; }
+    {%- endunless -%}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Application form",
+  "tag": "div",
+  "class": "section-vc-collab-form",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "header", "content": "Form heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "APPLY TO PARTNER" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Tell us what you’re <em>building.</em>" },
+    { "type": "richtext", "id": "intro", "label": "Intro text", "default": "<p>Share a few details — we’ll reply within 1 working day with next steps, pricing or a call slot.</p>" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "apply", "info": "Link to this form with #apply. Add ?topic=trade to the page URL to pre-select a matching option." },
+    { "type": "text", "id": "form_tag", "label": "Email subject tag", "default": "Collab / Partnership application", "info": "Sent with every submission so you can tell this form apart from the contact form." },
+    { "type": "header", "content": "Built-in fields" },
+    { "type": "text", "id": "name_label", "label": "Name label", "default": "Full Name" },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "Work Email" },
+    { "type": "paragraph", "content": "Add more fields with “Form field” blocks." },
+    { "type": "richtext", "id": "consent_text", "label": "Small print", "default": "<p>We’ll only use these details to respond to your application.</p>" },
+    { "type": "header", "content": "Submit & confirmation" },
+    { "type": "text", "id": "submit_label", "label": "Button label", "default": "Submit Application" },
+    { "type": "text", "id": "sending_label", "label": "Loading label", "default": "Sending…" },
+    { "type": "text", "id": "success_heading", "label": "Success heading", "default": "Application received!" },
+    { "type": "richtext", "id": "success_message", "label": "Success message", "default": "<p>Thank you — our partnerships team will get back to you within 1 working day.</p>" },
+    { "type": "text", "id": "reset_label", "label": "“Send another” label", "default": "Submit another request" },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Something went wrong. Please check your details and try again." },
+    { "type": "header", "content": "Side card" },
+    { "type": "checkbox", "id": "show_card", "label": "Show side card", "default": true },
+    { "type": "text", "id": "card_eyebrow", "label": "Eyebrow", "default": "WHAT HAPPENS NEXT" },
+    { "type": "inline_richtext", "id": "card_heading", "label": "Heading", "default": "A real person, <em>not a ticket.</em>" },
+    { "type": "richtext", "id": "card_text", "label": "Text", "default": "<p>Every application is reviewed by our partnerships team.</p>" },
+    { "type": "text", "id": "card_direct_label", "label": "Direct contact label", "default": "Prefer to talk directly?" },
+    { "type": "text", "id": "card_email", "label": "Email", "default": "collab@virah.co.in" },
+    { "type": "text", "id": "card_whatsapp", "label": "WhatsApp number", "default": "+91 00000 00000", "info": "Leave empty to hide." },
+    { "type": "text", "id": "card_whatsapp_label", "label": "WhatsApp label", "default": "Chat with partnerships" },
+    { "type": "text", "id": "card_whatsapp_message", "label": "WhatsApp prefilled message", "default": "Hi Virah team, I’d like to discuss a partnership." },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "form_width", "label": "Form width", "min": 55, "max": 70, "step": 5, "unit": "%", "default": 60 },
+    {
+      "type": "select", "id": "card_position", "label": "Side card position (desktop)",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ],
+      "default": "left"
+    },
+    { "type": "checkbox", "id": "mobile_card_first", "label": "Show side card first on mobile", "default": false },
+    { "type": "range", "id": "input_radius", "label": "Input corner radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 14 },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#F7F4EE" },
+    { "type": "color", "id": "panel_background", "label": "Form panel background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent / focus", "default": "#A0704C" },
+    { "type": "color", "id": "input_background", "label": "Input background", "default": "#FBF9F5" },
+    { "type": "color", "id": "button_color", "label": "Button background", "default": "#1F1D1A" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#F7F4EE" },
+    { "type": "color", "id": "card_background", "label": "Side card background", "default": "#1F1D1A" },
+    { "type": "color", "id": "card_text_color", "label": "Side card text", "default": "#F5F1EA" },
+    { "type": "color", "id": "card_accent_color", "label": "Side card accent", "default": "#D9B48F" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Form field",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Company / Studio Name" },
+        {
+          "type": "select", "id": "type", "label": "Field type",
+          "options": [
+            { "value": "text", "label": "Short text" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "url", "label": "Website URL" },
+            { "value": "number", "label": "Number" },
+            { "value": "select", "label": "Dropdown" },
+            { "value": "pills", "label": "Pill buttons (pick one)" },
+            { "value": "textarea", "label": "Long text" }
+          ],
+          "default": "text"
+        },
+        { "type": "textarea", "id": "options", "label": "Options", "info": "Dropdown & pill buttons only — one option per line." },
+        {
+          "type": "select", "id": "width", "label": "Width",
+          "options": [ { "value": "half", "label": "Half" }, { "value": "full", "label": "Full" } ],
+          "default": "half"
+        },
+        { "type": "checkbox", "id": "required", "label": "Required", "default": false },
+        { "type": "text", "id": "hint", "label": "Hint text" },
+        {
+          "type": "select", "id": "autocomplete", "label": "Browser autofill",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "organization", "label": "Company" },
+            { "value": "address-level2", "label": "City" },
+            { "value": "url", "label": "Website" }
+          ],
+          "default": "none"
+        },
+        { "type": "checkbox", "id": "url_preselect", "label": "Pre-select from ?topic= in the URL", "default": false, "info": "Dropdown & pill buttons only. Used by links from the contact page." }
+      ]
+    },
+    {
+      "type": "perk",
+      "name": "Side card step",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "briefcase", "label": "Briefcase" },
+            { "value": "spark", "label": "Sparkle" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "video", "label": "Video call" }
+          ],
+          "default": "check"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "We review your brief" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Within 1 working day" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Application form",
+      "blocks": [
+        { "type": "field", "settings": { "label": "I’m interested in", "type": "pills", "options": "Trade / Interior Designer\nBulk & Corporate Order\nSell With Us\nCreator Collab", "width": "full", "required": true, "url_preselect": true } },
+        { "type": "field", "settings": { "label": "Phone / WhatsApp", "type": "tel", "required": true, "autocomplete": "tel" } },
+        { "type": "field", "settings": { "label": "Company / Studio Name", "autocomplete": "organization" } },
+        { "type": "field", "settings": { "label": "Tell us about your project", "type": "textarea", "width": "full", "required": true } },
+        { "type": "perk" }
+      ]
+    }
+  ]
+}
+{% endschema %}

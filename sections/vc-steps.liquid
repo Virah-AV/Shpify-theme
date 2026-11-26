@@ -1,0 +1,262 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+-%}
+
+<section
+  id="vc-steps-{{ section.id }}"
+  class="vc vc-steps"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-card-bg: {{ s.card_background }};
+    --vc-cols: {{ section.blocks.size | at_least: 1 | at_most: 5 }};
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="vc-container">
+    <div class="vc-head vc-head--center">
+      {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.subheading != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.subheading }}</div>{%- endif -%}
+    </div>
+
+    <ol class="vc-steps__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="vc-steps__item vc-reveal" style="--vc-d: {{ forloop.index | plus: 2 }};" {{ block.shopify_attributes }}>
+          <div class="vc-steps__marker">
+            <span class="vc-steps__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          </div>
+          <div class="vc-steps__card">
+            {%- if block.settings.icon != 'none' -%}
+              <span class="vc-steps__icon">{%- render 'vc-icon', icon: block.settings.icon, size: 22 -%}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}<h3 class="vc-steps__title">{{ block.settings.title | escape }}</h3>{%- endif -%}
+            {%- if block.settings.text != blank -%}<div class="vc-steps__text">{{ block.settings.text }}</div>{%- endif -%}
+            {%- if block.settings.time != blank -%}<span class="vc-steps__time">{{ block.settings.time | escape }}</span>{%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+
+    {%- if s.button_label != blank -%}
+      <div class="vc-steps__cta vc-reveal" style="--vc-d: 7;">
+        <a class="vc-btn" href="{{ s.button_link | default: '#' }}">
+          {{ s.button_label | escape }}
+          {%- render 'vc-icon', icon: 'arrow', size: 18 -%}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #vc-steps-{{ section.id }} .vc-steps__list {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--vc-cols), minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__list::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 24px;
+    right: 24px;
+    border-top: 1px dashed color-mix(in srgb, var(--vc-accent) 45%, transparent);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__item {
+    position: relative;
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__marker {
+    position: relative;
+    margin-bottom: 22px;
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__num {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--vc-ink);
+    color: var(--vc-bg);
+    font-family: var(--vc-heading-family);
+    font-size: 16px;
+    box-shadow: 0 0 0 8px var(--vc-bg);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__card {
+    height: calc(100% - 68px);
+    padding: 26px 24px;
+    border-radius: 18px;
+    background: var(--vc-card-bg);
+    transition: transform 0.45s var(--vc-ease), box-shadow 0.45s var(--vc-ease);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 40px -26px rgba(31, 29, 26, 0.35);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__icon {
+    display: inline-flex;
+    margin-bottom: 14px;
+    color: var(--vc-accent);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__title {
+    margin: 0 0 8px;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--vc-ink);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__text {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--vc-muted);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__text p {
+    margin: 0;
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__time {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--vc-line);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vc-muted);
+  }
+
+  #vc-steps-{{ section.id }} .vc-steps__cta {
+    margin-top: 44px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 989px) {
+    #vc-steps-{{ section.id }} .vc-steps__list {
+      grid-template-columns: 1fr;
+      gap: 0;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    #vc-steps-{{ section.id }} .vc-steps__list::before {
+      top: 24px;
+      bottom: 24px;
+      left: 23px;
+      right: auto;
+      border-top: 0;
+      border-left: 1px dashed color-mix(in srgb, var(--vc-accent) 45%, transparent);
+    }
+
+    #vc-steps-{{ section.id }} .vc-steps__item {
+      display: flex;
+      gap: 18px;
+      padding-bottom: 18px;
+    }
+
+    #vc-steps-{{ section.id }} .vc-steps__marker {
+      flex: 0 0 auto;
+      margin: 0;
+    }
+
+    #vc-steps-{{ section.id }} .vc-steps__card {
+      flex: 1 1 auto;
+      height: auto;
+      padding: 20px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: How it works",
+  "tag": "div",
+  "class": "section-vc-steps",
+  "max_blocks": 5,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HOW IT WORKS" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "From brief to <em>beautifully delivered.</em>" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Start your application" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#F7F4EE" },
+    { "type": "color", "id": "card_background", "label": "Step card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#A0704C" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "box", "label": "Parcel" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "check", "label": "Check" },
+            { "value": "spark", "label": "Sparkle" },
+            { "value": "briefcase", "label": "Briefcase" }
+          ],
+          "default": "chat"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Share your brief" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell us about your space, quantities and timeline.</p>" },
+        { "type": "text", "id": "time", "label": "Time tag", "info": "e.g. “Day 1”", "default": "Day 1" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: How it works",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step", "settings": { "icon": "ruler", "title": "Get a curated quote", "text": "<p>Our team shortlists pieces and shares trade pricing.</p>", "time": "Within 48 hrs" } },
+        { "type": "step", "settings": { "icon": "camera", "title": "Sample & approve", "text": "<p>Photo, video or sample checks before you commit.</p>", "time": "Flexible" } },
+        { "type": "step", "settings": { "icon": "truck", "title": "Deliver & set up", "text": "<p>Scheduled dispatch with GST invoicing.</p>", "time": "Pan-India" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

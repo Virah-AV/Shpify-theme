@@ -1,0 +1,342 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- liquid
+  assign font = section.settings.heading_font
+  assign s = section.settings
+-%}
+
+<section
+  id="vc-split-{{ section.id }}"
+  class="vc vc-split vc-split--image-{{ s.image_position }} vc-split--list-{{ s.list_style }}"
+  data-vc-animate="{{ s.enable_animation }}"
+  style="
+    --vc-bg: {{ s.background_color }};
+    --vc-ink: {{ s.text_color }};
+    --vc-muted: {{ s.muted_text_color }};
+    --vc-accent: {{ s.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ s.heading_size }}px;
+    --vc-btn-bg: {{ s.button_color }};
+    --vc-btn-text: {{ s.button_text_color }};
+    --vc-radius: {{ s.image_radius }}px;
+    --vc-pt: {{ s.padding_top }}px;
+    --vc-pb: {{ s.padding_bottom }}px;
+    --vc-pt-m: {{ s.padding_top_mobile }}px;
+    --vc-pb-m: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  {%- if s.anchor_id != blank -%}<span id="{{ s.anchor_id | handleize }}" class="vc-split__anchor" aria-hidden="true"></span>{%- endif -%}
+  <div class="vc-container vc-split__grid">
+    <div class="vc-split__media vc-reveal">
+      <div class="vc-split__frame" style="aspect-ratio: {{ s.image_ratio }};">
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 1400 | image_tag: class: 'vc-split__img', loading: 'lazy', widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 990px) 45vw, 100vw' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'vc-split__img vc-placeholder' }}
+        {%- endif -%}
+      </div>
+      {%- if s.image_2 != blank or s.show_secondary_placeholder -%}
+        <div class="vc-split__inset">
+          {%- if s.image_2 != blank -%}
+            {{ s.image_2 | image_url: width: 700 | image_tag: class: 'vc-split__img', loading: 'lazy', widths: '300, 500, 700', sizes: '20vw' }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'vc-split__img vc-placeholder' }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if s.badge_title != blank -%}
+        <div class="vc-split__badge">
+          <span class="vc-split__badge-title">{{ s.badge_title | escape }}</span>
+          {%- if s.badge_text != blank -%}<span class="vc-split__badge-text">{{ s.badge_text | escape }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-split__content">
+      {%- if s.eyebrow != blank -%}<p class="vc-eyebrow vc-reveal">{{ s.eyebrow | escape }}</p>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.text != blank -%}<div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ s.text }}</div>{%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="vc-split__list" role="list">
+          {%- for block in section.blocks -%}
+            <li class="vc-split__item vc-reveal" style="--vc-d: {{ forloop.index | plus: 2 }};" {{ block.shopify_attributes }}>
+              <span class="vc-split__icon" aria-hidden="true">
+                {%- if s.list_style == 'numbered' -%}
+                  {{ forloop.index | prepend: '0' | slice: -2, 2 }}
+                {%- else -%}
+                  {%- render 'vc-icon', icon: block.settings.icon, size: 22 -%}
+                {%- endif -%}
+              </span>
+              <div>
+                {%- if block.settings.title != blank -%}<h3 class="vc-split__title">{{ block.settings.title | escape }}</h3>{%- endif -%}
+                {%- if block.settings.text != blank -%}<div class="vc-split__text">{{ block.settings.text }}</div>{%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.button_label != blank -%}
+        <div class="vc-split__actions vc-reveal" style="--vc-d: 6;">
+          <a class="vc-btn" href="{{ s.button_link | default: '#' }}">
+            {{ s.button_label | escape }}
+            {%- render 'vc-icon', icon: 'arrow', size: 18 -%}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #vc-split-{{ section.id }} .vc-split__anchor {
+    position: absolute;
+    top: -80px;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__media {
+    position: relative;
+    padding-bottom: 40px;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__frame {
+    overflow: hidden;
+    border-radius: var(--vc-radius);
+    width: 88%;
+  }
+
+  #vc-split-{{ section.id }}.vc-split--image-right .vc-split__frame {
+    margin-left: auto;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s var(--vc-ease);
+  }
+
+  #vc-split-{{ section.id }} .vc-split__frame:hover .vc-split__img {
+    transform: scale(1.04);
+  }
+
+  #vc-split-{{ section.id }} .vc-split__inset {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 38%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 6px solid var(--vc-bg);
+    border-radius: calc(var(--vc-radius) * 0.75);
+    box-shadow: 0 24px 40px -24px rgba(31, 29, 26, 0.45);
+  }
+
+  #vc-split-{{ section.id }}.vc-split--image-right .vc-split__inset {
+    right: auto;
+    left: 0;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__badge {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: #1f1d1a;
+    color: #f5f1ea;
+    box-shadow: 0 20px 40px -20px rgba(31, 29, 26, 0.6);
+  }
+
+  #vc-split-{{ section.id }}.vc-split--image-right .vc-split__badge {
+    right: auto;
+    left: 0;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__badge-title {
+    font-family: var(--vc-heading-family);
+    font-size: 26px;
+    line-height: 1.1;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__badge-text {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__list {
+    display: grid;
+    gap: 24px;
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__icon {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--vc-accent) 12%, transparent);
+    color: var(--vc-accent);
+  }
+
+  #vc-split-{{ section.id }}.vc-split--list-numbered .vc-split__icon {
+    background: none;
+    border: 1px solid color-mix(in srgb, var(--vc-accent) 40%, transparent);
+    font-family: var(--vc-heading-family);
+    font-size: 16px;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__title {
+    margin: 2px 0 6px;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--vc-ink);
+  }
+
+  #vc-split-{{ section.id }} .vc-split__text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--vc-muted);
+  }
+
+  #vc-split-{{ section.id }} .vc-split__text p {
+    margin: 0;
+  }
+
+  #vc-split-{{ section.id }} .vc-split__actions {
+    margin-top: 36px;
+  }
+
+  @media screen and (min-width: 990px) {
+    #vc-split-{{ section.id }} .vc-split__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 80px;
+    }
+
+    #vc-split-{{ section.id }}.vc-split--image-right .vc-split__media {
+      order: 2;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Image & benefits",
+  "tag": "div",
+  "class": "section-vc-feature-split",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "WHY PARTNER WITH VIRAH" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Designed for homes. <em>Built for business.</em>" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>From a single studio apartment to a 40-desk office, we bring the same warmth, finish and reliability — with pricing and service built around your project.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Apply to partner" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "info": "Optional. Link to this section with #your-id" },
+    {
+      "type": "select", "id": "list_style", "label": "Benefit list style",
+      "options": [ { "value": "icons", "label": "Icons" }, { "value": "numbered", "label": "Numbers" } ],
+      "default": "icons"
+    },
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "image", "label": "Main image" },
+    { "type": "image_picker", "id": "image_2", "label": "Small overlapping image" },
+    { "type": "checkbox", "id": "show_secondary_placeholder", "label": "Show placeholder for small image when empty", "default": true },
+    {
+      "type": "select", "id": "image_position", "label": "Image position (desktop)",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ],
+      "default": "left"
+    },
+    {
+      "type": "select", "id": "image_ratio", "label": "Main image ratio",
+      "options": [
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 3", "label": "Landscape" }
+      ],
+      "default": "4 / 5"
+    },
+    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 24 },
+    { "type": "text", "id": "badge_title", "label": "Floating badge title", "default": "Trade-only", "info": "Leave empty to hide the badge." },
+    { "type": "text", "id": "badge_text", "label": "Floating badge text", "default": "pricing & priority dispatch" },
+    { "type": "header", "content": "Style" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 42 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#A0704C" },
+    { "type": "color", "id": "button_color", "label": "Button background", "default": "#1F1D1A" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#F7F4EE" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "spark", "label": "Sparkle" },
+            { "value": "briefcase", "label": "Briefcase" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "box", "label": "Parcel" },
+            { "value": "sofa", "label": "Sofa" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "spark"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Exclusive trade pricing" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tiered discounts on every collection for registered partners.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Image & benefits",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit", "settings": { "icon": "chat", "title": "A dedicated project manager", "text": "<p>One point of contact from quote to delivery.</p>" } },
+        { "type": "benefit", "settings": { "icon": "truck", "title": "Priority dispatch", "text": "<p>Bulk orders packed and shipped pan-India.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

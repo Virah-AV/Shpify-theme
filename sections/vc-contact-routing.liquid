@@ -1,0 +1,409 @@
+{%- render 'vc-section-assets', font: section.settings.heading_font -%}
+{%- assign font = section.settings.heading_font -%}
+
+<section
+  id="vc-routing-{{ section.id }}"
+  class="vc vc-routing"
+  data-vc-animate="{{ section.settings.enable_animation }}"
+  style="
+    --vc-bg: {{ section.settings.background_color }};
+    --vc-ink: {{ section.settings.text_color }};
+    --vc-muted: {{ section.settings.muted_text_color }};
+    --vc-accent: {{ section.settings.accent_color }};
+    --vc-heading-family: {{ font.family | escape }}, {{ font.fallback_families | escape }};
+    --vc-heading-weight: {{ font.weight }};
+    --vc-heading-size: {{ section.settings.heading_size }}px;
+    --vc-card-bg: {{ section.settings.card_background }};
+    --vc-card-radius: {{ section.settings.card_radius }}px;
+    --vc-card-lift: -{{ section.settings.hover_lift }}px;
+    --vc-icon-bg: {{ section.settings.icon_background }};
+    --vc-cols: {{ section.settings.columns }};
+    --vc-pt: {{ section.settings.padding_top }}px;
+    --vc-pb: {{ section.settings.padding_bottom }}px;
+    --vc-pt-m: {{ section.settings.padding_top_mobile }}px;
+    --vc-pb-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  {%- if section.settings.anchor_id != blank -%}<span id="{{ section.settings.anchor_id | handleize }}" style="position: absolute; top: -80px;" aria-hidden="true"></span>{%- endif -%}
+  <div class="vc-container">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="vc-head vc-head--{{ section.settings.heading_alignment }}">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="vc-eyebrow vc-reveal">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vc-heading vc-reveal" style="--vc-d: 1;">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="vc-sub vc-reveal" style="--vc-d: 2;">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="vc-routing__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+          assign delay = forloop.index0 | plus: 2
+        -%}
+        <li class="vc-routing__item vc-reveal" style="--vc-d: {{ delay }};" {{ block.shopify_attributes }}>
+         <div class="vc-routing__card{% if b.featured %} vc-routing__card--featured{% endif %}">
+          <div class="vc-routing__top">
+            {%- if b.icon != 'none' -%}
+              <span class="vc-routing__icon">{%- render 'vc-icon', icon: b.icon, size: 26 -%}</span>
+            {%- endif -%}
+            {%- if b.tag != blank -%}
+              <span class="vc-routing__tag">{{ b.tag | escape }}</span>
+            {%- endif -%}
+          </div>
+
+          {%- if b.title != blank -%}
+            <h3 class="vc-routing__title">{{ b.title | escape }}</h3>
+          {%- endif -%}
+          {%- if b.text != blank -%}
+            <div class="vc-routing__text">{{ b.text }}</div>
+          {%- endif -%}
+
+          <div class="vc-routing__actions">
+            {%- for i in (1..2) -%}
+              {%- liquid
+                if i == 1
+                  assign a_type = b.action_1_type
+                  assign a_value = b.action_1_value
+                  assign a_label = b.action_1_label
+                else
+                  assign a_type = b.action_2_type
+                  assign a_value = b.action_2_value
+                  assign a_label = b.action_2_label
+                endif
+                if a_type == 'none' or a_value == blank
+                  continue
+                endif
+                if a_label == blank
+                  assign a_label = a_value
+                endif
+                case a_type
+                  when 'email'
+                    assign a_icon = 'mail'
+                  when 'whatsapp'
+                    assign a_icon = 'whatsapp'
+                  when 'phone'
+                    assign a_icon = 'phone'
+                  else
+                    assign a_icon = 'arrow-up-right'
+                endcase
+              -%}
+              {%- capture a_href -%}{%- render 'vc-action-href', type: a_type, value: a_value, message: b.message -%}{%- endcapture -%}
+              <a
+                class="vc-routing__action vc-routing__action--{{ a_type }}"
+                href="{{ a_href | strip }}"
+                {% if a_type == 'whatsapp' or a_href contains 'http' %}
+                  {% unless a_href contains request.host %}target="_blank" rel="noopener"{% endunless %}
+                {% endif %}
+              >
+                {%- render 'vc-icon', icon: a_icon, size: 18 -%}
+                <span>{{ a_label | escape }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+         </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% style %}
+  #vc-routing-{{ section.id }} .vc-routing__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--vc-cols), minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__item {
+    display: flex;
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 34px 30px 30px;
+    border-radius: var(--vc-card-radius);
+    background: var(--vc-card-bg);
+    border: 1px solid rgba(31, 29, 26, 0.06);
+    box-shadow: 0 1px 2px rgba(31, 29, 26, 0.04), 0 14px 34px -18px rgba(31, 29, 26, 0.18);
+    transition: transform 0.45s var(--vc-ease), box-shadow 0.45s var(--vc-ease);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card:hover {
+    transform: translateY(var(--vc-card-lift));
+    box-shadow: 0 1px 2px rgba(31, 29, 26, 0.04), 0 28px 50px -24px rgba(31, 29, 26, 0.3);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card--featured {
+    background: #1f1d1a;
+    color: #f5f1ea;
+    --vc-ink: #f5f1ea;
+    --vc-muted: rgba(245, 241, 234, 0.72);
+    --vc-icon-bg: rgba(245, 241, 234, 0.08);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--vc-icon-bg);
+    color: var(--vc-accent);
+    transition: transform 0.45s var(--vc-ease);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card:hover .vc-routing__icon {
+    transform: rotate(-6deg) scale(1.05);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__tag {
+    padding: 5px 11px;
+    border: 1px solid var(--vc-line);
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vc-muted);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card--featured .vc-routing__tag {
+    border-color: rgba(245, 241, 234, 0.2);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__title {
+    margin: 0 0 10px;
+    font-family: var(--vc-heading-family);
+    font-weight: var(--vc-heading-weight);
+    font-size: 23px;
+    line-height: 1.25;
+    color: var(--vc-ink);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__text {
+    flex: 1 1 auto;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--vc-muted);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__text p {
+    margin: 0;
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--vc-line);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__card--featured .vc-routing__actions {
+    border-color: rgba(245, 241, 234, 0.14);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: var(--vc-ink);
+    font-size: 14.5px;
+    font-weight: 500;
+    text-decoration: none;
+    word-break: break-word;
+    transition: color 0.25s ease, transform 0.35s var(--vc-ease);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__action .vc-icon {
+    flex: 0 0 auto;
+    color: var(--vc-accent);
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__action--whatsapp .vc-icon {
+    color: #25a95a;
+  }
+
+  #vc-routing-{{ section.id }} .vc-routing__action:hover {
+    transform: translateX(4px);
+    color: var(--vc-accent);
+  }
+
+  @media screen and (max-width: 989px) {
+    #vc-routing-{{ section.id }} .vc-routing__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #vc-routing-{{ section.id }} .vc-routing__grid {
+      {%- if section.settings.mobile_layout == 'slider' -%}
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        margin: 0 -20px;
+        padding: 6px 20px 18px;
+        scrollbar-width: none;
+      {%- else -%}
+        grid-template-columns: 1fr;
+      {%- endif -%}
+      gap: 16px;
+    }
+
+    #vc-routing-{{ section.id }} .vc-routing__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    {%- if section.settings.mobile_layout == 'slider' -%}
+      #vc-routing-{{ section.id }} .vc-routing__item {
+        flex: 0 0 84%;
+        scroll-snap-align: start;
+      }
+    {%- endif -%}
+
+    #vc-routing-{{ section.id }} .vc-routing__card {
+      padding: 26px 22px 22px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Virah: Routing cards",
+  "tag": "div",
+  "class": "section-vc-contact-routing",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "QUICK CONNECT" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Reach the <em>right</em> team, faster." },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Pick the desk that fits your question — we’ll route you straight to the people who can help.</p>" },
+    {
+      "type": "select", "id": "heading_alignment", "label": "Heading alignment",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ],
+      "default": "center"
+    },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "info": "Optional. Link to this section with #your-id" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "Cards" },
+    {
+      "type": "select", "id": "columns", "label": "Columns (desktop)",
+      "options": [ { "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ],
+      "default": "3"
+    },
+    {
+      "type": "select", "id": "mobile_layout", "label": "Mobile layout",
+      "options": [ { "value": "stack", "label": "Stacked" }, { "value": "slider", "label": "Swipe slider" } ],
+      "default": "stack"
+    },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "hover_lift", "label": "Hover lift", "min": 0, "max": 12, "step": 1, "unit": "px", "default": 4 },
+    { "type": "checkbox", "id": "enable_animation", "label": "Reveal on scroll", "default": true },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#F7F4EE" },
+    { "type": "color", "id": "card_background", "label": "Card background (ivory)", "default": "#FFFFFF" },
+    { "type": "color", "id": "icon_background", "label": "Icon circle background", "default": "#F3EDE4" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#2B2420" },
+    { "type": "color", "id": "muted_text_color", "label": "Secondary text", "default": "#6E655C" },
+    { "type": "color", "id": "accent_color", "label": "Accent (icons, eyebrow)", "default": "#A0704C" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Department card",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "chat", "label": "Chat bubble" },
+            { "value": "box", "label": "Parcel" },
+            { "value": "truck", "label": "Delivery truck" },
+            { "value": "sofa", "label": "Sofa" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "briefcase", "label": "Briefcase" },
+            { "value": "megaphone", "label": "Megaphone" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "spark", "label": "Sparkle" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "mail", "label": "Mail" },
+            { "value": "phone", "label": "Phone" }
+          ],
+          "default": "chat"
+        },
+        { "type": "text", "id": "tag", "label": "Small tag", "info": "Optional, e.g. “Trade pricing”." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Customer Care & Orders" },
+        { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Questions about shipping, assembly, returns, or an existing order.</p>" },
+        { "type": "checkbox", "id": "featured", "label": "Highlight this card (dark style)", "default": false },
+        { "type": "header", "content": "Action 1" },
+        {
+          "type": "select", "id": "action_1_type", "label": "Type",
+          "options": [
+            { "value": "none", "label": "Hidden" },
+            { "value": "email", "label": "Email" },
+            { "value": "whatsapp", "label": "WhatsApp chat" },
+            { "value": "phone", "label": "Phone call" },
+            { "value": "link", "label": "Page / URL" }
+          ],
+          "default": "email"
+        },
+        { "type": "text", "id": "action_1_value", "label": "Email / number / URL", "info": "Email: care@virah.co.in · WhatsApp & phone: +91 number · Link: /pages/collaboration", "default": "care@virah.co.in" },
+        { "type": "text", "id": "action_1_label", "label": "Label", "info": "Leave empty to show the value." },
+        { "type": "header", "content": "Action 2" },
+        {
+          "type": "select", "id": "action_2_type", "label": "Type",
+          "options": [
+            { "value": "none", "label": "Hidden" },
+            { "value": "email", "label": "Email" },
+            { "value": "whatsapp", "label": "WhatsApp chat" },
+            { "value": "phone", "label": "Phone call" },
+            { "value": "link", "label": "Page / URL" }
+          ],
+          "default": "none"
+        },
+        { "type": "text", "id": "action_2_value", "label": "Email / number / URL" },
+        { "type": "text", "id": "action_2_label", "label": "Label" },
+        { "type": "text", "id": "message", "label": "Prefilled WhatsApp message / email subject", "default": "Hi Virah team, I need help with" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Virah: Routing cards",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card", "settings": { "icon": "sofa", "title": "Interior Styling & Trade", "tag": "Trade pricing", "text": "<p>Sourcing for a full home, office, or commercial project? Get exclusive trade pricing.</p>", "action_1_type": "link", "action_1_value": "/pages/collaboration", "action_1_label": "Start a trade inquiry" } },
+        { "type": "card", "settings": { "icon": "megaphone", "title": "Press & Collaborations", "text": "<p>Creator partnerships, media kits, and brand storytelling.</p>", "action_1_value": "collab@virah.co.in", "message": "Collaboration inquiry" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

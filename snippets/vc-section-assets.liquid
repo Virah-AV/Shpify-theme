@@ -1,0 +1,15 @@
+{%- comment -%}
+  Shared assets + heading-font variables for the vc-* contact page sections.
+  Usage: {% render 'vc-section-assets', font: section.settings.heading_font %}
+  Duplicate stylesheet/script tags across sections are harmless (the JS guards itself).
+{%- endcomment -%}
+<script>document.documentElement.classList.add('vc-js');</script>
+{{ 'contact-page.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'contact-page.js' | asset_url }}" defer="defer"></script>
+{%- if font != blank -%}
+  {% style %}
+    {{ font | font_face: font_display: 'swap' }}
+    {%- assign font_italic = font | font_modify: 'style', 'italic' -%}
+    {%- if font_italic -%}{{ font_italic | font_face: font_display: 'swap' }}{%- endif -%}
+  {% endstyle %}
+{%- endif -%}
